@@ -5,6 +5,33 @@ background:#1c2220;
 color:#e5e5e5;
 }
 
+<!-- ===== ЛЕВАЯ ВЕРТИКАЛЬНАЯ ПАНЕЛЬ ===== -->
+<div class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="menu-icon">
+      ☰
+    </div>
+    <span class="menu-title">Аренда товаров</span>
+  </div>
+
+  <a href="playstation.html" target="_blank" class="side-item">
+    🎮
+    <span>PlayStation</span>
+  </a>
+
+  <a href="xbox.html" target="_blank" class="side-item">
+    🕹
+    <span>Xbox</span>
+  </a>
+
+  <a href="accounts.html" target="_blank" class="side-item">
+    👤
+    <span>Аккаунты</span>
+  </a>
+
+</div>
+
 /* верхняя полоска */
 .topbar{
 background:#2a3230;
