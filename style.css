@@ -21,6 +21,24 @@ margin-left:15px;
 text-decoration:none;
 }
 
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.top-icon {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.top-icon:hover {
+    transform: scale(1.15);
+}
+
 /* ===== SIDEBAR ===== */
 
 .sidebar{
