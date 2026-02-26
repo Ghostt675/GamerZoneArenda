@@ -39,6 +39,24 @@ text-decoration:none;
     transform: scale(1.15);
 }
 
+.phone{
+    margin-left:15px;
+    padding-left:15px;
+    position:relative;
+}
+
+/* вертикальная палочка */
+.phone::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:1px;
+    height:18px;
+    background:#5a6662; /* цвет линии */
+}
+
 /* ===== SIDEBAR ===== */
 
 .sidebar{
