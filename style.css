@@ -24,7 +24,7 @@ text-decoration:none;
 .top-right {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .top-icon {
