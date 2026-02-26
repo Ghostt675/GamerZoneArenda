@@ -20,15 +20,77 @@ margin-left:15px;
 text-decoration:none;
 }
 
-/* боковой каталог */
+/* ===== SIDEBAR ===== */
+
 .sidebar{
 position:fixed;
 left:0;
 top:0;
-width:200px;
-height:100%;
-background:#232b29;
-padding:20px;
+height:100vh;
+width:70px;
+background:#0b1d3a; /* темно-синий */
+transition:width 0.3s ease;
+overflow:hidden;
+z-index:1000;
+display:flex;
+flex-direction:column;
+}
+
+/* раскрытие */
+.sidebar:hover{
+width:220px;
+}
+
+/* верх */
+.sidebar-header{
+display:flex;
+align-items:center;
+gap:15px;
+padding:20px 15px;
+color:white;
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.menu-icon{
+font-size:22px;
+min-width:30px;
+text-align:center;
+}
+
+.menu-title{
+opacity:0;
+transition:0.3s;
+white-space:nowrap;
+}
+
+/* показываем текст при раскрытии */
+.sidebar:hover .menu-title{
+opacity:1;
+}
+
+/* пункты */
+.side-item{
+display:flex;
+align-items:center;
+gap:15px;
+padding:18px 15px;
+color:white;
+text-decoration:none;
+transition:0.25s;
+}
+
+.side-item span{
+opacity:0;
+white-space:nowrap;
+transition:0.3s;
+}
+
+.sidebar:hover .side-item span{
+opacity:1;
+}
+
+.side-item:hover{
+background:#132a55;
 }
 
 /* меню */
