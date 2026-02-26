@@ -132,15 +132,15 @@ background:#132a55;
 
 /* меню */
 .navbar{
-margin:0 200px;
+margin:0 100px;
 background:#2a3230;
 display:flex;
 align-items:center;
-padding:10px;
+padding:20px;
 gap:15px;
 }
 
-.logo{height:40px;}
+.logo{height:100px;}
 
 .search{
 flex:1;
