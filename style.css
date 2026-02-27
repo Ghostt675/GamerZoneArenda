@@ -139,14 +139,14 @@ margin-left: 70px;
 background:#2a3230;
 display:flex;
 align-items:center;
-padding:6px;
+padding:6px 12px;
 gap:15px;
 }
 
-.logo{height:100px;}
+.logo{height:70px;}
 
 .search{
-    width:400px;     /* регулируешь размер */
+    width:500px;     /* регулируешь размер */
     padding:10px;
     background:#1f2624;
     border:none;
