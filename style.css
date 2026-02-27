@@ -133,7 +133,7 @@ background:#132a55;
 
 /* меню */
 .navbar{
-margin:0 0px;
+margin-left: 30px;
 background:#2a3230;
 display:flex;
 align-items:center;
