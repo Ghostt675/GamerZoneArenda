@@ -179,6 +179,10 @@ font-size:12px;
     width:220px;
 }
 
+.navbar button{
+    margin-left:10px;
+}
+
 /* баннер */
 .banner{
     margin:20px 220px;
