@@ -12,122 +12,91 @@
 <!-- ===== ВЕРХНЯЯ ТОНКАЯ ПОЛОСА ===== -->
 <div class="topbar">
   <div class="top-right">
-
     <a href="https://t.me/USERNAME" target="_blank">
       <img src="images/tg.png" class="top-icon" alt="Telegram">
     </a>
-
     <a href="https://max.ru" target="_blank">
       <img src="images/max.png" class="top-icon" alt="MAX">
     </a>
-
-    <a class="phone" href="tel:+79999999999">
-      +7 999 999-99-99
-    </a>
-
+    <a class="phone" href="tel:+79999999999">+7 999 999-99-99</a>
   </div>
 </div>
 
 <!-- ===== ЛЕВАЯ ВЕРТИКАЛЬНАЯ ПАНЕЛЬ ===== -->
 <div id="sidebar" class="sidebar">
-
   <div class="sidebar-header">
-    <div class="menu-icon">
-      ☰
-    </div>
+    <div class="menu-icon">☰</div>
     <span class="menu-title">Аренда товаров</span>
   </div>
-
-  <a href="playstation.html" target="_blank" class="side-item">
-    🎮
-    <span>PlayStation</span>
-  </a>
-
-  <a href="xbox.html" target="_blank" class="side-item">
-    🕹
-    <span>Xbox</span>
-  </a>
-
-  <a href="accounts.html" target="_blank" class="side-item">
-    👤
-    <span>Аккаунты</span>
-  </a>
-
+  <a href="playstation.html" target="_blank" class="side-item">🎮 <span>PlayStation</span></a>
+  <a href="xbox.html" target="_blank" class="side-item">🕹 <span>Xbox</span></a>
+  <a href="accounts.html" target="_blank" class="side-item">👤 <span>Аккаунты</span></a>
 </div>
 
 <!-- ===== ОСНОВНОЕ МЕНЮ ===== -->
 <div class="navbar">
-
-  <!-- центр: логотип -->
   <img src="images/logo.png" class="logo">
-
-  <!-- блок товаров + поиск -->
   <div class="nav-center">
       <button class="products-btn" onclick="toggleCatalog()">Каталог</button>
       <input class="search" placeholder="Поиск товаров">
   </div>
-
-  <!-- иконки справа -->
   <div class="icons">
       <div class="icon">❤️</div>
-      <div class="icon cart" onclick="openCart()">
-          🛒
-          <span id="cartCount">0</span>
-      </div>
+      <div class="icon cart" onclick="openCart()">🛒<span id="cartCount">0</span></div>
       <div class="icon">👤</div>
   </div>
-
 </div>
 
-<!-- ===== БАННЕР ===== -->
-<div class="banner">
-  <img src="images/banner.png">
-</div>
+<!-- ===== КОНТЕЙНЕР ДЛЯ ВСЕГО КОНТЕНТА ===== -->
+<div class="container">
 
-<!-- ===== ПОПУЛЯРНЫЕ ===== -->
-<h2 class="section-title">Популярные товары</h2>
-
-<div class="products">
-
-  <div class="card" onclick="addToCart('PS5',1500)">
-    <img src="images/ps5.jpg">
-    <p>PlayStation 5</p>
-    <span>1500 ₽</span>
+  <!-- ===== БАННЕР ===== -->
+  <div class="banner">
+    <img src="images/banner.png" alt="Баннер">
   </div>
 
-  <div class="card" onclick="addToCart('Xbox Series X',1400)">
-    <img src="images/xbox.jpg">
-    <p>Xbox Series X</p>
-    <span>1400 ₽</span>
+  <!-- ===== ПОПУЛЯРНЫЕ ТОВАРЫ ===== -->
+  <h2 class="section-title">Популярные товары</h2>
+  <div class="products">
+    <div class="card" onclick="addToCart('PS5',1500)">
+      <img src="images/ps5.jpg" alt="PS5">
+      <p>PlayStation 5</p>
+      <span>1500 ₽</span>
+    </div>
+    <div class="card" onclick="addToCart('Xbox Series X',1400)">
+      <img src="images/xbox.jpg" alt="Xbox Series X">
+      <p>Xbox Series X</p>
+      <span>1400 ₽</span>
+    </div>
   </div>
 
-</div>
+  <!-- ===== ОТЗЫВЫ ===== -->
+  <section class="reviews">
+    <h2>Отзывы</h2>
+    <iframe src="https://www.avito.ru" loading="lazy"></iframe>
+  </section>
 
-<!-- ===== ОТЗЫВЫ ===== -->
-<section class="reviews">
-  <h2>Отзывы</h2>
-  <iframe src="https://www.avito.ru" loading="lazy"></iframe>
-</section>
+  <!-- ===== ОПИСАНИЕ САЙТА ===== -->
+  <section class="about">
+    <h2>О нашем сайте</h2>
+    <p>
+      GamerZone - интернет-магазин по аренде оборудования в г.Барнауле и его округу. 
+      Предлагаем суточную, недельную аренду консолей в полном комплекте с доставкой на дом и возможностью продления аренды.
+      Всё оборудование в отличном состоянии, все пожелания будут учтены.
+    </p>
+  </section>
 
-
-<!-- ===== ОПИСАНИЕ ===== -->
-<section class="about">
-  <p>
-    GamerZone - интернет-магазин по аренде оборудования в г.Барнауле и его округу. 
-    Предлагаем суточную, недельную аренду консолей в полном комплекте с доставкой на дом и возможностью продления аренды.
-    Всё оборудование в отличном состоянии, все пожеления будут учтены.
-  </p>
-</section>
+</div> <!-- /container -->
 
 <!-- ===== ФУТЕР ===== -->
 <footer>
   <p>© 2026 | GamerZone</p>
   <a href="https://t.me/USERNAME" target="_blank">
       <img src="images/tg.png" class="top-icon" alt="Telegram">
-    </a>
+  </a>
   <a href="https://max.ru" target="_blank">
       <img src="images/max.png" class="top-icon" alt="MAX">
-    </a>
+  </a>
 </footer>
 
 <!-- ===== КОРЗИНА ===== -->
