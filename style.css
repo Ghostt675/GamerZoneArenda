@@ -278,7 +278,7 @@ body{
 
 .reviews h2 {
     font-size: 28px;
-    color: #333;
+    color: white;
     margin-bottom: 20px;
 }
 
@@ -311,7 +311,7 @@ body{
 .about h2{
     margin-bottom:15px;
     font-size:28px;
-    color:#333;
+    color: white;
 }
 
 .about p{
