@@ -101,6 +101,7 @@ body{
     font-size:28px;             /* БОЛЬШЕ */
     min-width:36px;
     text-align:center;
+    margin: 0 auto;
 }
 
 /* текст заголовка */
