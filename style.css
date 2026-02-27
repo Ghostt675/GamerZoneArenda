@@ -272,36 +272,30 @@ body{
 }
 
 .reviews {
-  margin: 40px 0;
-  text-align: center;
+    margin: 40px 0;
+    text-align: center;
 }
 
 .reviews h2 {
-  font-size: 28px;
-  color: #2E7DFF;
-  margin-bottom: 20px;
+    font-size: 28px;
+    color: #2E7DFF;
+    margin-bottom: 20px;
 }
 
-.reviews-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+.reviews-widget {
+    width: 100%;
+    max-width: 1100px;  /* по ширине контента сайта */
+    margin: 0 auto;
+    height: 500px;      /* фиксированная высота */
+    overflow: hidden;   /* убираем скролл */
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-.review-card {
-  background: #2a3230;
-  border-radius: 12px;
-  width: 250px;
-  height: 300px;        /* фиксированная высота */
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-.review-card iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+.reviews-widget iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* About */
