@@ -286,7 +286,7 @@ body{
     width: 100%;
     max-width: 1400px;  /* по ширине контента сайта */
     margin: 0 auto;
-    height: 600px;      /* фиксированная высота */
+    height: 400px;      /* фиксированная высота */
     overflow: hidden;   /* убираем скролл */
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
