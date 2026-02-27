@@ -2,24 +2,24 @@
 let cart = [];
 
 // открыть/закрыть sidebar по кнопке "Каталог"
-function toggleCatalog(){
+function toggleCatalog() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
 }
 
 // добавить товар в корзину
-function addToCart(name, price){
-    cart.push({name, price});
+function addToCart(name, price) {
+    cart.push({ name, price });
     updateCart();
 }
 
 // обновить счетчик корзины
-function updateCart(){
+function updateCart() {
     document.getElementById("cartCount").innerText = cart.length;
 }
 
 // открыть модальное окно корзины
-function openCart(){
+function openCart() {
     const modal = document.getElementById("cartModal");
     const items = document.getElementById("cartItems");
     items.innerHTML = "";
@@ -31,31 +31,33 @@ function openCart(){
     });
 
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
-
     modal.classList.add("open");
+
+    // показать overlay
+    document.querySelector(".overlay").classList.add("show");
 }
 
 // удалить товар из корзины по индексу
-function removeFromCart(index){
+function removeFromCart(index) {
     cart.splice(index, 1);
     updateCart();
-    openCart(); // обновить модальное окно
+    openCart(); // обновить окно корзины
 }
 
 // закрыть корзину
-function closeCart(){
+function closeCart() {
     const modal = document.getElementById("cartModal");
     modal.classList.remove("open");
+    document.querySelector(".overlay").classList.remove("show");
 }
 
 // оформить заказ
-document.querySelector(".orderBtn").addEventListener("click", function(){
-    if(cart.length === 0){
+document.querySelector(".orderBtn").addEventListener("click", function () {
+    if (cart.length === 0) {
         alert("Корзина пуста!");
         return;
     }
 
-    // простое уведомление о заказе
     alert("Заказ оформлен! Уведомление придет вам.");
     
     // сброс корзины
@@ -64,11 +66,9 @@ document.querySelector(".orderBtn").addEventListener("click", function(){
     closeCart();
 });
 
-// закрытие корзины по клику вне окна
-document.addEventListener("click", function(e){
-    const modal = document.getElementById("cartModal");
-    if(e.target.classList.contains("overlay")){
+// закрытие корзины при клике на overlay
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("overlay")) {
         closeCart();
-        e.target.classList.remove("show");
     }
 });
