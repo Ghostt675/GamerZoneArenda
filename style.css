@@ -71,7 +71,7 @@ body{
     left:0;
     top:0;
     height:100vh;
-    width:60px;
+    width:70px;                 /* чуть шире закрытый */
     background:#000000;
     transition:width 0.3s ease;
     overflow:hidden;
@@ -80,30 +80,36 @@ body{
     flex-direction:column;
 }
 
+/* раскрытие */
 .sidebar:hover,
 .sidebar.open{
-    width:220px;
+    width:240px;                /* под новое меню */
 }
 
+/* верх */
 .sidebar-header{
     display:flex;
     align-items:center;
-    gap:15px;
-    padding:20px 15px;
+    gap:18px;
+    padding:22px 18px;
     color:white;
     border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
+/* ☰ */
 .menu-icon{
-    font-size:30px;
-    min-width:30px;
+    font-size:34px;             /* БОЛЬШЕ */
+    min-width:40px;
     text-align:center;
 }
 
+/* текст заголовка */
 .menu-title{
     opacity:0;
-    transition:0.3s;
+    transition:0.25s;
     white-space:nowrap;
+    font-size:18px;
+    font-weight:600;
 }
 
 .sidebar:hover .menu-title,
@@ -111,20 +117,30 @@ body{
     opacity:1;
 }
 
+/* пункты меню */
 .side-item{
     display:flex;
     align-items:center;
-    gap:15px;
-    padding:18px 15px;
+    gap:18px;
+    padding:20px 18px;
     color:white;
     text-decoration:none;
     transition:0.25s;
+    font-size:17px;
 }
 
+/* 🎮 🕹 👤 */
+.side-item{
+    font-size:26px;             /* увеличили иконки */
+}
+
+/* текст */
 .side-item span{
     opacity:0;
     white-space:nowrap;
-    transition:0.3s;
+    transition:0.25s;
+    font-size:17px;
+    font-weight:500;
 }
 
 .sidebar:hover .side-item span,
