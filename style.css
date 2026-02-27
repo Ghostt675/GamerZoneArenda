@@ -166,15 +166,16 @@ body{
     border-radius:6px;
 }
 
-.icons{
-    display:flex;
-    gap:15px;
-    margin-left:auto;
+.icons {
+    display: flex;
+    gap: 20px;         /* больше расстояние между иконками */
+    margin-left: auto;
 }
 
-.icon{
-    cursor:pointer;
-    position:relative;
+.icon {
+    font-size: 28px;   /* увеличиваем иконки */
+    cursor: pointer;
+    position: relative;
 }
 
 .cart span{
