@@ -58,24 +58,25 @@
 <!-- ===== ОСНОВНОЕ МЕНЮ ===== -->
 <div class="navbar">
 
+  <!-- центр: логотип -->
   <img src="images/logo.png" class="logo">
 
-  <button onclick="toggleCatalog()">Товары</button>
-
-  <input class="search" placeholder="Поиск товаров">
-
-  <div class="icons">
-
-    <div class="icon">❤️</div>
-
-    <div class="icon cart" onclick="openCart()">
-      🛒
-      <span id="cartCount">0</span>
-    </div>
-
-    <div class="icon">👤</div>
-
+  <!-- блок товаров + поиск -->
+  <div class="nav-center">
+      <button class="products-btn" onclick="toggleCatalog()">Каталог</button>
+      <input class="search" placeholder="Поиск товаров">
   </div>
+
+  <!-- иконки справа -->
+  <div class="icons">
+      <div class="icon">❤️</div>
+      <div class="icon cart" onclick="openCart()">
+          🛒
+          <span id="cartCount">0</span>
+      </div>
+      <div class="icon">👤</div>
+  </div>
+
 </div>
 
 <!-- ===== БАННЕР ===== -->
