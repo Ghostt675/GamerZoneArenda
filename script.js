@@ -33,14 +33,15 @@ function openCart() {
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
     modal.classList.add("open");
 
-    // создать overlay если его нет
-    if (!document.querySelector(".overlay")) {
-        const overlay = document.createElement("div");
+    // overlay
+    let overlay = document.querySelector(".overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
         overlay.classList.add("overlay");
         overlay.addEventListener("click", closeCart);
         document.body.appendChild(overlay);
     }
-    document.querySelector(".overlay").classList.add("show");
+    overlay.classList.add("show");
 }
 
 // удалить товар из корзины
