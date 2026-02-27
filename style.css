@@ -294,7 +294,7 @@ display:block;
 .about {
     background: #2f3836;        /* чуть светлее основного фона */
     color: #CFD6D4;             /* светло-серый текст */
-    padding: 30px 20px;         /* внутренние отступы */
+    padding: 100px 100px;         /* внутренние отступы */
     border-radius: 10px;        /* закруглённые углы */
     margin: 40px 0;             /* отступ сверху и снизу от других блоков */
     box-sizing: border-box;
