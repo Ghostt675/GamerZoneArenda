@@ -188,30 +188,19 @@ body{
     font-size:12px;
 }
 
-.hero-text {
-    background: #2a3230; /* тёмный фон */
-    border-radius: 50px; /* овальный эффект */
-    padding: 50px 30px; /* пространство вокруг текста */
-    margin: 20px auto; /* центрируем по горизонтали */
-    text-align: center;
-    max-width: 900px; /* чтобы не растягивалось на всю ширину */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5); /* лёгкая тень для объёма */
+.banner{
+    width: 100%;
+    max-width: 1100px;   /* оставляет текущий нормальный размер */
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
 }
 
-.hero-text h1 {
-    color: #2e7dff; /* акцентный синий */
-    font-size: 48px; /* крупный заголовок */
-    font-family: 'Arial', sans-serif; /* шрифт, можно заменить на Google Fonts */
-    margin: 0;
-}
-
-@media screen and (max-width:768px){
-    .hero-text {
-        padding: 30px 20px;
-    }
-    .hero-text h1 {
-        font-size: 32px;
-    }
+.banner img{
+    width: 100%;
+    height: auto;
+    border-radius: 20px; /* красиво смотрится */
+    object-fit: cover;
 }
 
 /* товары */
