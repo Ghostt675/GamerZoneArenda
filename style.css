@@ -136,56 +136,43 @@ body{
     background:#132a55;
 }
 
-/* ===== NAVBAR ===== */
-.navbar{
-    margin-left:70px;
-    background:#2a3230;
+/* ===== КНОПКИ МЕНЮ ===== */
+
+.menu-actions{
     display:flex;
     align-items:center;
-    padding:6px 15px;
+    gap:15px;
 }
 
-.logo{
-    height:70px;
-    margin:0 auto 0 20px;     
-}
-
-.nav-center{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-left:20px;
-}
-
-.search{
-    width:300px;     
-    padding:10px;
-    background:#1f2624;
-    border:none;
+/* общая кнопка */
+.menu-btn{
+    background:#39d98a; /* салатовый */
     color:white;
-    border-radius:6px;
+    border:none;
+    padding:10px 18px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.25s;
+    position:relative;
 }
 
-.icons {
-    display: flex;
-    gap: 20px;         /* больше расстояние между иконками */
-    margin-left: auto;
+/* hover эффект */
+.menu-btn:hover{
+    background:#2fc477;
+    transform:translateY(-2px);
 }
 
-.icon {
-    font-size: 28px;   /* увеличиваем иконки */
-    cursor: pointer;
-    position: relative;
-}
-
-.cart span{
+/* счётчик корзины */
+.cart-btn span{
     position:absolute;
-    top:-8px;
-    right:-10px;
-    background:#2e7dff;
-    padding:5px 9px;
-    border-radius:10px;
+    top:-6px;
+    right:-6px;
+    background:#ff3b3b;
     font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
 }
 
 .banner{
