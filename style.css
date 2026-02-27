@@ -71,7 +71,7 @@ body{
     left:0;
     top:0;
     height:100vh;
-    width:70px;                 /* чуть шире закрытый */
+    width:64px;                 /* чуть шире закрытый */
     background:#000000;
     transition:width 0.3s ease;
     overflow:hidden;
@@ -98,7 +98,7 @@ body{
 
 /* ☰ */
 .menu-icon{
-    font-size:34px;             /* БОЛЬШЕ */
+    font-size:28px;             /* БОЛЬШЕ */
     min-width:40px;
     text-align:center;
 }
@@ -131,7 +131,7 @@ body{
 
 /* 🎮 🕹 👤 */
 .side-item{
-    font-size:26px;             /* увеличили иконки */
+    font-size:20px;             /* увеличили иконки */
 }
 
 /* текст */
@@ -139,7 +139,7 @@ body{
     opacity:0;
     white-space:nowrap;
     transition:0.25s;
-    font-size:17px;
+    font-size:15px;
     font-weight:500;
 }
 
