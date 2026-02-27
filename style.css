@@ -66,91 +66,92 @@ body{
 }
 
 /* ===== SIDEBAR ===== */
-.sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    height:100vh;
-    width:64px;                 /* чуть шире закрытый */
-    background:#000000;
-    transition:width 0.3s ease;
-    overflow:hidden;
-    z-index:1000;
-    display:flex;
-    flex-direction:column;
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 64px;              /* закрытый размер */
+    background: #000000;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
 
 /* раскрытие */
 .sidebar:hover,
-.sidebar.open{
-    width:240px;                /* под новое меню */
+.sidebar.open {
+    width: 240px;             /* открытый размер */
 }
 
-/* верх */
-.sidebar-header{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:22px 18px;
-    color:white;
-    border-bottom:1px solid rgba(255,255,255,0.1);
+/* верхняя панель с гамбургером */
+.sidebar-header {
+    display: flex;
+    flex-direction: column;   /* вертикально */
+    align-items: center;      /* центрирование гамбургера */
+    padding: 20px 0;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ☰ */
-.menu-icon{
-    font-size:28px;             /* БОЛЬШЕ */
-    min-width:36px;
-    text-align:center;
-    margin: 0 auto;
+/* гамбургер ☰ */
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
 }
 
 /* текст заголовка */
-.menu-title{
-    opacity:0;
-    transition:0.25s;
-    white-space:nowrap;
-    font-size:18px;
-    font-weight:600;
+.menu-title {
+    opacity: 0;
+    transition: 0.25s;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .sidebar:hover .menu-title,
-.sidebar.open .menu-title{
-    opacity:1;
+.sidebar.open .menu-title {
+    opacity: 1;
 }
 
 /* пункты меню */
-.side-item{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:20px 18px;
-    color:white;
-    text-decoration:none;
-    transition:0.25s;
-    font-size:17px;
+.side-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;                /* расстояние между иконкой и текстом */
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    transition: 0.25s;
+    font-size: 16px;
 }
 
-/* 🎮 🕹 👤 */
-.side-item{
-    font-size:20px;             /* увеличили иконки */
+/* иконки */
+.side-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
 }
 
-/* текст */
-.side-item span{
-    opacity:0;
-    white-space:nowrap;
-    transition:0.25s;
-    font-size:15px;
-    font-weight:500;
+/* текст пунктов */
+.side-item span {
+    opacity: 0;
+    white-space: nowrap;
+    transition: 0.25s;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .sidebar:hover .side-item span,
-.sidebar.open .side-item span{
-    opacity:1;
+.sidebar.open .side-item span {
+    opacity: 1;
 }
 
-.side-item:hover{
-    background:#132a55;
+/* hover эффект */
+.side-item:hover {
+    background: #132a55;
 }
 
 /* ===== NAVBAR ===== */
