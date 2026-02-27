@@ -34,17 +34,21 @@
 </div>
 
 <!-- ===== ОСНОВНОЕ МЕНЮ ===== -->
-<div class="navbar">
-  <img src="images/logo.png" class="logo">
-  <div class="nav-center">
-      <button class="products-btn" onclick="toggleCatalog()">Каталог</button>
-      <input class="search" placeholder="Поиск товаров">
-  </div>
-  <div class="icons">
-      <div class="icon">❤️</div>
-      <div class="icon cart" onclick="openCart()">🛒<span id="cartCount">0</span></div>
-      <div class="icon">👤</div>
-  </div>
+<div class="menu-actions">
+
+    <button class="menu-btn favorite">
+        Избранное
+    </button>
+
+    <button class="menu-btn cart-btn" onclick="openCart()">
+        Корзина
+        <span id="cartCount">0</span>
+    </button>
+
+    <button class="menu-btn profile">
+        Профиль
+    </button>
+
 </div>
 
 <!-- ===== КОНТЕЙНЕР ДЛЯ ВСЕГО КОНТЕНТА ===== -->
