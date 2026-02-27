@@ -34,20 +34,35 @@
 </div>
 
 <!-- ===== ОСНОВНОЕ МЕНЮ ===== -->
-<div class="menu-actions">
+<div class="navbar">
 
-    <button class="menu-btn favorite">
+  <!-- центр: каталог + поиск -->
+  <div class="nav-center">
+
+      <button class="products-btn" onclick="toggleCatalog()">
+        Каталог
+      </button>
+
+      <input class="search" placeholder="Поиск товаров">
+
+  </div>
+
+  <!-- правые кнопки -->
+  <div class="icons">
+
+      <button class="nav-btn">
         Избранное
-    </button>
+      </button>
 
-    <button class="menu-btn cart-btn" onclick="openCart()">
-        Корзина
-        <span id="cartCount">0</span>
-    </button>
+      <button class="nav-btn" onclick="openCart()">
+        Корзина (<span id="cartCount">0</span>)
+      </button>
 
-    <button class="menu-btn profile">
+      <button class="nav-btn">
         Профиль
-    </button>
+      </button>
+
+  </div>
 
 </div>
 
