@@ -273,12 +273,12 @@ body{
 
 .reviews {
     margin: 40px 0;
-    text-align: center;
+    text-align: left;
 }
 
 .reviews h2 {
     font-size: 28px;
-    color: #2E7DFF;
+    color: #333;
     margin-bottom: 20px;
 }
 
@@ -311,7 +311,7 @@ body{
 .about h2{
     margin-bottom:15px;
     font-size:28px;
-    color:#2E7DFF;
+    color:#333;
 }
 
 .about p{
