@@ -369,3 +369,19 @@ button{
         width:200px;
     }
 }
+
+
+.products-btn {
+    background-color: #9ACD32; /* салатовый */
+    color: #000; /* тёмный текст для контраста */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.products-btn:hover {
+    background-color: #7FFF00; /* чуть ярче при наведении */
+}
