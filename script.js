@@ -1,7 +1,7 @@
 // ===== CART & SIDEBAR =====
 let cart = [];
 
-// открыть/закрыть sidebar по кнопке "Каталог"
+// открыть/закрыть sidebar
 function toggleCatalog() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
@@ -18,54 +18,59 @@ function updateCart() {
     document.getElementById("cartCount").innerText = cart.length;
 }
 
-// открыть модальное окно корзины
+// открыть корзину
 function openCart() {
     const modal = document.getElementById("cartModal");
     const items = document.getElementById("cartItems");
     items.innerHTML = "";
     let total = 0;
 
-    cart.forEach((i, index) => {
-        items.innerHTML += <p>${i.name} — ${i.price} ₽ <button onclick="removeFromCart(${index})">❌</button></p>;
-        total += i.price;
+    cart.forEach((item, index) => {
+        items.innerHTML += <p>${item.name} — ${item.price} ₽ <button onclick="removeFromCart(${index})">❌</button></p>;
+        total += item.price;
     });
 
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
     modal.classList.add("open");
 
     // показать overlay
+    if (!document.querySelector(".overlay")) {
+        const overlay = document.createElement("div");
+        overlay.classList.add("overlay");
+        overlay.addEventListener("click", closeCart);
+        document.body.appendChild(overlay);
+    }
     document.querySelector(".overlay").classList.add("show");
 }
 
-// удалить товар из корзины по индексу
+// удалить товар из корзины
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCart();
-    openCart(); // обновить окно корзины
+    openCart();
 }
 
 // закрыть корзину
 function closeCart() {
     const modal = document.getElementById("cartModal");
     modal.classList.remove("open");
-    document.querySelector(".overlay").classList.remove("show");
+    const overlay = document.querySelector(".overlay");
+    if (overlay) overlay.classList.remove("show");
 }
 
 // оформить заказ
-document.querySelector(".orderBtn").addEventListener("click", function () {
-    if (cart.length === 0) {
-        alert("Корзина пуста!");
-        return;
-    }
-    alert("Заказ оформлен! Уведомление придет вам.");
-    cart = [];
-    updateCart();
-    closeCart();
-});
-
-// закрытие корзины при клике на overlay
-document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("overlay")) {
-        closeCart();
+document.addEventListener("DOMContentLoaded", () => {
+    const orderBtn = document.querySelector(".orderBtn");
+    if (orderBtn) {
+        orderBtn.addEventListener("click", () => {
+            if (cart.length === 0) {
+                alert("Корзина пуста!");
+                return;
+            }
+            alert("Заказ оформлен!");
+            cart = [];
+            updateCart();
+            closeCart();
+        });
     }
 });
