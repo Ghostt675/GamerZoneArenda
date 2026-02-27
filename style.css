@@ -270,17 +270,15 @@ body{
     width:100%;
     border-radius:8px;
 }
-reviews {
-    margin: 40px 0;
-    max-width: 1100px;   /* ограничение ширины блока */
-    height: 300px;       /* нужная высота для виджета */
-    overflow: hidden;    /* скрываем лишнее */
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 10px; /* аккуратные углы */
-}
 
-.reviews iframe {
+.reviews-widget {
+    width: 100%;
+    max-width: 1100px;
+    height: 400px; /* подбираешь под свой сайт */
+    margin: 0 auto;
+    overflow: hidden; /* или auto, если будет скролл */
+}
+.reviews-widget iframe {
     width: 100%;
     height: 100%;
     border: none;
