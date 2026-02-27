@@ -290,3 +290,24 @@ z-index:900;
 .overlay.show{
 display:block;
 }
+
+.about {
+    background: #2f3836;        /* чуть светлее основного фона */
+    color: #CFD6D4;             /* светло-серый текст */
+    padding: 30px 20px;         /* внутренние отступы */
+    border-radius: 10px;        /* закруглённые углы */
+    margin: 40px 0;             /* отступ сверху и снизу от других блоков */
+    box-sizing: border-box;
+}
+
+.about h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #2E7DFF;             /* акцентный цвет заголовка */
+}
+
+.about p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 100%;
+}
