@@ -53,11 +53,10 @@ function closeCart() {
 
 // оформить заказ
 document.querySelector(".orderBtn").addEventListener("click", function () {
-    if (cart.length === 0) {
+    if(cart.length === 0){
         alert("Корзина пуста!");
         return;
     }
-
     alert("Заказ оформлен! Уведомление придет вам.");
     
     // сброс корзины
@@ -68,7 +67,7 @@ document.querySelector(".orderBtn").addEventListener("click", function () {
 
 // закрытие корзины при клике на overlay
 document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("overlay")) {
+    if(e.target.classList.contains("overlay")) {
         closeCart();
     }
 });
