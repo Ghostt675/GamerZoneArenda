@@ -270,36 +270,20 @@ body{
     width:100%;
     border-radius:8px;
 }
-
-/* ===== БЛОК ОТЗЫВОВ ===== */
-.reviews {
+reviews {
     margin: 40px 0;
-    padding: 20px;
-    background: #2a3230;       /* фон блока */
-    border-radius: 12px;       /* скругление */
-    box-sizing: border-box;
+    max-width: 1100px;   /* ограничение ширины блока */
+    height: 300px;       /* нужная высота для виджета */
+    overflow: hidden;    /* скрываем лишнее */
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px; /* аккуратные углы */
 }
 
-/* заголовок блока */
-.reviews h2 {
-    font-size: 28px;
-    color: #2E7DFF;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* контейнер для виджета */
-#smartwidgets_reviews {
+.reviews iframe {
     width: 100%;
-    min-height: 300px;        /* минимальная высота виджета */
-}
-
-/* если виджет подгружается как iframe, можно добавить рамку и скругление */
-#smartwidgets_reviews iframe {
-    width: 100% !important;
-    height: 100% !important;
+    height: 100%;
     border: none;
-    border-radius: 12px;
 }
 
 /* About */
