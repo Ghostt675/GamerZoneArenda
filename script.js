@@ -1,7 +1,7 @@
 // ===== CART & SIDEBAR =====
 let cart = [];
 
-// открыть/закрыть sidebar
+// открыть/закрыть sidebar по кнопке "Каталог"
 function toggleCatalog() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
@@ -18,7 +18,7 @@ function updateCart() {
     document.getElementById("cartCount").innerText = cart.length;
 }
 
-// открыть корзину
+// открыть модальное окно корзины
 function openCart() {
     const modal = document.getElementById("cartModal");
     const items = document.getElementById("cartItems");
@@ -33,7 +33,7 @@ function openCart() {
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
     modal.classList.add("open");
 
-    // показать overlay
+    // создать overlay если его нет
     if (!document.querySelector(".overlay")) {
         const overlay = document.createElement("div");
         overlay.classList.add("overlay");
@@ -47,7 +47,7 @@ function openCart() {
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCart();
-    openCart();
+    openCart(); // обновить корзину
 }
 
 // закрыть корзину
