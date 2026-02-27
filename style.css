@@ -372,7 +372,7 @@ button{
 
 
 .products-btn {
-    background-color: #9ACD32; /* салатовый */
+    background-color: #7FFF00; /* ярко-салатовый */
     color: #000; /* тёмный текст для контраста */
     border: none;
     padding: 10px 20px;
@@ -383,5 +383,5 @@ button{
 }
 
 .products-btn:hover {
-    background-color: #7FFF00; /* чуть ярче при наведении */
+    background-color: #9ACD32; /* чуть тусклее при наведении */
 }
