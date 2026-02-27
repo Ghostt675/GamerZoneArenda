@@ -26,7 +26,7 @@ function openCart() {
     let total = 0;
 
     cart.forEach((item, index) => {
-        items.innerHTML += <p>${item.name} — ${item.price} ₽ <button onclick="removeFromCart(${index})">❌</button></p>;
+        items.innerHTML += `<p>${item.name} — ${item.price} ₽ <button onclick="removeFromCart(${index})">❌</button></p>`;
         total += item.price;
     });
 
