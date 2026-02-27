@@ -146,16 +146,18 @@ gap:15px;
 .logo{height:100px;}
 
 .search{
-flex:1;
-padding:12px;
-background:#1f2624;
-border:none;
-color:white;
+    width:400px;     /* регулируешь размер */
+    padding:10px;
+    background:#1f2624;
+    border:none;
+    color:white;
+    border-radius:6px;
 }
 
 .icons{
 display:flex;
 gap:15px;
+margin-left:auto; /* ← магия */
 }
 
 .icon{
