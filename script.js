@@ -79,41 +79,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let favorites = [];
 
-/* открыть */
+// открыть Избранное
 function openFavorites() {
-    document.getElementById("favoritesModal").classList.add("open");
-}
-
-/* закрыть */
-function closeFavorites() {
-    document.getElementById("favoritesModal").classList.remove("open");
-}
-
-/* добавить в избранное */
-function addToFavorites(name, price, image) {
-    favorites.push({ name, price, image });
-    renderFavorites();
-}
-
-/* отрисовка */
-function renderFavorites() {
-    const container = document.getElementById("favoritesItems");
-    container.innerHTML = "";
+    const modal = document.getElementById("favoritesModal");
+    const items = document.getElementById("favoriteItems");
+    items.innerHTML = "";
 
     if (favorites.length === 0) {
-        container.innerHTML = '<p class="empty-text">Здесь будут ваши избранные товары</p>';
-        return;
+        items.innerHTML = "<p>Здесь будут ваши избранные товары</p>";
+    } else {
+        favorites.forEach((item, index) => {
+            items.innerHTML += `
+                <div class="favorite-card">
+                    <img src="${item.img}" alt="${item.name}" width="60">
+                    <p>${item.name} — ${item.price} ₽</p>
+                    <button onclick="removeFromFavorites(${index})">❌</button>
+                </div>
+            `;
+        });
     }
 
-    favorites.forEach(item => {
-        container.innerHTML += `
-            <div class="favorite-item">
-                <img src="${item.image}">
-                <div>
-                    <p>${item.name}</p>
-                    <span>${item.price} ₽</span>
-                </div>
-            </div>
-        `;
-    });
+    modal.classList.add("open");
+    document.querySelector(".overlay").classList.add("show");
+
+    // съезжает navbar как у sidebar
+    document.querySelector(".navbar").style.marginLeft = "220px";
+}
+
+// добавить в Избранное
+function addToFavorites(name, price, img) {
+    favorites.push({ name, price, img });
+    openFavorites();
+}
+
+// удалить из Избранного
+function removeFromFavorites(index) {
+    favorites.splice(index, 1);
+    openFavorites();
+}
+
+// закрыть Избранное
+function closeFavorites() {
+    const modal = document.getElementById("favoritesModal");
+    modal.classList.remove("open");
+    document.querySelector(".overlay").classList.remove("show");
+    document.querySelector(".navbar").style.marginLeft = "70px";
 }
