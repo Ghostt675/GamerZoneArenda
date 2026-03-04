@@ -75,3 +75,45 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+let favorites = [];
+
+/* открыть */
+function openFavorites() {
+    document.getElementById("favoritesModal").classList.add("open");
+}
+
+/* закрыть */
+function closeFavorites() {
+    document.getElementById("favoritesModal").classList.remove("open");
+}
+
+/* добавить в избранное */
+function addToFavorites(name, price, image) {
+    favorites.push({ name, price, image });
+    renderFavorites();
+}
+
+/* отрисовка */
+function renderFavorites() {
+    const container = document.getElementById("favoritesItems");
+    container.innerHTML = "";
+
+    if (favorites.length === 0) {
+        container.innerHTML = '<p class="empty-text">Здесь будут ваши избранные товары</p>';
+        return;
+    }
+
+    favorites.forEach(item => {
+        container.innerHTML += `
+            <div class="favorite-item">
+                <img src="${item.image}">
+                <div>
+                    <p>${item.name}</p>
+                    <span>${item.price} ₽</span>
+                </div>
+            </div>
+        `;
+    });
+}
