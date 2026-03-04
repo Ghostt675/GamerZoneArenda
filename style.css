@@ -431,76 +431,88 @@ button{
 }
 
 
-/* ===== ОБЩАЯ ВЫЕЗЖАЮЩАЯ ПАНЕЛЬ ===== */
+/* ===== ИЗБРАННОЕ ===== */
 .sideModal {
     position: fixed;
     top: 0;
-    right: -400px;
+    right: -400px;             /* скрыто по умолчанию */
     width: 350px;
     height: 100%;
-    background: #1c2220;
-    box-shadow: -4px 0 10px rgba(0,0,0,0.4);
-    transition: 0.3s;
+    background: #202826;
+    padding: 20px;
+    transition: 0.4s;
+    overflow-y: auto;
     z-index: 1000;
-    display: flex;
-    flex-direction: column;
+    box-shadow: -2px 0 6px rgba(0,0,0,0.5);
 }
 
 .sideModal.open {
-    right: 0;
+    right: 0;                  /* появляется при открытии */
 }
 
-/* ===== HEADER ===== */
 .sideModal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #2E7DFF;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .sideModal-header h3 {
     margin: 0;
+    font-size: 20px;
+    color: #fff;
 }
 
 .closeBtn {
     cursor: pointer;
+    color: #fff;
     font-size: 14px;
 }
 
-.closeBtn span {
-    margin-right: 5px;
-}
-
-/* ===== CONTENT ===== */
-.sideModal-content {
-    padding: 15px;
-    overflow-y: auto;
-    flex: 1;
-}
-
-.empty-text {
+.sideModal-content .empty-text {
+    color: #888;
+    font-size: 14px;
     text-align: center;
-    color: #aaa;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
-/* ===== КАРТОЧКА ИЗБРАННОГО ===== */
-.favorite-item {
+/* карточка товара в избранном */
+.sideModal-content .fav-card {
     display: flex;
     align-items: center;
     gap: 10px;
     background: #2a3230;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 8px;
     margin-bottom: 10px;
 }
 
-.favorite-item img {
+.sideModal-content .fav-card img {
     width: 60px;
-    border-radius: 6px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
-.favorite-item p {
+.sideModal-content .fav-card p {
+    flex: 1;
     margin: 0;
+    font-size: 14px;
+    color: #fff;
+}
+
+.sideModal-content .fav-card span {
+    font-size: 14px;
+    color: #7FFF00;
+    font-weight: bold;
+}
+
+.sideModal-content .fav-card button {
+    background: transparent;
+    border: none;
+    color: #ff3b3b;
+    font-size: 16px;
+    cursor: pointer;
 }
