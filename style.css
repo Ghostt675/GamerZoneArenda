@@ -435,7 +435,7 @@ button{
 .sideModal {
     position: fixed;
     top: 0;
-    right: -400px;             /* скрыто по умолчанию */
+    right: -400px;             
     width: 350px;
     height: 100%;
     background: #202826;
@@ -447,7 +447,7 @@ button{
 }
 
 .sideModal.open {
-    right: 0;                  /* появляется при открытии */
+    right: 0;                  
 }
 
 .sideModal-header {
@@ -478,29 +478,34 @@ button{
     margin-top: 20px;
 }
 
-/* карточка товара в избранном */
+/* ===== КАРТОЧКА ТОВАРА В ИЗБРАННОМ ===== */
 .sideModal-content .fav-card {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     background: #2a3230;
     padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
+/* картинка */
 .sideModal-content .fav-card img {
-    width: 60px;
-    height: 60px;
+    width: 100%;
+    height: 120px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
+/* название и цена */
 .sideModal-content .fav-card p {
-    flex: 1;
-    margin: 0;
+    margin: 5px 0 0 0;
     font-size: 14px;
     color: #fff;
+    text-align: center;
 }
 
 .sideModal-content .fav-card span {
@@ -509,10 +514,49 @@ button{
     font-weight: bold;
 }
 
-.sideModal-content .fav-card button {
-    background: transparent;
+/* кнопка добавить в корзину снизу */
+.sideModal-content .fav-card .add-cart-btn {
+    width: calc(100% - 20px);
+    padding: 6px 0;
+    background: #2e7dff;
+    color: #fff;
     border: none;
-    color: #ff3b3b;
-    font-size: 16px;
+    border-radius: 6px;
+    font-size: 14px;
     cursor: pointer;
+    margin-top: 5px;
+    transition: 0.2s;
+}
+
+.sideModal-content .fav-card .add-cart-btn:hover {
+    background: #1f5bb5;
+}
+
+/* иконка избранного в правом верхнем углу */
+.sideModal-content .fav-card .favorite-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #000;
+    border-radius: 6px;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sideModal-content .fav-card .favorite-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none; /* по умолчанию пустое сердце */
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.sideModal-content .fav-card .favorite-btn.active svg {
+    fill: #fff; /* белое сердце при добавлении в избранное */
 }
