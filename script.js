@@ -1,115 +1,63 @@
-// =======================
-// ===== СОСТОЯНИЕ =======
-// =======================
+// =========================
+// ===== БАЗА ТОВАРОВ ======
+// =========================
+const products = [
+    {
+        id: 1,
+        name: "PlayStation 5",
+        price: 1500,
+        img: "images/ps5.jpg",
+        category: "playstation",
+        popular: true
+    },
+    {
+        id: 2,
+        name: "Xbox Series X",
+        price: 1400,
+        img: "images/xbox.jpg",
+        category: "xbox",
+        popular: true
+    }
+];
+
+// =========================
+// ===== СОСТОЯНИЕ =========
+// =========================
 let cart = [];
 let favorites = [];
 
-// =======================
-// ===== КАТАЛОГ =========
-// =======================
-function toggleCatalog() {
-    document.getElementById("sidebar").classList.toggle("open");
-}
+// =========================
+// ===== ГЕНЕРАЦИЯ КАРТОЧЕК
+// =========================
+function renderProducts(containerId, filterFn) {
 
-// =======================
-// ===== КОРЗИНА =========
-// =======================
-function addToCart(name, price) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-    // нельзя добавить один и тот же товар дважды
-    if (cart.find(item => item.name === name)) return;
-
-    cart.push({ name, price });
-    updateCart();
-}
-
-function updateCart() {
-    document.getElementById("cartCount").innerText = cart.length;
-}
-
-function openCart() {
-
-    const modal = document.getElementById("cartModal");
-    const items = document.getElementById("cartItems");
-
-    items.innerHTML = "";
-    let total = 0;
-
-    cart.forEach((item, index) => {
-
-        items.innerHTML += `
-            <p>
-                ${item.name} — ${item.price} ₽
-                <button onclick="removeFromCart(${index})">❌</button>
-            </p>
-        `;
-
-        total += item.price;
-    });
-
-    document.getElementById("total").innerText =
-        "Итого: " + total + " ₽";
-
-    modal.classList.add("open");
-
-    createOverlay(closeCart);
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-    openCart();
-}
-
-function closeCart() {
-    document.getElementById("cartModal").classList.remove("open");
-    removeOverlay();
-}
-
-// =======================
-// ===== ИЗБРАННОЕ =======
-// =======================
-function toggleFavorite(name, price, img) {
-
-    const index = favorites.findIndex(item => item.name === name);
-
-    if (index === -1) {
-        favorites.push({ name, price, img });
-    } else {
-        favorites.splice(index, 1);
-    }
-
-    renderFavorites();
-}
-
-function renderFavorites() {
-
-    const container = document.getElementById("favoritesItems");
     container.innerHTML = "";
 
-    if (favorites.length === 0) {
-        container.innerHTML =
-            '<p class="empty-text">Здесь будут ваши избранные товары</p>';
-        return;
-    }
+    const filtered = products.filter(filterFn);
 
-    favorites.forEach((item, index) => {
+    filtered.forEach(product => {
+
+        const isFav = favorites.some(f => f.id === product.id);
 
         const card = document.createElement("div");
-        card.className = "fav-card";
+        card.className = "card";
 
         card.innerHTML = `
-            <img src="${item.img}" alt="${item.name}">
-            <p>${item.name}</p>
-            <span>${item.price} ₽</span>
+            <div class="favorite-btn ${isFav ? "active" : ""}" 
+                 onclick="toggleFavorite(${product.id})">
+                ❤️
+            </div>
+
+            <img src="${product.img}" alt="${product.name}">
+            <p>${product.name}</p>
+            <span>${product.price} ₽</span>
 
             <button class="add-cart-btn"
-                onclick="addToCart('${item.name}', ${item.price})">
+                    onclick="addToCart(${product.id})">
                 Добавить в корзину
-            </button>
-
-            <button onclick="removeFromFavorites(${index})">
-                ❌
             </button>
         `;
 
@@ -117,65 +65,152 @@ function renderFavorites() {
     });
 }
 
-function removeFromFavorites(index) {
-    favorites.splice(index, 1);
+// =========================
+// ===== КОРЗИНА ===========
+// =========================
+function addToCart(id) {
+
+    if (cart.includes(id)) return; // защита от дублей
+
+    cart.push(id);
+    updateCartCount();
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item !== id);
+    updateCartCount();
+    renderCart();
+}
+
+function updateCartCount() {
+    const el = document.getElementById("cartCount");
+    if (el) el.innerText = cart.length;
+}
+
+function renderCart() {
+
+    const container = document.getElementById("cartItems");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    let total = 0;
+
+    if (cart.length === 0) {
+        container.innerHTML = "<p class='empty-text'>Корзина пуста</p>";
+        return;
+    }
+
+    cart.forEach(id => {
+
+        const product = products.find(p => p.id === id);
+        total += product.price;
+
+        const item = document.createElement("div");
+        item.className = "fav-card";
+
+        item.innerHTML = `
+            <img src="${product.img}">
+            <p>${product.name}</p>
+            <span>${product.price} ₽</span>
+            <button onclick="removeFromCart(${id})">❌</button>
+        `;
+
+        container.appendChild(item);
+    });
+
+    document.getElementById("total").innerText =
+        "Итого: " + total + " ₽";
+}
+
+// =========================
+// ===== ИЗБРАННОЕ =========
+// =========================
+function toggleFavorite(id) {
+
+    const index = favorites.findIndex(item => item.id === id);
+
+    if (index === -1) {
+        const product = products.find(p => p.id === id);
+        favorites.push(product);
+    } else {
+        favorites.splice(index, 1);
+    }
+
     renderFavorites();
+    refreshCards();
+}
+
+function renderFavorites() {
+
+    const container = document.getElementById("favoritesItems");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (favorites.length === 0) {
+        container.innerHTML =
+            "<p class='empty-text'>Здесь будут ваши избранные товары</p>";
+        return;
+    }
+
+    favorites.forEach(product => {
+
+        const card = document.createElement("div");
+        card.className = "fav-card";
+
+        card.innerHTML = `
+            <img src="${product.img}">
+            <p>${product.name}</p>
+            <span>${product.price} ₽</span>
+
+            <button class="add-cart-btn"
+                onclick="addToCart(${product.id})">
+                Добавить в корзину
+            </button>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function refreshCards() {
+    document.querySelectorAll(".favorite-btn").forEach(btn => {
+        const id = Number(btn.getAttribute("onclick").match(/\d+/)[0]);
+        btn.classList.toggle(
+            "active",
+            favorites.some(f => f.id === id)
+        );
+    });
+}
+
+// =========================
+// ===== МОДАЛКИ ===========
+// =========================
+function openCart() {
+    document.getElementById("cartModal").classList.add("open");
+    renderCart();
+}
+
+function closeCart() {
+    document.getElementById("cartModal").classList.remove("open");
 }
 
 function openFavorites() {
     document.getElementById("favoritesModal").classList.add("open");
-    createOverlay(closeFavorites);
 }
 
 function closeFavorites() {
     document.getElementById("favoritesModal").classList.remove("open");
-    removeOverlay();
 }
 
-// =======================
-// ===== OVERLAY =========
-// =======================
-function createOverlay(closeFunction) {
-
-    let overlay = document.querySelector(".overlay");
-
-    if (!overlay) {
-        overlay = document.createElement("div");
-        overlay.classList.add("overlay");
-        document.body.appendChild(overlay);
-    }
-
-    overlay.classList.add("show");
-    overlay.onclick = closeFunction;
-}
-
-function removeOverlay() {
-    const overlay = document.querySelector(".overlay");
-    if (overlay) overlay.classList.remove("show");
-}
-
-// =======================
-// ===== ОФОРМЛЕНИЕ ======
-// =======================
+// =========================
+// ===== ЗАПУСК ============
+// =========================
 document.addEventListener("DOMContentLoaded", () => {
 
-    const orderBtn = document.querySelector(".orderBtn");
+    // популярные товары
+    renderProducts("popularProducts", p => p.popular === true);
 
-    if (orderBtn) {
-        orderBtn.addEventListener("click", () => {
-
-            if (cart.length === 0) {
-                alert("Корзина пуста!");
-                return;
-            }
-
-            alert("Заказ оформлен!");
-            cart = [];
-            updateCart();
-            closeCart();
-        });
-    }
-
-    updateCart();
+    updateCartCount();
 });
-
