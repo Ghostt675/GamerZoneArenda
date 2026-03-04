@@ -77,55 +77,52 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ===== FAVORITES =====
 let favorites = [];
 
-// Открыть модальное окно избранного
-function openFavorites() {
-    const modal = document.getElementById("favoritesModal");
-    const container = document.getElementById("favoritesItems");
-    container.innerHTML = "";
+// добавить/удалить товар из избранного
+function toggleFavorite(btn, name, price, img) {
+    const index = favorites.findIndex(item => item.name === name);
 
-    if(favorites.length === 0){
-        container.innerHTML = '<p class="empty-text">Здесь будут ваши избранные товары</p>';
+    if (index === -1) {
+        // добавить
+        favorites.push({ name, price, img });
+        btn.classList.add("active");
     } else {
-        favorites.forEach((item, index) => {
-            const div = document.createElement("div");
-            div.classList.add("fav-card");
-            div.innerHTML = `
-                <img src="${item.img}" alt="${item.name}">
-                <p>${item.name}</p>
-                <span>${item.price} ₽</span>
-                <button onclick="removeFromFavorites(${index})">❌</button>
-            `;
-            container.appendChild(div);
-        });
+        // удалить
+        favorites.splice(index, 1);
+        btn.classList.remove("active");
     }
-
-    modal.classList.add("open");
+    renderFavorites();
 }
 
-// Закрыть модальное окно избранного
-function closeFavorites() {
-    const modal = document.getElementById("favoritesModal");
-    modal.classList.remove("open");
-}
+// отобразить избранное в модальном окне
+function renderFavorites() {
+    const container = document.getElementById("favoritesItems");
+    container.innerHTML = '';
 
-// Добавить товар в избранное
-function addToFavorites(name, price, img) {
-    // Проверяем, есть ли уже такой товар
-    const exists = favorites.some(item => item.name === name);
-    if(exists){
-        alert("Этот товар уже в избранном!");
+    if (favorites.length === 0) {
+        container.innerHTML = '<p class="empty-text">Здесь будут ваши избранные товары</p>';
         return;
     }
 
-    favorites.push({name, price, img});
-    openFavorites(); // Обновляем окно сразу после добавления
+    favorites.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'fav-card';
+        card.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <p>${item.name}</p>
+            <span>${item.price} ₽</span>
+            <button class="add-cart-btn" onclick="addToCart('${item.name}',${item.price})">Добавить в корзину</button>
+        `;
+        container.appendChild(card);
+    });
 }
 
-// Удалить товар из избранного
-function removeFromFavorites(index){
-    favorites.splice(index, 1);
-    openFavorites();
+// открыть/закрыть избранное
+function openFavorites() {
+    document.getElementById("favoritesModal").classList.add("open");
+}
+
+function closeFavorites() {
+    document.getElementById("favoritesModal").classList.remove("open");
 }
