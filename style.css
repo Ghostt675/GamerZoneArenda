@@ -429,3 +429,78 @@ button{
 .products-btn:hover {
     background-color: #9ACD32; /* чуть тусклее при наведении */
 }
+
+
+/* ===== ОБЩАЯ ВЫЕЗЖАЮЩАЯ ПАНЕЛЬ ===== */
+.sideModal {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background: #1c2220;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.4);
+    transition: 0.3s;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.sideModal.open {
+    right: 0;
+}
+
+/* ===== HEADER ===== */
+.sideModal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #2E7DFF;
+}
+
+.sideModal-header h3 {
+    margin: 0;
+}
+
+.closeBtn {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.closeBtn span {
+    margin-right: 5px;
+}
+
+/* ===== CONTENT ===== */
+.sideModal-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.empty-text {
+    text-align: center;
+    color: #aaa;
+    margin-top: 50px;
+}
+
+/* ===== КАРТОЧКА ИЗБРАННОГО ===== */
+.favorite-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #2a3230;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.favorite-item img {
+    width: 60px;
+    border-radius: 6px;
+}
+
+.favorite-item p {
+    margin: 0;
+}
