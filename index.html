@@ -66,7 +66,7 @@
 
   <!-- правые кнопки -->
   <div class="icons">
-      <button class="nav-btn">Избранное</button>
+      <button class="nav-btn" onclick="openFavorites()">Избранное</button>
       <button class="nav-btn" onclick="openCart()">
         Корзина (<span id="cartCount">0</span>)
       </button>
@@ -142,6 +142,22 @@
   <div id="cartItems"></div>
   <p id="total"></p>
   <button class="orderBtn">Оформить заказ</button>
+</div>
+
+<!-- ===== ИЗБРАННОЕ ===== -->
+<div id="favoritesModal" class="sideModal">
+  
+  <div class="sideModal-header">
+    <h3>Избранные товары</h3>
+    <div class="closeBtn" onclick="closeFavorites()">
+      <span>Закрыть</span> ✕
+    </div>
+  </div>
+
+  <div class="sideModal-content" id="favoritesItems">
+    <p class="empty-text">Здесь будут ваши избранные товары</p>
+  </div>
+
 </div>
 
 <script src="script.js"></script>
