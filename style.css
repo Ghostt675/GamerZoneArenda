@@ -447,7 +447,7 @@ button{
     position: fixed;
     top: 0;
     right: -340px;
-    width: 320px;
+    width: 450px;
     height: 100%;
     background: #202826;
     padding: 20px;
@@ -545,6 +545,16 @@ button{
     color: #7CFF6B;
     font-weight: bold;
     margin-top: 4px;
+}
+
+.cartModal,
+.sideModal {
+    direction: rtl;
+}
+
+.cartModal *,
+.sideModal * {
+    direction: ltr;
 }
 
 /* ===================================== */
@@ -696,6 +706,8 @@ button{
     background: none;
     border: none;
     color: #ff3b3b;
+    width: 30px;
+    height: 30px;
     font-size: 18px;
     cursor: pointer;
 }
