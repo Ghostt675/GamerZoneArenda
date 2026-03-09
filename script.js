@@ -36,31 +36,22 @@ function renderProducts(containerId, filterFn) {
     });
 }
 
-// ===== КОРЗИНА =====
 function addToCart(id, btnEl) {
 
     if (cart.includes(id)) {
 
         cart = cart.filter(item => item !== id);
 
-        if (btnEl) {
-            btnEl.innerText = "Добавить в корзину";
-            btnEl.style.opacity = "1";
-        }
-
     } else {
 
         cart.push(id);
-
-        if (btnEl) {
-            btnEl.innerText = "В корзине";
-            btnEl.style.opacity = "0.7";
-        }
 
     }
 
     updateCartCount();
     renderCart();
+    renderFavorites();
+    renderProducts("popularProducts", p => p.popular);
 }
 
 function removeFromCart(id) {
@@ -122,7 +113,10 @@ function renderFavorites() {
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <span>${product.price} ₽</span>
-            <button class="add-cart-btn" onclick="addToCart(${product.id})">Добавить в корзину</button>
+            <button class="add-cart-btn"
+                onclick="addToCart(${product.id}, this)">
+                ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
+            </button>
             <button class="remove-btn" onclick="toggleFavorite(${product.id})">❌</button>
         `;
         container.appendChild(card);
