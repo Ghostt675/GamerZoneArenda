@@ -1,7 +1,7 @@
 // ===== БАЗА ТОВАРОВ =====
 const products = [
-    { id: 1, name: "PlayStation 5", price: 1100/"Сутки", img: "images/ps5.jpg", category: "playstation", popular: true },
-    { id: 2, name: "Xbox Series X", price: 1400/"Сутки", img: "images/xbox.jpg", category: "xbox", popular: true }
+    { id: 1, name: "PlayStation 5", price: 1100, img: "images/ps5.jpg", category: "playstation", popular: true },
+    { id: 2, name: "Xbox Series X", price: 1400, img: "images/xbox.jpg", category: "xbox", popular: true }
 ];
 
 // ===== СОСТОЯНИЕ =====
