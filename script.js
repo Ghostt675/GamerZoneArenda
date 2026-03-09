@@ -48,7 +48,7 @@ function renderProducts(containerId, filterFn) {
         card.innerHTML = `
             <div class="favorite-btn ${isFav ? "active" : ""}" 
                  onclick="toggleFavorite(${product.id})">
-                ❤️
+                 ❤️
             </div>
 
             <img src="${product.img}" alt="${product.name}">
@@ -56,7 +56,7 @@ function renderProducts(containerId, filterFn) {
             <span>${product.price} ₽</span>
 
             <button class="add-cart-btn"
-                    onclick="addToCart(${product.id})">
+                onclick="addToCart(${product.id})">
                 Добавить в корзину
             </button>
         `;
@@ -70,19 +70,21 @@ function renderProducts(containerId, filterFn) {
 // =========================
 function addToCart(id) {
 
-    if (cart.includes(id)) return; // защита от дублей
+    if (cart.includes(id)) return;
 
     cart.push(id);
     updateCartCount();
 }
 
 function removeFromCart(id) {
+
     cart = cart.filter(item => item !== id);
     updateCartCount();
     renderCart();
 }
 
 function updateCartCount() {
+
     const el = document.getElementById("cartCount");
     if (el) el.innerText = cart.length;
 }
@@ -131,10 +133,14 @@ function toggleFavorite(id) {
     const index = favorites.findIndex(item => item.id === id);
 
     if (index === -1) {
+
         const product = products.find(p => p.id === id);
         favorites.push(product);
+
     } else {
+
         favorites.splice(index, 1);
+
     }
 
     renderFavorites();
@@ -149,8 +155,10 @@ function renderFavorites() {
     container.innerHTML = "";
 
     if (favorites.length === 0) {
+
         container.innerHTML =
             "<p class='empty-text'>Здесь будут ваши избранные товары</p>";
+
         return;
     }
 
@@ -168,15 +176,23 @@ function renderFavorites() {
                 onclick="addToCart(${product.id})">
                 Добавить в корзину
             </button>
+
+            <button onclick="toggleFavorite(${product.id})">❌
+            </button>
         `;
 
         container.appendChild(card);
+
     });
 }
 
+// обновление состояния сердечек
 function refreshCards() {
+
     document.querySelectorAll(".favorite-btn").forEach(btn => {
+
         const id = Number(btn.getAttribute("onclick").match(/\d+/)[0]);
+
         btn.classList.toggle(
             "active",
             favorites.some(f => f.id === id)
@@ -188,19 +204,24 @@ function refreshCards() {
 // ===== МОДАЛКИ ===========
 // =========================
 function openCart() {
+
     document.getElementById("cartModal").classList.add("open");
     renderCart();
 }
 
 function closeCart() {
+
     document.getElementById("cartModal").classList.remove("open");
 }
 
 function openFavorites() {
+
     document.getElementById("favoritesModal").classList.add("open");
+    renderFavorites();
 }
 
 function closeFavorites() {
+
     document.getElementById("favoritesModal").classList.remove("open");
 }
 
@@ -209,7 +230,6 @@ function closeFavorites() {
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
 
-    // популярные товары
     renderProducts("popularProducts", p => p.popular === true);
 
     updateCartCount();
