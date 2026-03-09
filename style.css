@@ -435,7 +435,8 @@ button{
 /* ========== МОДАЛКИ (КОРЗИНА / ИЗБРАННОЕ) */
 /* ===================================== */
 
-.sideModal{
+.sideModal,
+.cartModal {
     position: fixed;
     top:0;
     right:-340px;
@@ -449,13 +450,15 @@ button{
     box-shadow:-6px 0 20px rgba(0,0,0,0.6);
 }
 
-.sideModal.open{
+.sideModal.open,
+.cartModal.open {
     right:0;
 }
 
 /* HEADER */
 
-.sideModal-header{
+.sideModal-header,
+.modal-header {
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -464,17 +467,25 @@ button{
     margin-bottom:15px;
 }
 
-.sideModal-header h3{
+.sideModal-header h3,
+.modal-header h3 {
     color:#fff;
     font-size:18px;
 }
 
-.closeBtn{
+.closeBtn {
     cursor:pointer;
     color:#aaa;
+    background:#ff4d4d;
+    border:none;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:14px;
+    transition:0.2s;
 }
 
-.closeBtn:hover{
+.closeBtn:hover {
+    background:#ff1a1a;
     color:#fff;
 }
 
@@ -482,7 +493,7 @@ button{
 /* ========= СЕТКА ТОВАРОВ ============= */
 /* ===================================== */
 
-.products{
+.products {
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
     gap:18px;
@@ -492,7 +503,7 @@ button{
 /* ========= КАРТОЧКА ТОВАРА =========== */
 /* ===================================== */
 
-.card{
+.card {
     position:relative;
     background:#2a3230;
     border-radius:14px;
@@ -505,7 +516,7 @@ button{
 
 /* Картинка */
 
-.card img{
+.card img {
     width:100%;
     height:140px;
     object-fit:cover;
@@ -514,7 +525,7 @@ button{
 
 /* Название */
 
-.card p{
+.card p {
     margin-top:8px;
     font-size:14px;
     color:#fff;
@@ -522,8 +533,8 @@ button{
 
 /* Цена */
 
-.card span{
-    color:#7FFF00;
+.card span {
+    color:#7CFF6B;
     font-weight:bold;
     margin-top:4px;
 }
@@ -532,76 +543,51 @@ button{
 /* ===== КНОПКА ДОБАВИТЬ В КОРЗИНУ ===== */
 /* ===================================== */
 
-.add-cart-btn{
+.add-cart-btn {
     margin-top:10px;
     width:100%;
     padding:8px 0;
     border:none;
     border-radius:8px;
-    background:#2e3835;
-    color:#fff;
+    background:#7CFF6B;
+    color:#000;
+    font-weight:bold;
     cursor:pointer;
     transition:0.25s;
 }
 
-.add-cart-btn:hover{
+.add-cart-btn:hover {
     transform:scale(1.05);
-    background:#3a4743;
 }
 
 /* ===================================== */
 /* ========= КНОПКА ИЗБРАННОГО ========= */
 /* ===================================== */
 
-.favorite-btn{
+.favorite-btn {
     position:absolute;
     top:10px;
     right:10px;
-    width:32px;
-    height:32px;
-    border-radius:8px;
-    border:2px solid #7FFF00;
-    background:#111;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    font-size:18px;
+    color:#fff;
     cursor:pointer;
     transition:0.25s;
 }
 
-/* Hover */
-
-.favorite-btn:hover{
-    transform:scale(1.15);
+.favorite-btn:hover {
+    transform:scale(1.2);
 }
 
-/* SVG сердце */
-
-.favorite-btn svg{
-    width:18px;
-    height:18px;
-    fill:transparent;
-    stroke:#7FFF00;
-    stroke-width:2;
-    transition:0.25s;
-}
-
-/* Активное состояние */
-
-.favorite-btn.active{
-    background:#7FFF00;
-}
-
-.favorite-btn.active svg{
-    fill:#111;
-    stroke:#111;
+/* Активное состояние: сердце заполнено салатовым */
+.favorite-btn.active {
+    color:#7CFF6B;
 }
 
 /* ===================================== */
 /* ===== КАРТОЧКИ В ИЗБРАННОМ ========== */
 /* ===================================== */
 
-.fav-card{
+.fav-card {
     position:relative;
     display:flex;
     flex-direction:column;
@@ -610,24 +596,42 @@ button{
     padding:10px;
     border-radius:12px;
     margin-bottom:12px;
+    width:100%;
 }
 
-.fav-card img{
+.fav-card img {
     width:100%;
     height:120px;
     object-fit:cover;
     border-radius:8px;
 }
 
-.fav-card p{
+.fav-card p {
     margin-top:6px;
     font-size:14px;
     color:#fff;
+    text-align:center;
 }
 
-.fav-card span{
-    color:#7FFF00;
+.fav-card span {
+    color:#7CFF6B;
     font-weight:bold;
 }
 
+/* Кнопка "Добавить в корзину" в избранном */
+.fav-card .add-cart-btn {
+    width:100%;
+    margin-top:8px;
+    padding:8px 0;
+    border:none;
+    border-radius:8px;
+    background:#7CFF6B;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.25s;
+}
 
+.fav-card .add-cart-btn:hover {
+    transform:scale(1.05);
+}
