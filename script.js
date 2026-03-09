@@ -26,15 +26,29 @@ function renderProducts(containerId, filterFn) {
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <span>${product.price} ₽</span>
-            <button class="add-cart-btn" onclick="addToCart(${product.id})">Добавить в корзину</button>
+            <button class="add-cart-btn" 
+                data-id="${product.id}" 
+                onclick="addToCart(${product.id}, this)">
+                ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
+            </button>
         `;
         container.appendChild(card);
     });
 }
 
 // ===== КОРЗИНА =====
-function addToCart(id) {
-    if (!cart.includes(id)) cart.push(id);
+function addToCart(id, btnEl) {
+
+    if (!cart.includes(id)) {
+        cart.push(id);
+
+        if (btnEl) {
+            btnEl.innerText = "В корзине";
+            btnEl.disabled = true;
+            btnEl.style.opacity = "0.6";
+        }
+    }
+
     updateCartCount();
     renderCart();
 }
