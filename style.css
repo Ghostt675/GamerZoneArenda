@@ -595,7 +595,7 @@ button{
 }
 
 .favorite-btn.active::before {
-    content: "♥";
+    content: "🤍";
     color: #ff3b3b;
     transform: scale(1.2);
 }
