@@ -576,8 +576,8 @@ button{
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -591,13 +591,13 @@ button{
 .favorite-btn::before {
     content: "♡";            /* контурное сердце по умолчанию */
     color: #ffffff;             /* яркий белый контур */
-    font-size: 18px;
+    font-size: 14px;
     transition: 0.3s transform 0.2s, color 0.3s;
 }
 
 /* при активном состоянии */
 .favorite-btn.active::before {
-    content: "❤️";
+    content: "🤍";
     color: #fff;
     transform: scale(1.2);   /* эффект «прыжка» при добавлении */
 }
