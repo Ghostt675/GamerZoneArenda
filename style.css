@@ -460,6 +460,7 @@ button{
 .sideModal.open,
 .cartModal.open {
     right: 0;
+    width: 500px
 }
 
 /* HEADER */
