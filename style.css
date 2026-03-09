@@ -1,6 +1,6 @@
 /* ===== ОБЩИЙ ФОН ===== */
 body {
-    background: #272f2d;
+    background: linear-gradient(135deg, #1c2220, #2c2f33, #1c1f26);
     color: #e5e5e5;
 }
 
