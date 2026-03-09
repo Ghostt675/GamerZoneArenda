@@ -582,7 +582,7 @@ button{
     align-items: center;
     justify-content: center;
     background: #000;
-    border-radius: 50%;
+    border-radius: 70%;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -590,7 +590,7 @@ button{
 .favorite-btn::before {
     content: "♡";
     color: #ffffff;
-    font-size: 14px;
+    font-size: 18px;
     transition: 0.3s transform 0.2s, color 0.3s;
 }
 
