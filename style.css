@@ -592,7 +592,7 @@ button{
  font-size:18px;
 
  color:transparent;
- -webkit-text-stroke:1.5px white;
+ -webkit-text-stroke:1.6px white;
 
  cursor:pointer;
  transition:0.2s;
@@ -605,15 +605,6 @@ button{
 .favorite-btn.active{
  color:white;
  -webkit-text-stroke:0;
-}
-
-.favorite-btn:hover{
- transform:scale(1.2);
-}
-
-.favorite-btn.active{
- color:white;
- background:#000;
 }
 
 /* ===================================== */
