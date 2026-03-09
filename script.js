@@ -152,8 +152,14 @@ function hideOverlay() {
 
 // ===== SIDEBAR =====
 function toggleCatalog() {
-    document.getElementById("sidebar").classList.toggle("open");
+    const sidebar = document.getElementById("sidebar");
+    const navbar = document.querySelector(".navbar");
+    if (!sidebar || !navbar) return;
+
+    sidebar.classList.toggle("open");
+    navbar.classList.toggle("shifted");
 }
+
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
