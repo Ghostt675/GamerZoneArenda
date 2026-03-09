@@ -39,14 +39,24 @@ function renderProducts(containerId, filterFn) {
 // ===== КОРЗИНА =====
 function addToCart(id, btnEl) {
 
-    if (!cart.includes(id)) {
+    if (cart.includes(id)) {
+
+        cart = cart.filter(item => item !== id);
+
+        if (btnEl) {
+            btnEl.innerText = "Добавить в корзину";
+            btnEl.style.opacity = "1";
+        }
+
+    } else {
+
         cart.push(id);
 
         if (btnEl) {
             btnEl.innerText = "В корзине";
-            btnEl.disabled = true;
-            btnEl.style.opacity = "0.6";
+            btnEl.style.opacity = "0.7";
         }
+
     }
 
     updateCartCount();
