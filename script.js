@@ -174,6 +174,7 @@ function toggleFavorite(id, btnEl) {
     }
 
     renderFavorites();
+    renderProducts("popularProducts", p => p.popular);
 }
 
 
