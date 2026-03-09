@@ -20,8 +20,9 @@ function renderProducts(containerId, filterFn) {
         card.className = "card";
 
         card.innerHTML = `
-            <div class="favorite-btn ${isFav ? "active" : ""}" data-id="${product.id}"
-                 onclick="toggleFavorite(${product.id}, this)">♡</div>
+            <div class="favorite-btn ${isFav ? "active" : ""}" 
+                 data-id="${product.id}" 
+                 onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <span>${product.price} ₽</span>
@@ -76,18 +77,6 @@ function renderCart() {
         container.appendChild(item);
     });
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
-}
-
-// ===== ИЗБРАННОЕ =====
-function toggleFavorite(id, btnEl) {
-    const idx = favorites.indexOf(id);
-    if (idx === -1) favorites.push(id);
-    else favorites.splice(idx, 1);
-
-    if (!btnEl) btnEl = document.querySelector(`.favorite-btn[data-id="${id}"]`);
-    if (btnEl) btnEl.classList.toggle("active", favorites.includes(id));
-
-    renderFavorites();
 }
 
 function renderFavorites() {
