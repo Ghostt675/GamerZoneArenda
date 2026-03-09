@@ -455,12 +455,18 @@ button{
     overflow-y: auto;
     z-index: 1000;
     box-shadow: none;
+    direction: rtl; /* скролл слева */
 }
 
 .sideModal.open,
 .cartModal.open {
     right: 0;
-    width: 500px
+    width: 500px;
+}
+
+.cartModal *,
+.sideModal * {
+    direction: ltr;
 }
 
 /* HEADER */
@@ -483,10 +489,10 @@ button{
 
 .closeBtn {
     cursor: pointer;
-    color: #aaa;
+    color: #fff;
     background: #ff4d4d;
     border: none;
-    padding: 4px 8px;
+    padding: 6px 10px; /* настраиваемый размер */
     border-radius: 6px;
     font-size: 14px;
     transition: 0.2s;
@@ -494,7 +500,6 @@ button{
 
 .closeBtn:hover {
     background: #ff1a1a;
-    color: #fff;
 }
 
 /* ===================================== */
@@ -548,29 +553,20 @@ button{
     margin-top: 4px;
 }
 
-.cartModal,
-.sideModal {
-    direction: rtl;
-}
-
-.cartModal *,
-.sideModal * {
-    direction: ltr;
-}
-
 /* ===================================== */
 /* ===== КНОПКА ДОБАВИТЬ В КОРЗИНУ ===== */
 /* ===================================== */
 
 .add-cart-btn {
-    margin-top: 10px;
-    width: 100%;
-    padding: 8px 0;
-    border: none;
+    display: inline-block;
+    min-width: 100px;
+    padding: 6px 12px;
+    margin-top: 8px;
     border-radius: 8px;
     background: #7CFF6B;
     color: #000;
     font-weight: bold;
+    border: none;
     cursor: pointer;
     transition: 0.25s;
 }
@@ -587,26 +583,27 @@ button{
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #000;
     border-radius: 50%;
     cursor: pointer;
+    z-index: 10;
 }
 
 .favorite-btn::before {
     content: "♡";
-    color: #ffffff;
+    color: #ffffff; /* яркий белый контур */
     font-size: 18px;
     transition: transform 0.2s, color 0.2s;
 }
 
 .favorite-btn.active::before {
-    content: "♥";
-    color: #ff3b3b;
+    content: "❤️";
+    color: #ff3b3b;  /* красное сердце */
     animation: heartPop 0.35s ease;
 }
 
@@ -620,95 +617,82 @@ button{
 /* ===== КАРТОЧКИ В ИЗБРАННОМ / КОРЗИНЕ === */
 /* ===================================== */
 
-.fav-card {
+.fav-card, .cart-card {
     display: flex;
     align-items: center;
-    gap: 14px;
-    background: #2a3230; 
+    gap: 12px;
+    background: #2a3230;
     padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-           
-}
-
-.fav-card img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 6px;
-}
-
-.fav-card p {
-    flex: 1;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.fav-card span {
-    color: #7CFF6B;
-    font-weight: bold;
-}
-
-.fav-card .add-cart-btn,
-.fav-card .remove-btn {
+    border-radius: 12px;
+    margin-bottom: 12px;
     width: 100%;
-    margin-top: 8px;
-    padding: 8px 0;
-    border: none;
+    box-sizing: border-box;
+}
+
+.fav-card img, .cart-card img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
     border-radius: 8px;
-    cursor: pointer;
-    transition: 0.25s;
+    flex-shrink: 0;
 }
 
-.fav-card .add-cart-btn {
-    background: #7CFF6B;
-    color: #000;
-    font-weight: bold;
-}
-
-.fav-card .remove-btn {
-    background: #ff4d4d;
-    color: #fff;
-    font-weight: bold;
-}
-
-.fav-card .add-cart-btn:hover,
-.fav-card .remove-btn:hover {
-    transform: scale(1.05);
+.fav-info, .cart-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
 }
 
 /* Название и цена */
-.fav-card p {
-    margin-top: 6px;
-    font-size: 14px;
+.fav-info p, .cart-info p {
+    font-size: 15px;
+    font-weight: 600;
     color: #fff;
-    text-align: center;
+    margin: 0;
+    text-align: left;
 }
 
-.fav-card span {
-    color: #7CFF6B;
+.fav-info span, .cart-info span {
     font-weight: bold;
+    color: #7CFF6B;
+    margin: 4px 0;
 }
 
-/* Кнопки */
-.fav-card .add-cart-btn {
-    width: 100%;
-    margin-top: 8px;
-    padding: 6px 0;
+/* Блок кнопок */
+.fav-btns, .cart-btns {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Кнопка добавить в корзину */
+.fav-info .add-cart-btn, .cart-info .add-cart-btn {
+    min-width: 100px;
+    padding: 6px 12px;
     border-radius: 8px;
     background: #7CFF6B;
     color: #000;
     font-weight: bold;
+    border: none;
     cursor: pointer;
     transition: 0.25s;
 }
 
-.remove-btn {
-    background: none;
-    border: none;
-    color: #ff3b3b;
+/* Крестик */
+.fav-info .remove-btn, .cart-info .remove-btn {
     width: 30px;
     height: 30px;
     font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    background: #ff4d4d;
+    color: #fff;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.fav-info .remove-btn:hover, .cart-info .remove-btn:hover {
+    background: #ff1a1a;
 }
