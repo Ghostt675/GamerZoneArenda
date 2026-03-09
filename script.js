@@ -5,8 +5,8 @@ const products = [
 ];
 
 // ===== СОСТОЯНИЕ =====
-let cart = [];       // хранит id товаров
-let favorites = [];  // хранит id товаров
+let cart = [];
+let favorites = [];
 
 // ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
 function renderProducts(containerId, filterFn) {
@@ -14,39 +14,28 @@ function renderProducts(containerId, filterFn) {
     if (!container) return;
     container.innerHTML = "";
 
-    const filtered = products.filter(filterFn);
-
-    filtered.forEach(product => {
+    products.filter(filterFn).forEach(product => {
         const isFav = favorites.includes(product.id);
-
         const card = document.createElement("div");
         card.className = "card";
 
-        // favorite-btn получает data-id для поиска кнопки из других функций
         card.innerHTML = `
             <div class="favorite-btn ${isFav ? "active" : ""}" data-id="${product.id}"
-                 onclick="toggleFavorite(${product.id}, this)">
-                <!-- используем простой символ сердца -->
-                ♡
-            </div>
-
+                 onclick="toggleFavorite(${product.id}, this)">♡</div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <span>${product.price} ₽</span>
             <button class="add-cart-btn" onclick="addToCart(${product.id})">Добавить в корзину</button>
         `;
-
         container.appendChild(card);
     });
 }
 
 // ===== КОРЗИНА =====
 function addToCart(id) {
-    if (!cart.includes(id)) {
-        cart.push(id);
-        updateCartCount();
-        renderCart();
-    }
+    if (!cart.includes(id)) cart.push(id);
+    updateCartCount();
+    renderCart();
 }
 
 function removeFromCart(id) {
@@ -62,10 +51,9 @@ function updateCartCount() {
 
 function renderCart() {
     const container = document.getElementById("cartItems");
-    if (!container) return;
     container.innerHTML = "";
 
-    if (cart.length === 0) {
+    if (!cart.length) {
         container.innerHTML = "<p class='empty-text'>Корзина пуста</p>";
         document.getElementById("total").innerText = "";
         return;
@@ -87,37 +75,26 @@ function renderCart() {
         `;
         container.appendChild(item);
     });
-
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
 }
 
 // ===== ИЗБРАННОЕ =====
-// btnEl — элемент кнопки в карточке (this). Если не передали, находим кнопку по data-id.
 function toggleFavorite(id, btnEl) {
     const idx = favorites.indexOf(id);
-    if (idx === -1) {
-        favorites.push(id);
-    } else {
-        favorites.splice(idx, 1);
-    }
+    if (idx === -1) favorites.push(id);
+    else favorites.splice(idx, 1);
 
-    // Обновить вид кнопки (если есть)
-    if (!btnEl) {
-        btnEl = document.querySelector(`.favorite-btn[data-id="${id}"]`);
-    }
-    if (btnEl) {
-        btnEl.classList.toggle("active", favorites.includes(id));
-    }
+    if (!btnEl) btnEl = document.querySelector(`.favorite-btn[data-id="${id}"]`);
+    if (btnEl) btnEl.classList.toggle("active", favorites.includes(id));
 
     renderFavorites();
 }
 
 function renderFavorites() {
     const container = document.getElementById("favoritesItems");
-    if (!container) return;
     container.innerHTML = "";
 
-    if (favorites.length === 0) {
+    if (!favorites.length) {
         container.innerHTML = "<p class='empty-text'>Здесь будут ваши избранные товары</p>";
         return;
     }
@@ -141,77 +118,51 @@ function renderFavorites() {
 
 // ===== МОДАЛКИ =====
 function openCart() {
-    const m = document.getElementById("cartModal");
-    if (!m) return;
-    m.classList.add("open");
+    document.getElementById("cartModal").classList.add("open");
     renderCart();
     showOverlay();
 }
 
 function closeCart() {
-    const m = document.getElementById("cartModal");
-    if (!m) return;
-    m.classList.remove("open");
+    document.getElementById("cartModal").classList.remove("open");
     hideOverlay();
 }
 
 function openFavorites() {
-    const f = document.getElementById("favoritesModal");
-    if (!f) return;
-    f.classList.add("open");
+    document.getElementById("favoritesModal").classList.add("open");
     renderFavorites();
     showOverlay();
 }
 
 function closeFavorites() {
-    const f = document.getElementById("favoritesModal");
-    if (!f) return;
-    f.classList.remove("open");
+    document.getElementById("favoritesModal").classList.remove("open");
     hideOverlay();
 }
 
 // ===== OVERLAY =====
 function showOverlay() {
     const overlay = document.getElementById("overlay");
-    if (!overlay) return;
     overlay.classList.add("show");
 }
 
 function hideOverlay() {
     const overlay = document.getElementById("overlay");
-    if (!overlay) return;
     overlay.classList.remove("show");
 }
 
-// ===== SIDEBAR (каталог) =====
+// ===== SIDEBAR =====
 function toggleCatalog() {
-    const sidebar = document.getElementById("sidebar");
-    if (!sidebar) return;
-    sidebar.classList.toggle("open");
+    document.getElementById("sidebar").classList.toggle("open");
 }
 
-// ===== ИНИЦИАЛИЗАЦИЯ и привязки событий =====
+// ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
-    // отрисовать популярные
-    renderProducts("popularProducts", p => p.popular === true);
-
-    // обновить счётчик корзины
+    renderProducts("popularProducts", p => p.popular);
     updateCartCount();
 
-    // overlay клик закрывает модалки (если overlay элемент есть в HTML)
     const overlay = document.getElementById("overlay");
-    if (overlay) {
-        overlay.addEventListener("click", () => {
-            closeCart();
-            closeFavorites();
-        });
-    }
-
-    // закрывать модалки при клике по главным кнопкам (например, чтобы не было наложения)
-    document.querySelectorAll(".products-btn, .nav-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            closeCart();
-            closeFavorites();
-        });
+    overlay.addEventListener("click", () => {
+        closeCart();
+        closeFavorites();
     });
 });
