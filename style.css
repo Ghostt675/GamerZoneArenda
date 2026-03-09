@@ -584,37 +584,28 @@ button{
 /* ========= КНОПКА ИЗБРАННОГО ========= */
 /* ===================================== */
 
-.favorite-btn{
- position:absolute;
- top:10px;
- right:10px;
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;          /* фон всегда черный */
+    border-radius: 50%;
+    font-size: 18px;
 
- width:30px;
- height:30px;
-
- display:flex;
- align-items:center;
- justify-content:center;
-
- background:#000;
- border-radius:50%;
-
- font-size:18px;
-
- color:transparent;
- -webkit-text-stroke:1.6px white;
-
- cursor:pointer;
- transition:0.2s;
+    color: transparent;        /* по умолчанию текст прозрачный */
+    -webkit-text-stroke: 1.5px white; /* белые контуры */
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.favorite-btn:hover{
- transform:scale(1.15);
-}
-
-.favorite-btn.active{
- color:white;
- -webkit-text-stroke:0;
+.favorite-btn.active {
+    color: white;             /* полностью белое сердце */
+    -webkit-text-stroke: 0;   /* убираем контур */
 }
 
 /* ===== КАРТОЧКИ В ИЗБРАННОМ И КОРЗИНЕ ===== */
