@@ -463,7 +463,6 @@ button{
 }
 
 /* HEADER */
-
 .sideModal-header,
 .modal-header {
     display: flex;
@@ -497,153 +496,51 @@ button{
 }
 
 /* ===================================== */
-/* ========= СЕТКА ТОВАРОВ ============= */
-/* ===================================== */
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 45px;
-    padding: 20px 10px;
-}
-
-/* ===================================== */
-/* ========= КАРТОЧКА ТОВАРА =========== */
-/* ===================================== */
-
-.card {
-    position: relative;
-    background: #2a3230;
-    border-radius: 14px;
-    padding: 10px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 0.25s;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-}
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.card p {
-    margin-top: 8px;
-    font-size: 14px;
-    color: #fff;
-}
-
-.card span {
-    color: #7CFF6B;
-    font-weight: bold;
-    margin-top: 4px;
-}
-
-/* ===================================== */
-/* ===== КНОПКА ДОБАВИТЬ В КОРЗИНУ ===== */
-/* ===================================== */
-
-.add-cart-btn {
-    margin-top: 10px;
-    width: 100%;
-    padding: 8px 0;
-    border: none;
-    border-radius: 8px;
-    background: #7CFF6B;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.add-cart-btn:hover {
-    transform: scale(1.05);
-}
-
-/* ===================================== */
-/* ========= КНОПКА ИЗБРАННОГО ========= */
-/* ===================================== */
-
-.favorite-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #000;          
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.favorite-btn::before {
-    content: "♡";            /* контурное сердце по умолчанию */
-    color: #fff;             /* яркий белый контур */
-    font-size: 18px;
-    transition: 0.3s transform 0.2s, color 0.3s;
-}
-
-/* при активном состоянии */
-.favorite-btn.active::before {
-    content: "🤍";
-    color: #fff;
-    transform: scale(1.2);   /* эффект «прыжка» при добавлении */
-}
-
-/* ===================================== */
 /* ===== КАРТОЧКИ В ИЗБРАННОМ / КОРЗИНЕ === */
 /* ===================================== */
 
 .fav-card {
-    position: relative;
     display: flex;
-    flex-direction: column;
+    gap: 12px;
     align-items: center;
     background: #2a3230; 
-    padding: 6px;
+    padding: 10px;
     border-radius: 12px;
     margin-bottom: 12px;
-    width: 100%;       /* занимает всю ширину контейнера модалки */
+    width: 100%;       
     box-sizing: border-box;
 }
 
 .fav-card img {
-    width: 100%;
-    height: 100px;   /* авто высота для пропорций */
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     border-radius: 8px;
 }
 
+/* Контейнер для текста и кнопок справа */
+.fav-card .details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .fav-card p {
-    margin-top: 6px;
-    font-size: 12px;
+    margin: 0 0 4px 0;
+    font-size: 14px;
     color: #fff;
-    text-align: center;
 }
 
 .fav-card span {
     color: #7CFF6B;
     font-weight: bold;
-    font-size: 13px;
+    margin-bottom: 6px;
 }
 
 .fav-card .add-cart-btn,
 .fav-card .remove-btn {
-    width: 100%;
-    margin-top: 8px;
-    padding: 8px 0;
+    padding: 6px 0;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -654,6 +551,7 @@ button{
     background: #7CFF6B;
     color: #000;
     font-weight: bold;
+    margin-bottom: 4px;
 }
 
 .fav-card .remove-btn {
@@ -667,28 +565,32 @@ button{
     transform: scale(1.05);
 }
 
-/* Название и цена */
-.fav-card p {
-    margin-top: 6px;
-    font-size: 14px;
-    color: #fff;
-    text-align: center;
-}
+/* ===================================== */
+/* ===== КНОПКА ИЗБРАННОГО (СЕРДЦЕ) ===== */
+/* ===================================== */
 
-.fav-card span {
-    color: #7CFF6B;
-    font-weight: bold;
-}
-
-/* Кнопки */
-.fav-card .add-cart-btn {
-    width: 100%;
-    margin-top: 8px;
-    padding: 6px 0;
-    border-radius: 8px;
-    background: #7CFF6B;
-    color: #000;
-    font-weight: bold;
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
     cursor: pointer;
-    transition: 0.25s;
+    transition: 0.3s;
+    color: white; /* контур по умолчанию */
+    -webkit-text-stroke: 1.5px white; 
+}
+
+/* активное состояние — прыжок и полностью белое */
+.favorite-btn.active {
+    color: white;
+    -webkit-text-stroke: 0;
+    transform: scale(1.2);
+    transition: 0.3s transform 0.2s, color 0.3s;
 }
