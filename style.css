@@ -415,6 +415,16 @@ button{
 }
 
 
+.navbar {
+    margin-left: 70px;
+    transition: margin 0.3s ease;
+}
+
+.navbar.shifted {
+    margin-left: 220px; /* когда каталог открыт */
+}
+
+
 .products-btn {
     background-color: #7FFF00; /* ярко-салатовый */
     color: #000; /* тёмный текст для контраста */
