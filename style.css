@@ -447,8 +447,8 @@ button{
 .cartModal {
     position: fixed;
     top: 0;
-    right: -340px;
-    width: 340px;  /* чуть шире */
+    right: -320px;
+    width: 320px;  /* чуть шире */
     height: 100%;
     background: #202826;
     padding: 20px;
