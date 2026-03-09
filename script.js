@@ -160,6 +160,34 @@ function toggleCatalog() {
     navbar.classList.toggle("shifted");
 }
 
+//функция прыжка сердца избранного
+function toggleFavorite(id, btnEl) {
+    const idx = favorites.indexOf(id);
+    if (idx === -1) {
+        favorites.push(id);
+    } else {
+        favorites.splice(idx, 1);
+    }
+
+    if (!btnEl) {
+        btnEl = document.querySelector(`.favorite-btn[data-id="${id}"]`);
+    }
+    if (btnEl) {
+        btnEl.classList.toggle("active", favorites.includes(id));
+
+        // маленький эффект «прыжка»
+        if (favorites.includes(id)) {
+            btnEl.style.transform = "scale(1.3)";
+            setTimeout(() => {
+                btnEl.style.transform = "scale(1)";
+            }, 200);
+        }
+    }
+
+    renderFavorites();
+}
+
+
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
