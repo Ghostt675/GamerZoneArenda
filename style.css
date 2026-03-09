@@ -496,7 +496,8 @@ button{
 .products {
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
-    gap:28px;
+    gap:45px;
+    padding:20px 10px;
 }
 
 /* ===================================== */
@@ -512,6 +513,15 @@ button{
     display:flex;
     flex-direction:column;
     align-items:center;
+}
+
+.card{
+    transition:0.25s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
 /* Картинка */
