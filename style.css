@@ -1,6 +1,7 @@
 /* ===== ОБЩИЙ ФОН ===== */
 body {
-    background: linear-gradient(135deg, #1c2220, #2c2f33, #1c1f26);
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    color: #e5e5e5;
 }
 
 /* контейнер для всего контента */
