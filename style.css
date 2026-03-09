@@ -454,7 +454,7 @@ button{
     transition: 0.35s;
     overflow-y: auto;
     z-index: 1000;
-    box-shadow: -6px 0 20px rgba(0,0,0,0.6);
+    box-shadow: none;
 }
 
 .sideModal.open,
