@@ -1,9 +1,9 @@
 /* ===== ОБЩИЙ ФОН ===== */
-body{
-    margin:0;
-    font-family:Russo One;
-    background:#1c2220;
-    color:#e5e5e5;
+body {
+    margin: 0;
+    font-family: Russo One;
+    background: linear-gradient(135deg, #1c2220, #2a3230);
+    color: #e5e5e5;
 }
 
 /* контейнер для всего контента */
