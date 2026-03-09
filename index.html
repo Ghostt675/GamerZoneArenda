@@ -128,28 +128,25 @@
 
 <!-- ===== КОРЗИНА ===== -->
 <div id="cartModal" class="cartModal">
-  <h3>Корзина</h3>
+  <div class="modal-header">
+    <h3>Корзина</h3>
+    <button class="closeBtn" onclick="closeCart()">Закрыть ✕</button>
+  </div>
   <div id="cartItems"></div>
   <p id="total"></p>
-  <button class="orderBtn">Оформить заказ</button>
+  <button class="add-cart-btn orderBtn">Оформить заказ</button>
 </div>
 
 <!-- ===== ИЗБРАННОЕ ===== -->
 <div id="favoritesModal" class="sideModal">
-  
   <div class="sideModal-header">
     <h3>Избранные товары</h3>
-    <div class="closeBtn" onclick="closeFavorites()">
-      <span>Закрыть</span> ✕
-    </div>
+    <button class="closeBtn" onclick="closeFavorites()">Закрыть ✕</button>
   </div>
-
   <div class="sideModal-content" id="favoritesItems">
     <p class="empty-text">Здесь будут ваши избранные товары</p>
   </div>
-
 </div>
 
-<script src="script.js"></script>
-</body>
-</html>
+<!-- overlay для закрытия модалок -->
+<div id="overlay" class="overlay"></div>
