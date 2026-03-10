@@ -182,8 +182,8 @@ body {
 /* кнопки */
 .products-btn,
 .nav-btn{
-  background:##7FFF00;
-  color:white;
+  background:#7FFF00;
+  color:#000;
   border:none;
   padding:12px 22px;
   border-radius:10px;
