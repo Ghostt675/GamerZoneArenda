@@ -682,6 +682,7 @@ button{
     border: none;
     cursor: pointer;
     transition: 0.25s;
+    align-items: center;
 }
 
 
