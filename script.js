@@ -55,8 +55,18 @@ function addToCart(id, btnEl) {
     renderProducts("popularProducts", p => p.popular);
 }
 
-function removeFromCart(id) {
+function removeFromCart(id){
+
     cart = cart.filter(item => item !== id);
+
+    // ищем кнопку товара на странице
+    const btn = document.querySelector(`.add-cart-btn[data-id="${id}"]`);
+
+    if(btn){
+        btn.classList.remove("in-cart");
+        btn.innerText = "Добавить в корзину";
+    }
+
     updateCartCount();
     renderCart();
 }
