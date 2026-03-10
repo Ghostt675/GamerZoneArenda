@@ -695,7 +695,7 @@ button{
     border:none;
     border-radius:6px;
     background:#ff4d4d; /* красный фон */
-    color:#ffffff; /* белый крестик */
+    color: white; /* белый крестик */
     cursor:pointer;
     display:flex;
     align-items:center;
