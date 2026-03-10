@@ -522,6 +522,7 @@ button{
     background: #2a3230;
     border-radius: 14px;
     padding: 10px;
+    width: 220px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -601,10 +602,10 @@ button{
     transition: transform 0.2s, color 0.2s;
 }
 
-.favorite-btn.active::before {
-    content: "❤️";
-    color: #ff3b3b;  /* красное сердце */
-    animation: heartPop 0.35s ease;
+.favorite-btn.active::before{
+    content:"♥";
+    color:#ff3b3b;
+    animation:heartPop 0.35s ease;
 }
 
 @keyframes heartPop {
@@ -695,4 +696,25 @@ button{
 
 .fav-info .remove-btn:hover, .cart-info .remove-btn:hover {
     background: #ff1a1a;
+}
+
+
+/* ===== КНОПКА ОФОРМЛЕНИЯ ЗАКАЗА ===== */
+
+.orderBtn{
+    width:100%;
+    margin-top:15px;
+    padding:14px 0;
+    font-size:18px;
+    font-weight:bold;
+    border-radius:12px;
+    background:#7CFF6B;
+    color:#000;
+    border:none;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.orderBtn:hover{
+    transform:scale(1.05);
 }
