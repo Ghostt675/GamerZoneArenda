@@ -182,7 +182,7 @@ body {
 /* кнопки */
 .products-btn,
 .nav-btn{
-  background:#7FFF00;
+  background:#7CFF6B;
   color:#000;
   border:none;
   padding:12px 22px;
@@ -427,7 +427,7 @@ button{
 
 
 .products-btn {
-    background-color: #7FFF00; /* ярко-салатовый */
+    background-color: #7CFF6B; /* ярко-салатовый */
     color: #000; /* тёмный текст для контраста */
     border: none;
     padding: 10px 20px;
@@ -438,7 +438,7 @@ button{
 }
 
 .products-btn:hover {
-    background-color: #9ACD32; /* чуть тусклее при наведении */
+    background-color: #43bd33; /* чуть тусклее при наведении */
 }
 
 /* ===================================== */
