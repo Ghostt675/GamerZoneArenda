@@ -684,21 +684,26 @@ button{
     transition: 0.25s;
 }
 
-/* Крестик */
-.fav-info .remove-btn, .cart-info .remove-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 6px;
-    background: #ff4d4d;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.2s;
+
+/* ===== КНОПКА УДАЛЕНИЯ ===== */
+
+.remove-btn{
+    width:32px;
+    height:32px;
+    font-size:18px;
+    border:none;
+    border-radius:6px;
+    background:#ff4d4d; /* красный фон */
+    color:#ffffff; /* белый крестик */
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.2s;
 }
 
-.fav-info .remove-btn:hover, .cart-info .remove-btn:hover {
-    background: #ff1a1a;
+.remove-btn:hover{
+    background:#ff1a1a;
 }
 
 
