@@ -340,7 +340,8 @@ footer a:hover{
 
 /* кнопки */
 button{
-    background:#7FFF00;
+    background: #ff4d4d;
+    color: #fff;
     border:none;
     color:white;
     padding:10px 15px;
