@@ -606,7 +606,7 @@ button{
 
 .favorite-btn.active::before{
     content:"♥";
-    color:#ff3b3b;
+    color:#ffffff;
     animation:heartPop 0.35s ease;
 }
 
