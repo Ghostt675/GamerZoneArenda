@@ -190,6 +190,7 @@ body {
   cursor:pointer;
   font-size:18px;
   transition:0.2s;
+  font-weight: bold;
 }
 
 .products-btn:hover,
