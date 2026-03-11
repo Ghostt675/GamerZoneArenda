@@ -72,7 +72,7 @@ function flyToCart(btnEl) {
     const clone = img.cloneNode(true);
     clone.classList.add('fly-img');
 
-    // установка стартовых координат и размеров
+    // Устанавливаем исходные координаты и размеры
     clone.style.position = 'fixed';
     clone.style.left = `${imgRect.left}px`;
     clone.style.top = `${imgRect.top}px`;
@@ -83,7 +83,7 @@ function flyToCart(btnEl) {
 
     document.body.appendChild(clone);
 
-    // запуск анимации
+    // Запуск анимации
     requestAnimationFrame(() => {
         clone.style.left = `${cartRect.left}px`;
         clone.style.top = `${cartRect.top}px`;
@@ -92,7 +92,7 @@ function flyToCart(btnEl) {
         clone.style.opacity = '0.7';
     });
 
-    // удаление элемента после завершения анимации
+    // Удаляем элемент после завершения анимации
     clone.addEventListener('transitionend', () => {
         clone.remove();
         cartIcon.classList.add('shake');
