@@ -264,8 +264,8 @@ body {
 
 /* иконка */
 .nav-icon{
-    width:36px;
-    height:36px;
+    width:24px;
+    height:24px;
     object-fit:contain;
     transition:0.2s;
 }
@@ -949,26 +949,32 @@ button{
     animation: cartShake 0.4s ease;
 }
 
-.days-control{
-display:flex;
-align-items:center;
-gap:10px;
-margin:5px 0;
+.control-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    transition: color 0.3s;
 }
 
-.days-control button{
-width:26px;
-height:26px;
-border:none;
-border-radius:6px;
-background:#2f3a37;
-color:white;
-cursor:pointer;
+.control-btn:hover {
+    color: #ff5722; /* оранжевый */
 }
 
-.days-control span{
-min-width:20px;
-text-align:center;
+.period-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.period-controls input[type=number] {
+    width: 50px;
+    text-align: center;
+    margin: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    height: 30px;
 }
 
     
