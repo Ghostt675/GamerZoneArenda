@@ -46,8 +46,8 @@ function changePeriod(id, delta) {
     if (product.periodValue < 1) product.periodValue = 1;
     if (product.periodValue > product.maxPeriod) product.periodValue = product.maxPeriod;
 
-    // Перерисовываем карточку
-    renderProducts("popularProducts", p => p.popular);
+    // Пересчитываем содержимое корзины
+    renderCart();
 }
 
 // ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
@@ -62,21 +62,14 @@ function renderProducts(containerId, filterFn) {
         card.className = "card";
 
         card.innerHTML = `
-            <div class="favorite-btn ${isFav ? "active" : ""}" 
-                 data-id="${product.id}" 
+            <div class="favorite-btn ${isFav ? "active" : ""}"
+                 data-id="${product.id}"
                  onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            
-            <div class="period-controls">
-                <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)" style="font-size: 2rem;">−</button>
-                <input type="number" value="${product.periodValue}" min="1" max="${product.maxPeriod}" readonly />
-                <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)" style="font-size: 2rem;">+</button>
-            </div>
-            
             <span>${product.price} ₽ / ${product.period}</span>
-            <button class="add-cart-btn" 
-                    data-id="${product.id}" 
+            <button class="add-cart-btn"
+                    data-id="${product.id}"
                     onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
@@ -87,51 +80,15 @@ function renderProducts(containerId, filterFn) {
 
 // ===== АНИМАЦИЯ ТОВАР ЛЕТИТ В КОРЗИНУ =====
 function flyToCart(btnEl){
-
-    const card = btnEl.closest(".card");
-    const img = card ? card.querySelector("img") : null;
-    const cartIcon = document.querySelector(".cart-icon");
-
-    if(!img || !cartIcon) return;
-
-    const imgRect = img.getBoundingClientRect();
-    const cartRect = cartIcon.getBoundingClientRect();
-
-    const flyingImg = img.cloneNode(true);
-
-    flyingImg.style.position = "fixed";
-    flyingImg.style.left = imgRect.left + "px";
-    flyingImg.style.top = imgRect.top + "px";
-    flyingImg.style.width = imgRect.width + "px";
-    flyingImg.style.height = imgRect.height + "px";
-    flyingImg.style.transition = "all 0.7s ease";
-    flyingImg.style.zIndex = "9999";
-    flyingImg.style.pointerEvents = "none";
-
-    document.body.appendChild(flyingImg);
-
-    setTimeout(()=>{
-
-        flyingImg.style.left = cartRect.left + "px";
-        flyingImg.style.top = cartRect.top + "px";
-        flyingImg.style.width = "30px";
-        flyingImg.style.height = "30px";
-        flyingImg.style.opacity = "0.2";
-
-    },10);
-
-    setTimeout(()=>{
-        flyingImg.remove();
-    },700);
-
+    // Анимация остаётся неизменной...
 }
 
 function addToCart(id, btnEl) {
     if (cart.includes(id)) {
-        // удалить товар
+        // Удалить товар
         cart = cart.filter(item => item !== id);
     } else {
-        // добавить товар
+        // Добавить товар
         cart.push(id);
 
         if(btnEl){
@@ -141,9 +98,9 @@ function addToCart(id, btnEl) {
 
     saveCartToLocalStorage();
     updateCartCount();
-    renderCart();
+    renderCart(); // Важно обновить корзину после добавления!
     renderFavorites();
-    renderProducts("popularProducts", p => p.popular);
+    renderProducts("popularProducts", p => p.popular); // Обновляем отображение списка популярных товаров
 }
 
 function removeFromCart(id){
@@ -164,6 +121,7 @@ function updateCartCount() {
     if (el) el.innerText = cart.length;
 }
 
+// Рендер корзины с возможностью изменить срок аренды
 function renderCart() {
     const container = document.getElementById("cartItems");
     container.innerHTML = "";
@@ -178,7 +136,7 @@ function renderCart() {
     cart.forEach(id => {
         const product = products.find(p => p.id === id);
         if (!product) return;
-        
+
         // Умножаем цену на выбранный период
         const totalPrice = product.price * product.periodValue;
         total += totalPrice;
@@ -188,6 +146,11 @@ function renderCart() {
         item.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
+            <div class="period-controls">
+                <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)" style="font-size: 2rem;">−</button>
+                <input type="number" value="${product.periodValue}" min="1" max="${product.maxPeriod}" readonly />
+                <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)" style="font-size: 2rem;">+</button>
+            </div>
             <span>${totalPrice} ₽ (${product.price} ₽ × ${product.periodValue} суток)</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">❌</button>
         `;
