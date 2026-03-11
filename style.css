@@ -895,30 +895,24 @@ button{
 }
 
 
-/* Клон для анимации полёта */
+/* Анимационный класс для перелёта товара в корзину */
 .fly-img {
     position: fixed !important;
     z-index: 9999 !important;
     pointer-events: none !important;
-    transition: all 0.7s ease-in-out !important;
+    transition: all 0.7s cubic-bezier(.3,.7,.3,1.2) !important;
 }
 
-/* Корзина трясётся */
+/* Эффект дрожания корзины */
 @keyframes cartShake {
-    0%{ transform: rotate(0deg); }
-    25%{ transform: rotate(-6deg); }
-    50%{ transform: rotate(6deg); }
-    75%{ transform: rotate(-4deg); }
-    100%{ transform: rotate(0deg); }
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+    75% { transform: rotate(-4deg); }
 }
 
 .cart-icon.shake {
     animation: cartShake 0.4s ease;
-}
-
-/* Обеспечиваем видимость клона вне контейнеров */
-body, html, .container, .products {
-    overflow: visible !important;
 }
 
     
