@@ -68,10 +68,10 @@ function renderProducts(containerId, filterFn) {
 // Функция анимации полёта
 function flyToCart(btnEl) {
     const card = btnEl.closest(".card");
-    const img = card ? card.querySelector("img") : null;
+    const img = card && card.querySelector("img");
     const cartIcon = document.querySelector(".cart-icon");
 
-    if(!img || !cartIcon) return;
+    if (!img || !cartIcon) return;
 
     const imgRect = img.getBoundingClientRect();
     const cartRect = cartIcon.getBoundingClientRect();
@@ -79,27 +79,30 @@ function flyToCart(btnEl) {
     const clone = img.cloneNode(true);
     clone.classList.add("fly-img");
 
-    // Начальные позиции клона
-    clone.style.left = imgRect.left + "px";
-    clone.style.top = imgRect.top + "px";
-    clone.style.width = imgRect.width + "px";
-    clone.style.height = imgRect.height + "px";
-    clone.style.opacity = "1";
+    // Установим начальное положение клона относительно окна браузера
+    clone.style.position = "fixed"; // обязательный fixed!
+    clone.style.left = `${imgRect.left}px`;
+    clone.style.top = `${imgRect.top}px`;
+    clone.style.width = `${imgRect.width}px`;
+    clone.style.height = `${imgRect.height}px`;
+    clone.style.zIndex = "9999"; // повышаем индекс слоя
+    clone.style.transition = "all 0.7s cubic-bezier(.3,.7,.3,1.2)"; // улучшенная кривая движения
 
     document.body.appendChild(clone);
 
-    // Делаем анимацию с requestAnimationFrame
+    // Начинаем анимацию
     requestAnimationFrame(() => {
-        clone.style.left = cartRect.left + "px";
-        clone.style.top = cartRect.top + "px";
+        clone.style.left = `${cartRect.left}px`;
+        clone.style.top = `${cartRect.top}px`;
         clone.style.width = "30px";
         clone.style.height = "30px";
         clone.style.opacity = "0.7";
     });
 
+    // Удаляем элемент после завершения анимации
     clone.addEventListener("transitionend", () => {
-        clone.remove();
-        // Тряска корзины
+        clone.remove(); // удаление клона
+        // Дрожание корзины
         cartIcon.classList.add("shake");
         setTimeout(() => cartIcon.classList.remove("shake"), 400);
     });
