@@ -135,25 +135,27 @@ function flyToCart(btnEl){
 }
 
 function addToCart(id, btnEl){
+    const product = products.find(p => p.id === id);
+    if (!product) return;
 
-const product = products.find(p => p.id === id);
+    // если товара нет в корзине — добавляем с начальным количеством дней
+    if(!cart[id]){
+        cart[id] = { days: product.startDays };
+        
+        // ⭐ анимация
+        if(btnEl){
+            flyToCart(btnEl);
+        }
+    } else {
+        // если уже в корзине — можно увеличить количество дней или убрать
+        // например убираем из корзины
+        delete cart[id];
+    }
 
-if(!cart[id]){
-
-cart[id] = {
-days: product.startDays
-};
-
-if(btnEl){
-flyToCart(btnEl);
-}
-
-}
-
-saveCartToLocalStorage();
-
-updateCartCount();
-renderCart();
+    saveCartToLocalStorage();
+    updateCartCount();
+    renderCart();
+    renderProducts("popularProducts", p => p.popular);
 }
 
 function removeFromCart(id){
@@ -177,14 +179,12 @@ function updateCartCount() {
     if (el) el.innerText = cart.length;
 }
 
-function renderCart() {
-
+function renderCart(){
     const container = document.getElementById("cartItems");
     container.innerHTML = "";
 
     const ids = Object.keys(cart);
-
-    if (!ids.length) {
+    if(ids.length === 0){
         container.innerHTML = "<p class='empty-text'>Корзина пуста</p>";
         document.getElementById("total").innerText = "";
         return;
@@ -193,39 +193,33 @@ function renderCart() {
     let total = 0;
 
     ids.forEach(id => {
-
-        const product = products.find(p => p.id == id);
-        if (!product) return;
+        const product = products.find(p => p.id === parseInt(id));
+        if(!product) return;
 
         const days = cart[id].days;
-        const price = product.price * days;
-
-        total += price;
+        const subtotal = product.price * days;
+        total += subtotal;
 
         const item = document.createElement("div");
         item.className = "fav-card";
-
         item.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
-
             <div class="cart-info">
                 <p>${product.name}</p>
-
-                <div class="days-control">
-                    <button onclick="decreaseDays(${id})">-</button>
+                <span>${subtotal} ₽ / ${days} ${days > 1 ? 'суток' : 'сутки'}</span>
+                <div class="day-controls">
+                    <button onclick="changeDays(${id}, -1)">-</button>
                     <span>${days}</span>
-                    <button onclick="increaseDays(${id})">+</button>
+                    <button onclick="changeDays(${id}, 1)">+</button>
                 </div>
-
-                <span>${price} ₽</span>
             </div>
-
             <button class="remove-btn" onclick="removeFromCart(${id})">❌</button>
         `;
-
         container.appendChild(item);
-
     });
+
+    document.getElementById("total").innerText = "Итого: " + total + " ₽";
+}
 
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
 
@@ -329,6 +323,21 @@ function decreaseDays(id){
     renderCart();
     updateCartCount();
 }
+
+
+function changeDays(id, delta){
+    const product = products.find(p => p.id === id);
+    if(!product || !cart[id]) return;
+
+    cart[id].days += delta;
+
+    if(cart[id].days < 1) cart[id].days = 1;
+    if(cart[id].days > product.maxDays) cart[id].days = product.maxDays;
+
+    saveCartToLocalStorage();
+    renderCart();
+}
+
 
 //функция прыжка сердца избранного
 function toggleFavorite(id, btnEl) {
