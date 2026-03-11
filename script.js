@@ -105,8 +105,43 @@ function renderProducts(containerId, filterFn) {
 }
 
 // ===== АНИМАЦИЯ ТОВАР ЛЕТИТ В КОРЗИНУ =====
-function flyToCart(btnEl){
-    // Анимация остаётся неизменной...
+function flyToCart(btnEl) {
+    console.log("Запущена анимация:", btnEl); // Логирование для проверки наличия элемента
+
+    const card = btnEl.closest(".card"); // Найти ближайшую родительскую карту
+    const img = card ? card.querySelector("img") : null; // Найти картинку товара
+    const cartIcon = document.querySelector(".cart-icon"); // Получить иконку корзины
+
+    if (!img || !cartIcon) return;
+
+    // Продолжаем стандартную реализацию анимируемого эффекта
+    const imgRect = img.getBoundingClientRect();
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    const flyingImg = img.cloneNode(true);
+    flyingImg.style.position = "fixed";
+    flyingImg.style.left = imgRect.left + "px";
+    flyingImg.style.top = imgRect.top + "px";
+    flyingImg.style.width = imgRect.width + "px";
+    flyingImg.style.height = imgRect.height + "px";
+    flyingImg.style.transition = "all 0.7s ease";
+    flyingImg.style.zIndex = "9999";
+    flyingImg.style.pointerEvents = "none"; // Сделать непрозрачным для кликов
+
+    document.body.appendChild(flyingImg);
+
+    setTimeout(() => {
+        flyingImg.style.left = cartRect.left + "px";
+        flyingImg.style.top = cartRect.top + "px";
+        flyingImg.style.width = "30px";
+        flyingImg.style.height = "30px";
+        flyingImg.style.opacity = "0.2";
+    }, 10);
+
+    setTimeout(() => {
+        flyingImg.remove();
+    }, 700);
+}
 }
 
 function addToCart(id, btnEl) {
