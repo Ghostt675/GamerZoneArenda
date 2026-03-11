@@ -949,33 +949,34 @@ button{
     animation: cartShake 0.4s ease;
 }
 
+/* Кнопки плюса и минуса */
 .control-btn {
-    background-color: transparent;       /* делаем прозрачный фон */
-    border: none;                        /* убираем границу */
-    font-size: 1.5rem;                   /* оставляем меньший размер */
-    cursor: pointer;
-    padding: 0.3em 0.8em;               /* небольшие отступы */
-    transition: color 0.3s;
+    background-color: transparent;   /* Прозрачный фон */
+    border: none;                    /* Без границ */
+    font-size: 1.5rem;               /* Размер символов */
+    cursor: pointer;                 /* Курсор руки */
+    padding: 0.3em 0.8em;            /* Внутренний отступ */
+    transition: color 0.3s;          /* Переход цвета плавно */
 }
 
 .control-btn:hover {
-    color: #ff5722;                      /* оранжевый цвет при наведении */
+    color: #ff5722;                  /* Цвет при наведении */
 }
 
+/* Контроллеры периода */
 .period-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
+    display: inline-flex;            /* Горизонтальное расположение */
+    align-items: center;             /* Центрирование вертикального положения */
+    gap: 10px;                       /* Промежуток между элементами */
+    margin-top: 10px;                /* Верхний отступ */
 }
 
 .period-controls input[type=number] {
-    width: 50px;
-    text-align: center;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    height: 30px;
+    width: 50px;                     /* Ширина поля ввода */
+    text-align: center;              /* Цифры по центру */
+    border-radius: 5px;              /* Скруглённые углы */
+    border: 1px solid #ccc;          /* Тонкая рамка */
+    height: 30px;                    /* Высота поля */
 }
     
 /* ===== FOOTER ===== */
