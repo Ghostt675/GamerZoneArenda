@@ -63,10 +63,8 @@ function renderProducts(containerId, filterFn) {
     });
 }
 
-
-// ===== АНИМАЦИЯ ТОВАР ЛЕТИТ В КОРЗИНУ =====
-function flyToCart(btnEl){
-
+// Функция анимации полёта
+function flyToCart(btnEl) {
     const card = btnEl.closest(".card");
     const img = card ? card.querySelector("img") : null;
     const cartIcon = document.querySelector(".cart-icon");
@@ -76,35 +74,54 @@ function flyToCart(btnEl){
     const imgRect = img.getBoundingClientRect();
     const cartRect = cartIcon.getBoundingClientRect();
 
-    const flyingImg = img.cloneNode(true);
+    const clone = img.cloneNode(true);
+    clone.classList.add("fly-img");
 
-    flyingImg.style.position = "fixed";
-    flyingImg.style.left = imgRect.left + "px";
-    flyingImg.style.top = imgRect.top + "px";
-    flyingImg.style.width = imgRect.width + "px";
-    flyingImg.style.height = imgRect.height + "px";
-    flyingImg.style.transition = "all 0.7s ease";
-    flyingImg.style.zIndex = "9999";
-    flyingImg.style.pointerEvents = "none";
+    // Начальные позиции клона
+    clone.style.left = imgRect.left + "px";
+    clone.style.top = imgRect.top + "px";
+    clone.style.width = imgRect.width + "px";
+    clone.style.height = imgRect.height + "px";
+    clone.style.opacity = "1";
 
-    document.body.appendChild(flyingImg);
+    document.body.appendChild(clone);
 
-    setTimeout(()=>{
+    // Делаем анимацию с requestAnimationFrame
+    requestAnimationFrame(() => {
+        clone.style.left = cartRect.left + "px";
+        clone.style.top = cartRect.top + "px";
+        clone.style.width = "30px";
+        clone.style.height = "30px";
+        clone.style.opacity = "0.7";
+    });
 
-        flyingImg.style.left = cartRect.left + "px";
-        flyingImg.style.top = cartRect.top + "px";
-        flyingImg.style.width = "30px";
-        flyingImg.style.height = "30px";
-        flyingImg.style.opacity = "0.2";
-
-    },10);
-
-    setTimeout(()=>{
-        flyingImg.remove();
-    },700);
-
+    clone.addEventListener("transitionend", () => {
+        clone.remove();
+        // Тряска корзины
+        cartIcon.classList.add("shake");
+        setTimeout(() => cartIcon.classList.remove("shake"), 400);
+    });
 }
 
+// Добавление товара в корзину
+function addToCart(id, btnEl) {
+    if(cart.includes(id)) {
+        cart = cart.filter(item => item !== id);
+    } else {
+        cart.push(id);
+        saveCartToLocalStorage();
+
+        // Анимация полёта
+        if(btnEl){
+            flyToCart(btnEl);
+        }
+    }
+
+    updateCartCount();
+    renderCart();
+    renderFavorites();
+    renderProducts("popularProducts", p => p.popular);
+}
 
 function addToCart(id, btnEl) {
 
