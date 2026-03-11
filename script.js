@@ -167,13 +167,13 @@ function renderCart() {
         const product = products.find(p => p.id === id);
         if (!product) return;
 
-        // Получаем выбранное количество суток
+        // Количество дней
         const days = product.periodValue;
 
-        // Рассчитываем стоимость: цена первого дня плюс остальные дни
-        const firstDayCost = product.prices[0]; // Цена за первый день
-        const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Стоимость последующих дней
-        const totalProductCost = firstDayCost + subsequentDaysCost;
+        // Первая цена и цена за последующие дни
+        const firstDayCost = product.prices[0];     // Цена за первый день
+        const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Цена за дополнительные дни
+        const totalProductCost = firstDayCost + subsequentDaysCost;           // Общая стоимость
 
         total += totalProductCost;
 
@@ -183,12 +183,12 @@ function renderCart() {
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <div class="period-controls">
-                <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)" style="font-size: 2rem;">−</button>
+                <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)">−</button>
                 <input type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
-                <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)" style="font-size: 2rem;">+</button>
+                <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
-            <span>${totalProductCost} ₽ (${firstDayCost} ₽ + ${subsequentDaysCost} ₽ за ${days} суток)</span>
-            <button class="remove-btn" onclick="removeFromCart(${product.id})">❌</button>
+            <span>Общая стоимость: ${totalProductCost} ₽ (${firstDayCost} ₽ за первый день + ${subsequentDaysCost} ₽ за ${Math.max(days - 1, 0)} последующих дня)</span>
+            <button class="remove-btn" onclick="removeFromCart(${product.id})">Удалить</button>
         `;
         container.appendChild(item);
     });
