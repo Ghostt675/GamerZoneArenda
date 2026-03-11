@@ -105,24 +105,25 @@ function flyToCart(btnEl){
 
 }
 
-
 function addToCart(id, btnEl) {
 
     if (cart.includes(id)) {
 
+        // удалить товар
         cart = cart.filter(item => item !== id);
 
     } else {
 
+        // добавить товар
         cart.push(id);
 
-        // ⭐ анимация
         if(btnEl){
             flyToCart(btnEl);
         }
-
-        saveCartToLocalStorage();
     }
+
+    // сохраняем ВСЕГДА
+    saveCartToLocalStorage();
 
     updateCartCount();
     renderCart();
