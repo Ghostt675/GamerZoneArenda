@@ -270,6 +270,7 @@ body {
 .card img{
     width:100%;
     border-radius:8px;
+    transition: transform 0.3s ease;
 }
 
 .reviews {
@@ -543,6 +544,7 @@ button{
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
 .card p {
@@ -555,6 +557,23 @@ button{
     color: #7CFF6B;
     font-weight: bold;
     margin-top: 4px;
+}
+
+.card:hover img{
+    transform: scale(1.03);
+}
+
+/* тряска корзины */
+@keyframes cartShake{
+    0%{ transform: rotate(0deg); }
+    25%{ transform: rotate(-6deg); }
+    50%{ transform: rotate(6deg); }
+    75%{ transform: rotate(-4deg); }
+    100%{ transform: rotate(0deg); }
+}
+
+.cart-icon.shake{
+    animation: cartShake 0.4s ease;
 }
 
 /* ===================================== */
