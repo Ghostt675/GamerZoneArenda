@@ -218,8 +218,17 @@ body {
     display:flex;
     align-items:center;
     gap:40px;
+    position:relative;
     padding-left:20px;
-    border-left:1px solid rgba(255,255,255,0.25);
+}
+
+.icons::before{
+    content:"";
+    position:absolute;
+    left:0;
+    width:1px;
+    height:24px;
+    background:#8aa39c;
 }
 
 /* кнопки иконок */
