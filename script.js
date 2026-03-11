@@ -1,50 +1,53 @@
 // ===== БАЗА ТОВАРОВ =====
 const products = [
-  {
-    id: 1,
-    name: "PlayStation 5",
-    dailyPrice: [1100, 1050, 1000, 950, 900, 900, 900, 900, 900, 900], // цена за каждый день
-    maxDays: 10,
-    startDays: 1,
-    img: "images/ps5.jpg",
-    category: "playstation",
-    popular: true
-  },
-  {
-    id: 2,
-    name: "Xbox Series X",
-    dailyPrice: [1400, 1350, 1300, 1250, 1200],
-    maxDays: 5,
-    startDays: 1,
-    img: "images/xbox.jpg",
-    category: "xbox",
-    popular: true
-  },
-  {
-    id: 3,
-    name: "Call Of Duty WW2",
-    dailyPrice: [500, 480, 460, 440, 420, 400, 380],
-    maxDays: 7,
-    startDays: 1,
-    img: "images/cdww2.png",
-    category: "accounts",
-    popular: true
-  }
+{
+    id:1,
+    name:"PlayStation 5",
+    price:1100,          
+    dailyPrice:[1100, 1000, 950], // цена за 1-й, 2-й, 3-й день и далее по умолчанию price
+    maxDays:30,          
+    startDays:1,         
+    img:"images/ps5.jpg",
+    category:"playstation",
+    popular:true
+},
+
+{
+    id:2,
+    name:"Xbox Series X",
+    price:1400,
+    dailyPrice:[1400,1350,1300],
+    maxDays:20,
+    startDays:1,
+    img:"images/xbox.jpg",
+    category:"xbox",
+    popular:true
+},
+
+{
+    id:3,
+    name:"Call Of Duty WW2",
+    price:500,
+    dailyPrice:[500,450,400],
+    maxDays:7,
+    startDays:1,
+    img:"images/cdww2.png",
+    category:"accounts",
+    popular:true
+}
 ];
 
 // ===== LOCAL STORAGE =====
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-// Сохранение корзины и избранного
+// ===== LOCAL STORAGE FUNCTIONS =====
 function saveCartToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 function saveFavoritesToLocalStorage() {
     localStorage.setItem('favorites', JSON.stringify(favorites));
 }
-
-// Загрузка корзины и избранного
 function loadCartFromLocalStorage() {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) cart = JSON.parse(savedCart);
@@ -54,19 +57,34 @@ function loadFavoritesFromLocalStorage() {
     if (savedFavorites) favorites = JSON.parse(savedFavorites);
 }
 
-// ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
-function renderProducts(containerId, filterFn) {
+// ===== HELPER FUNCTION =====
+function getSubtotal(product, days){
+    let subtotal = 0;
+    for(let i=0;i<days;i++){
+        if(product.dailyPrice && product.dailyPrice[i] != null){
+            subtotal += product.dailyPrice[i];
+        } else {
+            subtotal += product.price;
+        }
+    }
+    return subtotal;
+}
+
+// ===== RENDER PRODUCTS =====
+function renderProducts(containerId, filterFn){
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if(!container) return;
     container.innerHTML = "";
 
     products.filter(filterFn).forEach(product => {
         const isFav = favorites.includes(product.id);
-        const days = cart[product.id]?.days || product.startDays;
-        const subtotal = product.dailyPrice.slice(0, days).reduce((a,b)=>a+b,0);
+        const inCart = cart[product.id] != null;
+        const days = inCart ? cart[product.id].days : product.startDays;
+        const subtotal = getSubtotal(product, days);
 
         const card = document.createElement("div");
         card.className = "card";
+
         card.innerHTML = `
             <div class="favorite-btn ${isFav ? "active" : ""}" 
                  data-id="${product.id}" 
@@ -77,14 +95,14 @@ function renderProducts(containerId, filterFn) {
             <button class="add-cart-btn" 
                 data-id="${product.id}" 
                 onclick="addToCart(${product.id}, this)">
-                ${cart[product.id] ? "В корзине" : "Добавить в корзину"}
+                ${inCart ? "В корзине" : "Добавить в корзину"}
             </button>
         `;
         container.appendChild(card);
     });
 }
 
-// ===== АНИМАЦИЯ ТОВАР ЛЕТИТ В КОРЗИНУ =====
+// ===== ANIMATION =====
 function flyToCart(btnEl){
     const card = btnEl.closest(".card");
     const img = card ? card.querySelector("img") : null;
@@ -113,20 +131,16 @@ function flyToCart(btnEl){
         flyingImg.style.opacity = "0.2";
     },10);
 
-    setTimeout(()=>{
-        flyingImg.remove();
-        cartIcon.classList.add("shake");
-        setTimeout(()=>cartIcon.classList.remove("shake"),400);
-    },700);
+    setTimeout(()=>flyingImg.remove(),700);
 }
 
-// ===== КОРЗИНА =====
+// =====FUNCTIONS =====
 function addToCart(id, btnEl){
-    const product = products.find(p => p.id===id);
+    const product = products.find(p=>p.id===id);
     if(!product) return;
 
     if(!cart[id]){
-        cart[id] = { days: product.startDays };
+        cart[id] = {days: product.startDays};
         if(btnEl) flyToCart(btnEl);
     } else {
         delete cart[id];
@@ -134,18 +148,23 @@ function addToCart(id, btnEl){
     saveCartToLocalStorage();
     updateCartCount();
     renderCart();
-    renderProducts("popularProducts", p => p.popular);
+    renderProducts("popularProducts", p=>p.popular);
 }
 
 function removeFromCart(id){
     delete cart[id];
+    const btn = document.querySelector(`.add-cart-btn[data-id="${id}"]`);
+    if(btn){
+        btn.classList.remove("in-cart");
+        btn.innerText = "Добавить в корзину";
+    }
     saveCartToLocalStorage();
     updateCartCount();
     renderCart();
 }
 
 function changeDays(id, delta){
-    const product = products.find(p => p.id===id);
+    const product = products.find(p=>p.id===id);
     if(!product || !cart[id]) return;
 
     cart[id].days += delta;
@@ -154,6 +173,7 @@ function changeDays(id, delta){
 
     saveCartToLocalStorage();
     renderCart();
+    updateCartCount();
 }
 
 function updateCartCount(){
@@ -164,22 +184,20 @@ function updateCartCount(){
 function renderCart(){
     const container = document.getElementById("cartItems");
     container.innerHTML = "";
-
     const ids = Object.keys(cart);
     if(ids.length===0){
-        container.innerHTML="<p class='empty-text'>Корзина пуста</p>";
-        document.getElementById("total").innerText="";
+        container.innerHTML = "<p class='empty-text'>Корзина пуста</p>";
+        document.getElementById("total").innerText = "";
         return;
     }
 
-    let total = 0;
+    let total=0;
     ids.forEach(id=>{
-        const product = products.find(p=>p.id===parseInt(id));
+        const product = products.find(p=>p.id==parseInt(id));
         if(!product) return;
-
         const days = cart[id].days;
-        const subtotal = product.dailyPrice.slice(0,days).reduce((a,b)=>a+b,0);
-        total += subtotal;
+        const subtotal = getSubtotal(product, days);
+        total+=subtotal;
 
         const item = document.createElement("div");
         item.className="fav-card";
@@ -198,64 +216,45 @@ function renderCart(){
         `;
         container.appendChild(item);
     });
-    document.getElementById("total").innerText="Итого: "+total+" ₽";
+
+    document.getElementById("total").innerText = "Итого: "+total+" ₽";
 }
 
-// ===== ИЗБРАННОЕ =====
+// ===== FAVORITES =====
 function renderFavorites(){
     const container = document.getElementById("favoritesItems");
-    container.innerHTML = "";
+    container.innerHTML="";
     if(!favorites.length){
         container.innerHTML="<p class='empty-text'>Здесь будут ваши избранные товары</p>";
         return;
     }
-
     favorites.forEach(id=>{
         const product = products.find(p=>p.id===id);
         if(!product) return;
-
-        const days = cart[id]?.days || product.startDays;
-        const subtotal = product.dailyPrice.slice(0,days).reduce((a,b)=>a+b,0);
-
         const card = document.createElement("div");
         card.className="fav-card";
         card.innerHTML=`
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>${subtotal} ₽ / ${days} ${days>1?'суток':'сутки'}</span>
-            <button class="add-cart-btn"
-                onclick="addToCart(${product.id}, this)">
-                ${cart[product.id] ? "В корзине" : "Добавить в корзину"}
+            <span>${product.price} ₽</span>
+            <button class="add-cart-btn" onclick="addToCart(${product.id}, this)">
+                ${cart[product.id]?"В корзине":"Добавить в корзину"}
             </button>
-            <button class="remove-btn"
-                onclick="toggleFavorite(${product.id})">❌</button>
+            <button class="remove-btn" onclick="toggleFavorite(${product.id})">❌</button>
         `;
         container.appendChild(card);
     });
 }
 
-function toggleFavorite(id, btnEl){
-    const idx = favorites.indexOf(id);
-    if(idx===-1) favorites.push(id);
-    else favorites.splice(idx,1);
-
-    if(!btnEl) btnEl=document.querySelector(`.favorite-btn[data-id="${id}"]`);
-    if(btnEl) btnEl.classList.toggle("active", favorites.includes(id));
-
-    saveFavoritesToLocalStorage();
-    renderFavorites();
-    renderProducts("popularProducts", p=>p.popular);
-}
-
-// ===== МОДАЛКИ =====
-function openCart(){ document.getElementById("cartModal").classList.add("open"); renderCart(); showOverlay(); }
-function closeCart(){ document.getElementById("cartModal").classList.remove("open"); hideOverlay(); }
-function openFavorites(){ document.getElementById("favoritesModal").classList.add("open"); renderFavorites(); showOverlay(); }
-function closeFavorites(){ document.getElementById("favoritesModal").classList.remove("open"); hideOverlay(); }
+// ===== MODALS =====
+function openCart(){document.getElementById("cartModal").classList.add("open");renderCart();showOverlay();}
+function closeCart(){document.getElementById("cartModal").classList.remove("open");hideOverlay();}
+function openFavorites(){document.getElementById("favoritesModal").classList.add("open");renderFavorites();showOverlay();}
+function closeFavorites(){document.getElementById("favoritesModal").classList.remove("open");hideOverlay();}
 
 // ===== OVERLAY =====
-function showOverlay(){ document.getElementById("overlay").classList.add("show"); }
-function hideOverlay(){ document.getElementById("overlay").classList.remove("show"); }
+function showOverlay(){document.getElementById("overlay").classList.add("show");}
+function hideOverlay(){document.getElementById("overlay").classList.remove("show");}
 
 // ===== SIDEBAR =====
 function toggleCatalog(){
@@ -266,17 +265,36 @@ function toggleCatalog(){
     navbar.classList.toggle("shifted");
 }
 
-// ===== ИНИЦИАЛИЗАЦИЯ =====
+// ===== FAVORITE BUTTON =====
+function toggleFavorite(id, btnEl){
+    const idx = favorites.indexOf(id);
+    if(idx===-1) favorites.push(id);
+    else favorites.splice(idx,1);
+
+    if(!btnEl) btnEl=document.querySelector(`.favorite-btn[data-id="${id}"]`);
+    if(btnEl){
+        btnEl.classList.toggle("active", favorites.includes(id));
+        if(favorites.includes(id)){
+            btnEl.style.transform="scale(1.3)";
+            setTimeout(()=>btnEl.style.transform="scale(1)",200);
+        }
+    }
+
+    saveFavoritesToLocalStorage();
+    renderFavorites();
+    renderProducts("popularProducts",p=>p.popular);
+}
+
+// ===== INIT =====
 document.addEventListener("DOMContentLoaded", ()=>{
     loadCartFromLocalStorage();
     loadFavoritesFromLocalStorage();
-    renderProducts("popularProducts", p=>p.popular);
+    renderProducts("popularProducts",p=>p.popular);
     updateCartCount();
 
-    const overlay=document.getElementById("overlay");
-    overlay.addEventListener("click", ()=>{
+    const overlay = document.getElementById("overlay");
+    overlay.addEventListener("click",()=>{
         closeCart();
         closeFavorites();
     });
-});
-
+}); 
