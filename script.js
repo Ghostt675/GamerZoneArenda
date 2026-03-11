@@ -38,11 +38,13 @@ function loadFavoritesFromLocalStorage() {
 // ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
 function renderProducts(containerId, filterFn) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if(!container) return;
     container.innerHTML = "";
 
     products.filter(filterFn).forEach(product => {
+        const isInCart = cart.includes(product.id);
         const isFav = favorites.includes(product.id);
+
         const card = document.createElement("div");
         card.className = "card";
 
@@ -56,7 +58,7 @@ function renderProducts(containerId, filterFn) {
             <button class="add-cart-btn" 
                 data-id="${product.id}" 
                 onclick="addToCart(${product.id}, this)">
-                ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
+                ${isInCart ? "В корзине" : "Добавить в корзину"}
             </button>
         `;
         container.appendChild(card);
@@ -115,30 +117,6 @@ function addToCart(id, btnEl) {
         if(btnEl){
             flyToCart(btnEl);
         }
-    }
-
-    updateCartCount();
-    renderCart();
-    renderFavorites();
-    renderProducts("popularProducts", p => p.popular);
-}
-
-function addToCart(id, btnEl) {
-
-    if (cart.includes(id)) {
-
-        cart = cart.filter(item => item !== id);
-
-    } else {
-
-        cart.push(id);
-
-        // ⭐ анимация
-        if(btnEl){
-            flyToCart(btnEl);
-        }
-
-        saveCartToLocalStorage();
     }
 
     updateCartCount();
