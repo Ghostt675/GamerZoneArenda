@@ -103,8 +103,10 @@ function flyToCart(btnEl) {
 // Добавление товара в корзину
 function addToCart(id, btnEl) {
     if (cart.hasOwnProperty(id)) {
-        cart[id]++;
+        // Если товар уже в корзине, удаляем его
+        delete cart[id];
     } else {
+        // Иначе добавляем товар в корзину
         cart[id] = 1;
     }
 
@@ -113,8 +115,14 @@ function addToCart(id, btnEl) {
     renderCart();
     renderProducts('popularProducts', p => p.popular);
 
-    if (btnEl) flyToCart(btnEl);
+    if (btnEl) {
+        // меняем текст кнопки в зависимости от состояния товара
+        btnEl.textContent = cart.hasOwnProperty(id) ? 'В корзине' : 'Добавить в корзину';
+    }
 }
+
+// Больше не нужно отдельной функции удаления
+// Вы можете избавиться от функции removeFromCart(), поскольку вся логика содержится внутри addToCart()
 
 // Удаление товара из корзины
 function removeFromCart(id) {
