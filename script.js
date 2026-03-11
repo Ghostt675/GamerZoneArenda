@@ -186,7 +186,7 @@ function renderCart() {
                 <input type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
                 <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
-            <span>Стоимость: ${totalProductCost} ₽ (${firstDayCost} ₽ за первый день + ${subsequentDaysCost} ₽ за ${Math.max(days - 1, 0)} дополнительных дня)</span>
+            <span>Стоимость: ${totalProductCost} 
             <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
         `;
         container.appendChild(item);
