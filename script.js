@@ -1,8 +1,38 @@
 // ===== БАЗА ТОВАРОВ =====
 const products = [
-    { id:1, name:"PlayStation 5", price:1100, maxPeriod:7, periodValue:1, period:"сутки", img:"images/ps5.jpg", category:"playstation", popular:true },
-    { id:2, name:"Xbox Series X", price:1400, maxPeriod:5, periodValue:1, period:"сутки", img:"images/xbox.jpg", category:"xbox", popular:true },
-    { id:3, name:"Call Of Duty WW2", price:500, maxPeriod:3, periodValue:3, period:"3 суток", img:"images/cdww2.png", category:"accounts", popular:true }
+    { 
+      id:1,
+      name:"PlayStation 5",
+      prices:[1100, 1600], // Цены: 1-й день - 1100₽, последующие дни - 1600₽
+      maxPeriod:7,
+      periodValue:1,
+      period:"сутки",
+      img:"images/ps5.jpg",
+      category:"playstation",
+      popular:true 
+    },
+    { 
+      id:2,
+      name:"Xbox Series X",
+      prices:[1400, 1800],
+      maxPeriod:5,
+      periodValue:1,
+      period:"сутки",
+      img:"images/xbox.jpg",
+      category:"xbox",
+      popular:true 
+    },
+    { 
+      id:3,
+      name:"Call Of Duty WW2",
+      prices:[500, 700],
+      maxPeriod:3,
+      periodValue:3,
+      period:"3 суток",
+      img:"images/cdww2.png",
+      category:"accounts",
+      popular:true 
+    }
 ];
 
 // ===== LOCAL STORAGE =====
@@ -137,9 +167,15 @@ function renderCart() {
         const product = products.find(p => p.id === id);
         if (!product) return;
 
-        // Умножаем цену на выбранный период
-        const totalPrice = product.price * product.periodValue;
-        total += totalPrice;
+        // Получаем выбранное количество суток
+        const days = product.periodValue;
+
+        // Рассчитываем стоимость: цена первого дня плюс остальные дни
+        const firstDayCost = product.prices[0]; // Цена за первый день
+        const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Стоимость последующих дней
+        const totalProductCost = firstDayCost + subsequentDaysCost;
+
+        total += totalProductCost;
 
         const item = document.createElement("div");
         item.className = "fav-card";
@@ -148,10 +184,10 @@ function renderCart() {
             <p>${product.name}</p>
             <div class="period-controls">
                 <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)" style="font-size: 2rem;">−</button>
-                <input type="number" value="${product.periodValue}" min="1" max="${product.maxPeriod}" readonly />
+                <input type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
                 <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)" style="font-size: 2rem;">+</button>
             </div>
-            <span>${totalPrice} ₽ (${product.price} ₽ × ${product.periodValue} суток)</span>
+            <span>${totalProductCost} ₽ (${firstDayCost} ₽ + ${subsequentDaysCost} ₽ за ${days} суток)</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">❌</button>
         `;
         container.appendChild(item);
