@@ -1,8 +1,37 @@
 // ===== БАЗА ТОВАРОВ =====
 const products = [
-    { id:1, name:"PlayStation 5", price:1100, period:"сутки", img:"images/ps5.jpg", category:"playstation", popular:true },
-    { id:2, name:"Xbox Series X", price:1400, period:"сутки", img:"images/xbox.jpg", category:"xbox", popular:true },
-    { id:3, name:"Call Of Duty WW2", price:500, period:"3 суток", img:"images/cdww2.png", category:"accounts", popular:true }
+{
+id:1,
+name:"PlayStation 5",
+price:1100,          // цена за сутки
+maxDays:30,          // максимум суток
+startDays:1,         // начальное значение
+img:"images/ps5.jpg",
+category:"playstation",
+popular:true
+},
+
+{
+id:2,
+name:"Xbox Series X",
+price:1400,
+maxDays:20,
+startDays:1,
+img:"images/xbox.jpg",
+category:"xbox",
+popular:true
+},
+
+{
+id:3,
+name:"Call Of Duty WW2",
+price:500,
+maxDays:7,
+startDays:1,
+img:"images/cdww2.png",
+category:"accounts",
+popular:true
+}
 ];
 
 // ===== LOCAL STORAGE =====
@@ -107,16 +136,24 @@ function flyToCart(btnEl){
 
 function addToCart(id, btnEl){
 
-    if(!cart[id]){
-        cart[id] = { days:1 };
-        flyToCart(btnEl);
-    }
+const product = products.find(p => p.id === id);
 
-    saveCartToLocalStorage();
+if(!cart[id]){
 
-    updateCartCount();
-    renderCart();
-    renderProducts("popularProducts", p => p.popular);
+cart[id] = {
+days: product.startDays
+};
+
+if(btnEl){
+flyToCart(btnEl);
+}
+
+}
+
+saveCartToLocalStorage();
+
+updateCartCount();
+renderCart();
 }
 
 function removeFromCart(id){
@@ -270,10 +307,14 @@ function toggleCatalog() {
 
 function increaseDays(id){
 
-    cart[id].days++;
+const product = products.find(p => p.id === id);
 
-    saveCartToLocalStorage();
-    renderCart();
+if(cart[id].days < product.maxDays){
+cart[id].days++;
+}
+
+saveCartToLocalStorage();
+renderCart();
 }
 
 function decreaseDays(id){
