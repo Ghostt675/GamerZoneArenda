@@ -174,7 +174,7 @@ body {
 .nav-center{
     display:flex;
     align-items:center;
-    gap:15px;           
+    gap:20px;           
 }
 
 /* кнопка каталог */
@@ -196,9 +196,9 @@ body {
 
 /* поиск */
 .search{
-    width:320px;       
-    min-width:600px;
-    max-width:1000px;
+    width:500px;       
+    min-width:250px;
+    max-width:600px;
     background:#1f2624;
     border:none;
     color:white;
@@ -216,7 +216,6 @@ body {
 /* иконки */
 .icons{
     display:flex;
-    gap:24px;          
     align-items:center;
 }
 
@@ -226,12 +225,18 @@ body {
     background:none;
     border:none;
     cursor:pointer;
-    padding:0;
+    padding:0 12px;
     margin:0;
 }
 
+/* разделительная линия */
+.icon-btn + .icon-btn{
+    border-left:1px solid #8aa39c;
+}
+
+/* иконка */
 .nav-icon{
-    width:36px;        
+    width:36px;
     height:36px;
     object-fit:contain;
     transition:0.2s;
