@@ -105,29 +105,17 @@ function flyToCart(btnEl){
 
 }
 
-function addToCart(id, btnEl) {
+function addToCart(id, btnEl){
 
-    if (cart.includes(id)) {
-
-        // удалить товар
-        cart = cart.filter(item => item !== id);
-
-    } else {
-
-        // добавить товар
-        cart.push(id);
-
-        if(btnEl){
-            flyToCart(btnEl);
-        }
+    if(!cart[id]){
+        cart[id] = { days:1 };
+        flyToCart(btnEl);
     }
 
-    // сохраняем ВСЕГДА
     saveCartToLocalStorage();
 
     updateCartCount();
     renderCart();
-    renderFavorites();
     renderProducts("popularProducts", p => p.popular);
 }
 
@@ -153,32 +141,57 @@ function updateCartCount() {
 }
 
 function renderCart() {
+
     const container = document.getElementById("cartItems");
     container.innerHTML = "";
 
-    if (!cart.length) {
+    const ids = Object.keys(cart);
+
+    if (!ids.length) {
         container.innerHTML = "<p class='empty-text'>Корзина пуста</p>";
         document.getElementById("total").innerText = "";
         return;
     }
 
     let total = 0;
-    cart.forEach(id => {
-        const product = products.find(p => p.id === id);
+
+    ids.forEach(id => {
+
+        const product = products.find(p => p.id == id);
         if (!product) return;
-        total += product.price;
+
+        const days = cart[id].days;
+        const price = product.price * days;
+
+        total += price;
 
         const item = document.createElement("div");
         item.className = "fav-card";
+
         item.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
-            <p>${product.name}</p>
-            <span>${product.price} ₽</span>
-            <button class="remove-btn" onclick="removeFromCart(${product.id})">❌</button>
+
+            <div class="cart-info">
+                <p>${product.name}</p>
+
+                <div class="days-control">
+                    <button onclick="decreaseDays(${id})">-</button>
+                    <span>${days}</span>
+                    <button onclick="increaseDays(${id})">+</button>
+                </div>
+
+                <span>${price} ₽</span>
+            </div>
+
+            <button class="remove-btn" onclick="removeFromCart(${id})">❌</button>
         `;
+
         container.appendChild(item);
+
     });
+
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
+
 }
 
 function renderFavorites() {
@@ -253,6 +266,27 @@ function toggleCatalog() {
 
     sidebar.classList.toggle("open");
     navbar.classList.toggle("shifted");
+}
+
+function increaseDays(id){
+
+    cart[id].days++;
+
+    saveCartToLocalStorage();
+    renderCart();
+}
+
+function decreaseDays(id){
+
+    cart[id].days--;
+
+    if(cart[id].days <= 0){
+        delete cart[id];
+    }
+
+    saveCartToLocalStorage();
+    renderCart();
+    updateCartCount();
 }
 
 //функция прыжка сердца избранного
