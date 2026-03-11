@@ -1,8 +1,8 @@
 // ===== БАЗА ТОВАРОВ =====
 const products = [
-    { id:1, name:"PlayStation 5", price:1100, period:"сутки", img:"images/ps5.jpg", category:"playstation", popular:true },
-    { id:2, name:"Xbox Series X", price:1400, period:"сутки", img:"images/xbox.jpg", category:"xbox", popular:true },
-    { id:3, name:"Call Of Duty WW2", price:500, period:"3 суток", img:"images/cdww2.png", category:"accounts", popular:true }
+    { id:1, name:"PlayStation 5", price:1100, maxPeriod:7, periodValue:1, period:"сутки", img:"images/ps5.jpg", category:"playstation", popular:true },
+    { id:2, name:"Xbox Series X", price:1400, maxPeriod:5, periodValue:1, period:"сутки", img:"images/xbox.jpg", category:"xbox", popular:true },
+    { id:3, name:"Call Of Duty WW2", price:500, maxPeriod:3, periodValue:3, period:"3 суток", img:"images/cdww2.png", category:"accounts", popular:true }
 ];
 
 // ===== LOCAL STORAGE =====
@@ -35,6 +35,21 @@ function loadFavoritesFromLocalStorage() {
     }
 }
 
+// Функция изменения периода аренды
+function changePeriod(id, delta) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+
+    product.periodValue += delta;
+
+    // Ограничиваем значения
+    if (product.periodValue < 1) product.periodValue = 1;
+    if (product.periodValue > product.maxPeriod) product.periodValue = product.maxPeriod;
+
+    // Перерисовываем карточку
+    renderProducts("popularProducts", p => p.popular);
+}
+
 // ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
 function renderProducts(containerId, filterFn) {
     const container = document.getElementById(containerId);
@@ -52,17 +67,23 @@ function renderProducts(containerId, filterFn) {
                  onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
+            
+            <div class="period-controls">
+                <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)" style="font-size: 2rem;">−</button>
+                <input type="number" value="${product.periodValue}" min="1" max="${product.maxPeriod}" readonly />
+                <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)" style="font-size: 2rem;">+</button>
+            </div>
+            
             <span>${product.price} ₽ / ${product.period}</span>
             <button class="add-cart-btn" 
-                data-id="${product.id}" 
-                onclick="addToCart(${product.id}, this)">
+                    data-id="${product.id}" 
+                    onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
         `;
         container.appendChild(card);
     });
 }
-
 
 // ===== АНИМАЦИЯ ТОВАР ЛЕТИТ В КОРЗИНУ =====
 function flyToCart(btnEl){
@@ -106,14 +127,10 @@ function flyToCart(btnEl){
 }
 
 function addToCart(id, btnEl) {
-
     if (cart.includes(id)) {
-
         // удалить товар
         cart = cart.filter(item => item !== id);
-
     } else {
-
         // добавить товар
         cart.push(id);
 
@@ -122,9 +139,7 @@ function addToCart(id, btnEl) {
         }
     }
 
-    // сохраняем ВСЕГДА
     saveCartToLocalStorage();
-
     updateCartCount();
     renderCart();
     renderFavorites();
@@ -132,12 +147,9 @@ function addToCart(id, btnEl) {
 }
 
 function removeFromCart(id){
-
     cart = cart.filter(item => item !== id);
 
-    // ищем кнопку товара на странице
     const btn = document.querySelector(`.add-cart-btn[data-id="${id}"]`);
-
     if(btn){
         btn.classList.remove("in-cart");
         btn.innerText = "Добавить в корзину";
@@ -166,14 +178,17 @@ function renderCart() {
     cart.forEach(id => {
         const product = products.find(p => p.id === id);
         if (!product) return;
-        total += product.price;
+        
+        // Умножаем цену на выбранный период
+        const totalPrice = product.price * product.periodValue;
+        total += totalPrice;
 
         const item = document.createElement("div");
         item.className = "fav-card";
         item.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>${product.price} ₽</span>
+            <span>${totalPrice} ₽ (${product.price} ₽ × ${product.periodValue} суток)</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">❌</button>
         `;
         container.appendChild(item);
@@ -270,7 +285,7 @@ function toggleFavorite(id, btnEl) {
     if (btnEl) {
         btnEl.classList.toggle("active", favorites.includes(id));
 
-        // маленький эффект «прыжка»
+        // Эффект «прыжка»
         if (favorites.includes(id)) {
             btnEl.style.transform = "scale(1.3)";
             setTimeout(() => {
@@ -285,11 +300,8 @@ function toggleFavorite(id, btnEl) {
     renderProducts("popularProducts", p => p.popular);
 }
 
-
-
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
-
     loadCartFromLocalStorage();
     loadFavoritesFromLocalStorage();
     
