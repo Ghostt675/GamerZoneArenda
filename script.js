@@ -95,7 +95,7 @@ function renderProducts(containerId, filterFn) {
             <div class="favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>${product.price} ₽</span> <!-- Здесь убираем лишние символы -->
+            <span>От ${product.prices[0]} ₽</span> <!-- Показываем стартовую цену -->
             <button class="add-cart-btn" data-id="${product.id}" onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
@@ -162,11 +162,11 @@ function renderCart() {
         const product = products.find(p => p.id === id);
         if (!product) return;
 
-        // Количество дней
+        // Период аренды
         const days = product.periodValue;
 
-        // Первая цена и цена за последующие дни
-        const firstDayCost = product.prices[0];          // Цена за первый день
+        // Первоначальная цена и цена за следующие дни
+        const firstDayCost = product.prices[0];              // Цена за первый день
         const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Цена за доп. дни
         const totalProductCost = firstDayCost + subsequentDaysCost;           // Общая стоимость
 
@@ -182,7 +182,7 @@ function renderCart() {
                 <input type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
                 <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
-            <span>Стоимость: ${totalProductCost} 
+            <span>Стоимость: ${totalProductCost} ₽</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
         `;
         container.appendChild(item);
