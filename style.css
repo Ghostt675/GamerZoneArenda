@@ -889,11 +889,16 @@ button{
     padding:20px 15px;
 }
 
+.container,
+.products {
+    overflow: visible; /* обязательно */
+}
+
 /* ===== FOOTER ===== */
 footer{
     padding:15px;
 }
-}
+    }
 
 
 
