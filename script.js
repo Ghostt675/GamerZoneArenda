@@ -142,7 +142,7 @@ function flyToCart(btnEl) {
         flyingImg.remove();
     }, 700);
 }
-}
+
 
 function addToCart(id, btnEl) {
     if (cart.includes(id)) {
