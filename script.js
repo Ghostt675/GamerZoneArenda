@@ -5,9 +5,35 @@ const products = [
     { id: 3, name: "Call Of Duty WW2", price: 500, img: "images/cdww2.png", category: "accounts", popular: true }
 ];
 
-// ===== СОСТОЯНИЕ =====
-let cart = [];
-let favorites = [];
+// ===== LOCAL STORAGE =====
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+// Сохранение корзины в localStorage
+function saveCartToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Сохранение избранного в localStorage
+function saveFavoritesToLocalStorage() {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+// Загрузка корзины из localStorage
+function loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+    }
+}
+
+// Загрузка избранного из localStorage
+function loadFavoritesFromLocalStorage() {
+    const savedFavorites = localStorage.getItem('favorites');
+    if (savedFavorites) {
+        favorites = JSON.parse(savedFavorites);
+    }
+}
 
 // ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
 function renderProducts(containerId, filterFn) {
@@ -47,6 +73,7 @@ function addToCart(id, btnEl) {
 
         cart.push(id);
 
+        saveCartToLocalStorage();
     }
 
     updateCartCount();
@@ -66,7 +93,7 @@ function removeFromCart(id){
         btn.classList.remove("in-cart");
         btn.innerText = "Добавить в корзину";
     }
-
+    saveCartToLocalStorage();
     updateCartCount();
     renderCart();
 }
@@ -203,6 +230,8 @@ function toggleFavorite(id, btnEl) {
         }
     }
 
+    saveFavoritesToLocalStorage();
+    
     renderFavorites();
     renderProducts("popularProducts", p => p.popular);
 }
@@ -211,6 +240,10 @@ function toggleFavorite(id, btnEl) {
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
+
+    loadCartFromLocalStorage();
+    loadFavoritesFromLocalStorage();
+    
     renderProducts("popularProducts", p => p.popular);
     updateCartCount();
 
