@@ -68,13 +68,15 @@
       <input class="search" placeholder="Поиск товаров">
   </div>
 
-  <!-- правые кнопки -->
+  <!-- правые иконки -->
   <div class="icons">
-      <button class="nav-btn" onclick="openFavorites()">Избранное</button>
-     <button class="nav-btn cart-icon" onclick="openCart()">
-        Корзина (<span id="cartCount">0</span>)
+      <button class="icon-btn" onclick="openFavorites()">
+          <img src="images/favorite-icon.png" alt="Избранное" class="nav-icon">
       </button>
-      <button class="nav-btn">Профиль</button>
+      <button class="icon-btn" onclick="openCart()">
+          <img src="images/cart-icon.png" alt="Корзина" class="nav-icon">
+          <span id="cartCount" class="cart-count">0</span>
+      </button>
   </div>
 
 </div>
