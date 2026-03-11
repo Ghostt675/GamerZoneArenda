@@ -151,7 +151,6 @@ function updateCartCount() {
     if (el) el.innerText = cart.length;
 }
 
-// Рендер корзины с возможностью изменить срок аренды
 function renderCart() {
     const container = document.getElementById("cartItems");
     container.innerHTML = "";
@@ -171,8 +170,8 @@ function renderCart() {
         const days = product.periodValue;
 
         // Первая цена и цена за последующие дни
-        const firstDayCost = product.prices[0];     // Цена за первый день
-        const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Цена за дополнительные дни
+        const firstDayCost = product.prices[0];          // Цена за первый день
+        const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Цена за доп. дни
         const totalProductCost = firstDayCost + subsequentDaysCost;           // Общая стоимость
 
         total += totalProductCost;
@@ -187,8 +186,8 @@ function renderCart() {
                 <input type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
                 <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
-            <span>Общая стоимость: ${totalProductCost} ₽ (${firstDayCost} ₽ за первый день + ${subsequentDaysCost} ₽ за ${Math.max(days - 1, 0)} последующих дня)</span>
-            <button class="remove-btn" onclick="removeFromCart(${product.id})">Удалить</button>
+            <span>Стоимость: ${totalProductCost} ₽ (${firstDayCost} ₽ за первый день + ${subsequentDaysCost} ₽ за ${Math.max(days - 1, 0)} дополнительных дня)</span>
+            <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
         `;
         container.appendChild(item);
     });
