@@ -1,8 +1,8 @@
 // ===== БАЗА ТОВАРОВ =====
 const products = [
-    { id: 1, name: "PlayStation 5", price: 1100, img: "images/ps5.jpg", category: "playstation", popular: true },
-    { id: 2, name: "Xbox Series X", price: 1400, img: "images/xbox.jpg", category: "xbox", popular: true },
-    { id: 3, name: "Call Of Duty WW2", price: 500, img: "images/cdww2.png", category: "accounts", popular: true }
+    { id:1, name:"PlayStation 5", price:1100, period:"сутки", img:"images/ps5.jpg", category:"playstation", popular:true },
+    { id:2, name:"Xbox Series X", price:1400, period:"сутки", img:"images/xbox.jpg", category:"xbox", popular:true },
+    { id:3, name:"Call Of Duty WW2", price:500, period:"3 суток", img:"images/cdww2.png", category:"accounts", popular:true }
 ];
 
 // ===== LOCAL STORAGE =====
@@ -52,7 +52,7 @@ function renderProducts(containerId, filterFn) {
                  onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>${product.price} ₽</span>
+            <span>${product.price} ₽ / ${product.period}</span>
             <button class="add-cart-btn" 
                 data-id="${product.id}" 
                 onclick="addToCart(${product.id}, this)">
