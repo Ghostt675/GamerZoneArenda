@@ -211,7 +211,7 @@ function renderCart() {
             <p>${product.name}</p>
             <div class="period-controls">
                 <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)">−</button>
-                <input class="period-input" type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
+               <input class="period-input" type="text" value="${days}" readonly/>
                 <span class="period-label">${formatDuration(days)}</span>
                 <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
