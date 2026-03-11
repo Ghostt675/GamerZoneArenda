@@ -5,71 +5,64 @@ const products = [
     { id: 3, name: "Call Of Duty WW2", price: 500, img: "images/cdww2.png", category: "accounts", popular: true }
 ];
 
-// ===== LOCAL STORAGE =====
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+// Хранение товаров в корзине и избранном
+let cart = {};
+let favorites = [];
 
-// Сохранение корзины в localStorage
-function saveCartToLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+// Получение данных из localStorage
+function loadDataFromLocalStorage() {
+    try {
+        const storedCart = localStorage.getItem('cart');
+        if(storedCart) cart = JSON.parse(storedCart);
+
+        const storedFaves = localStorage.getItem('favorites');
+        if(storedFaves) favorites = JSON.parse(storedFaves);
+    } catch(e) {}
 }
 
-// Сохранение избранного в localStorage
-function saveFavoritesToLocalStorage() {
+// Сохранение данных в localStorage
+function saveDataToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
-// Загрузка корзины из localStorage
-function loadCartFromLocalStorage() {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
-}
-
-// Загрузка избранного из localStorage
-function loadFavoritesFromLocalStorage() {
-    const savedFavorites = localStorage.getItem('favorites');
-    if (savedFavorites) {
-        favorites = JSON.parse(savedFavorites);
-    }
-}
-
-// ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
+// Генерация HTML-контента для отображения товаров
 function renderProducts(containerId, filterFn) {
     const container = document.getElementById(containerId);
-    if(!container) return;
-    container.innerHTML = "";
+    if (!container) return;
+
+    container.innerHTML = ''; // очищаем контейнер
 
     products.filter(filterFn).forEach(product => {
-        const isInCart = cart.includes(product.id);
-        const isFav = favorites.includes(product.id);
+        const isInCart = !!cart[product.id]; // проверка наличия товара в корзине
+        const isFav = favorites.includes(product.id); // проверка наличия товара в избранном
 
-        const card = document.createElement("div");
-        card.className = "card";
+        const card = document.createElement('div');
+        card.className = 'card';
 
         card.innerHTML = `
-            <div class="favorite-btn ${isFav ? "active" : ""}" 
-                 data-id="${product.id}" 
+            <div class="favorite-btn ${isFav ? 'active' : ''}"
+                 data-id="${product.id}"
                  onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <span>${product.price} ₽</span>
-            <button class="add-cart-btn" 
-                data-id="${product.id}" 
-                onclick="addToCart(${product.id}, this)">
-                ${isInCart ? "В корзине" : "Добавить в корзину"}
+            <button class="add-cart-btn"
+                    data-id="${product.id}"
+                    onclick="addToCart(${product.id}, this)"
+            >${isInCart ? 'В корзине' : 'Добавить в корзину'}
             </button>
         `;
+
         container.appendChild(card);
     });
 }
 
-// Функция анимации полёта
+// Анимация полёта товара в корзину
 function flyToCart(btnEl) {
-    const card = btnEl.closest(".card");
-    const img = card && card.querySelector("img");
-    const cartIcon = document.querySelector(".cart-icon");
+    const card = btnEl.closest('.card');
+    const img = card && card.querySelector('img');
+    const cartIcon = document.querySelector('.cart-icon');
 
     if (!img || !cartIcon) return;
 
@@ -77,113 +70,119 @@ function flyToCart(btnEl) {
     const cartRect = cartIcon.getBoundingClientRect();
 
     const clone = img.cloneNode(true);
-    clone.classList.add("fly-img");
+    clone.classList.add('fly-img');
 
-    // Установим начальное положение клона относительно окна браузера
-    clone.style.position = "fixed"; // обязательный fixed!
+    // установка стартовых координат и размеров
+    clone.style.position = 'fixed';
     clone.style.left = `${imgRect.left}px`;
     clone.style.top = `${imgRect.top}px`;
     clone.style.width = `${imgRect.width}px`;
     clone.style.height = `${imgRect.height}px`;
-    clone.style.zIndex = "9999"; // повышаем индекс слоя
-    clone.style.transition = "all 0.7s cubic-bezier(.3,.7,.3,1.2)"; // улучшенная кривая движения
+    clone.style.opacity = '1';
+    clone.style.zIndex = '9999';
 
     document.body.appendChild(clone);
 
-    // Начинаем анимацию
+    // запуск анимации
     requestAnimationFrame(() => {
         clone.style.left = `${cartRect.left}px`;
         clone.style.top = `${cartRect.top}px`;
-        clone.style.width = "30px";
-        clone.style.height = "30px";
-        clone.style.opacity = "0.7";
+        clone.style.width = '30px';
+        clone.style.height = '30px';
+        clone.style.opacity = '0.7';
     });
 
-    // Удаляем элемент после завершения анимации
-    clone.addEventListener("transitionend", () => {
-        clone.remove(); // удаление клона
-        // Дрожание корзины
-        cartIcon.classList.add("shake");
-        setTimeout(() => cartIcon.classList.remove("shake"), 400);
+    // удаление элемента после завершения анимации
+    clone.addEventListener('transitionend', () => {
+        clone.remove();
+        cartIcon.classList.add('shake');
+        setTimeout(() => cartIcon.classList.remove('shake'), 400);
     });
 }
 
 // Добавление товара в корзину
 function addToCart(id, btnEl) {
-    if(cart.includes(id)) {
-        cart = cart.filter(item => item !== id);
+    if (cart.hasOwnProperty(id)) {
+        cart[id]++;
     } else {
-        cart.push(id);
-        saveCartToLocalStorage();
+        cart[id] = 1;
+    }
 
-        // Анимация полёта
-        if(btnEl){
-            flyToCart(btnEl);
+    saveDataToLocalStorage();
+    updateCartCount();
+    renderCart();
+    renderProducts('popularProducts', p => p.popular);
+
+    if (btnEl) flyToCart(btnEl);
+}
+
+// Удаление товара из корзины
+function removeFromCart(id) {
+    if (cart.hasOwnProperty(id)) {
+        if (cart[id] > 1) {
+            cart[id]--;
+        } else {
+            delete cart[id];
         }
     }
 
-    updateCartCount();
-    renderCart();
-    renderFavorites();
-    renderProducts("popularProducts", p => p.popular);
-}
-
-function removeFromCart(id){
-
-    cart = cart.filter(item => item !== id);
-
-    // ищем кнопку товара на странице
-    const btn = document.querySelector(`.add-cart-btn[data-id="${id}"]`);
-
-    if(btn){
-        btn.classList.remove("in-cart");
-        btn.innerText = "Добавить в корзину";
-    }
-    saveCartToLocalStorage();
+    saveDataToLocalStorage();
     updateCartCount();
     renderCart();
 }
 
+// Обновление счётачика товаров в корзине
 function updateCartCount() {
-    const el = document.getElementById("cartCount");
-    if (el) el.innerText = cart.length;
+    const count = Object.values(cart).reduce((sum, val) => sum + val, 0);
+    const counter = document.getElementById('cartCount');
+    if(counter) counter.textContent = count.toString();
 }
 
+// Рендеринг содержимого корзины
 function renderCart() {
-    const container = document.getElementById("cartItems");
-    container.innerHTML = "";
+    const container = document.getElementById('cartItems');
+    if (!container) return;
 
-    if (!cart.length) {
-        container.innerHTML = "<p class='empty-text'>Корзина пуста</p>";
-        document.getElementById("total").innerText = "";
+    container.innerHTML = '';
+
+    if(Object.keys(cart).length === 0) {
+        container.innerHTML = '<p class="empty-text">Корзина пуста</p>';
+        document.getElementById('total').innerText = '';
         return;
     }
 
-    let total = 0;
-    cart.forEach(id => {
-        const product = products.find(p => p.id === id);
-        if (!product) return;
-        total += product.price;
+    let totalSum = 0;
 
-        const item = document.createElement("div");
-        item.className = "fav-card";
+    Object.entries(cart).forEach(([id, qty]) => {
+        const product = products.find(p => p.id === Number(id));
+        if (!product) return;
+
+        const subTotal = product.price * qty;
+        totalSum += subTotal;
+
+        const item = document.createElement('div');
+        item.className = 'fav-card';
         item.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
-            <p>${product.name}</p>
-            <span>${product.price} ₽</span>
-            <button class="remove-btn" onclick="removeFromCart(${product.id})">❌</button>
+            <p>${product.name}<br>(количество: ${qty})</p>
+            <span>Цена: ${subTotal} ₽</span>
+            <button class="remove-btn" onclick="removeFromCart(${id})">❌</button>
         `;
         container.appendChild(item);
     });
-    document.getElementById("total").innerText = "Итого: " + total + " ₽";
+
+    document.getElementById('total').innerText = `Итого: ${totalSum} ₽`;
 }
 
+// Рендеринг избранных товаров
 function renderFavorites() {
-    const container = document.getElementById("favoritesItems");
-    container.innerHTML = "";
+    const container = document.getElementById('favoritesItems');
+    if (!container) return;
 
-    if (!favorites.length) {
-        container.innerHTML = "<p class='empty-text'>Здесь будут ваши избранные товары</p>";
+    container.innerHTML = '';
+
+    if (favorites.length === 0) {
+        container.innerHTML = '<p class="empty-text">Нет избранных товаров.</p>';
         return;
     }
 
@@ -191,111 +190,105 @@ function renderFavorites() {
         const product = products.find(p => p.id === id);
         if (!product) return;
 
-        const card = document.createElement("div");
-        card.className = "fav-card";
+        const card = document.createElement('div');
+        card.className = 'fav-card';
         card.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <span>${product.price} ₽</span>
             <button class="add-cart-btn"
-                onclick="addToCart(${product.id}, this)">
-                ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
+                    onclick="addToCart(${id}, this)"
+            >${cart[id] ? 'В корзине' : 'Добавить в корзину'}
             </button>
             <button class="remove-btn"
-            onclick="toggleFavorite(${product.id})">❌</button>
+                    onclick="toggleFavorite(${id})"
+            >❌</button>
         `;
         container.appendChild(card);
     });
 }
 
-// ===== МОДАЛКИ =====
+// Открыть корзину
 function openCart() {
-    document.getElementById("cartModal").classList.add("open");
+    const modal = document.getElementById('cartModal');
+    if(modal) modal.classList.add('open');
     renderCart();
     showOverlay();
 }
 
+// Закрыть корзину
 function closeCart() {
-    document.getElementById("cartModal").classList.remove("open");
+    const modal = document.getElementById('cartModal');
+    if(modal) modal.classList.remove('open');
     hideOverlay();
 }
 
+// Открыть избранное
 function openFavorites() {
-    document.getElementById("favoritesModal").classList.add("open");
+    const modal = document.getElementById('favoritesModal');
+    if(modal) modal.classList.add('open');
     renderFavorites();
     showOverlay();
 }
 
+// Закрыть избранное
 function closeFavorites() {
-    document.getElementById("favoritesModal").classList.remove("open");
+    const modal = document.getElementById('favoritesModal');
+    if(modal) modal.classList.remove('open');
     hideOverlay();
 }
 
-// ===== OVERLAY =====
+// Показать полупрозрачный оверлей
 function showOverlay() {
-    const overlay = document.getElementById("overlay");
-    overlay.classList.add("show");
+    const overlay = document.getElementById('overlay');
+    if(overlay) overlay.classList.add('show');
 }
 
+// Скрыть полупрозрачный оверлей
 function hideOverlay() {
-    const overlay = document.getElementById("overlay");
-    overlay.classList.remove("show");
+    const overlay = document.getElementById('overlay');
+    if(overlay) overlay.classList.remove('show');
 }
 
-// ===== SIDEBAR =====
+// Переключение каталога
 function toggleCatalog() {
-    const sidebar = document.getElementById("sidebar");
-    const navbar = document.querySelector(".navbar");
-    if (!sidebar || !navbar) return;
-
-    sidebar.classList.toggle("open");
-    navbar.classList.toggle("shifted");
+    const sidebar = document.getElementById('sidebar');
+    const navbar = document.querySelector('.navbar');
+    if(sidebar && navbar) {
+        sidebar.classList.toggle('open');
+        navbar.classList.toggle('shifted');
+    }
 }
 
-//функция прыжка сердца избранного
+// Управление избранным
 function toggleFavorite(id, btnEl) {
-    const idx = favorites.indexOf(id);
-    if (idx === -1) {
+    const index = favorites.indexOf(id);
+    if(index === -1) {
         favorites.push(id);
     } else {
-        favorites.splice(idx, 1);
+        favorites.splice(index, 1);
     }
 
-    if (!btnEl) {
-        btnEl = document.querySelector(`.favorite-btn[data-id="${id}"]`);
-    }
-    if (btnEl) {
-        btnEl.classList.toggle("active", favorites.includes(id));
-
-        // маленький эффект «прыжка»
-        if (favorites.includes(id)) {
-            btnEl.style.transform = "scale(1.3)";
-            setTimeout(() => {
-                btnEl.style.transform = "scale(1)";
-            }, 200);
-        }
+    if(btnEl) {
+        btnEl.classList.toggle('active', favorites.includes(id));
     }
 
-    saveFavoritesToLocalStorage();
-    
+    saveDataToLocalStorage();
     renderFavorites();
-    renderProducts("popularProducts", p => p.popular);
+    renderProducts('popularProducts', p => p.popular);
 }
 
-
-
-// ===== ИНИЦИАЛИЗАЦИЯ =====
-document.addEventListener("DOMContentLoaded", () => {
-
-    loadCartFromLocalStorage();
-    loadFavoritesFromLocalStorage();
-    
-    renderProducts("popularProducts", p => p.popular);
+// Главная загрузочная функция
+document.addEventListener('DOMContentLoaded', () => {
+    loadDataFromLocalStorage();
+    renderProducts('popularProducts', p => p.popular);
     updateCartCount();
 
-    const overlay = document.getElementById("overlay");
-    overlay.addEventListener("click", () => {
-        closeCart();
-        closeFavorites();
-    });
+    const overlay = document.getElementById('overlay');
+    if(overlay) {
+        overlay.addEventListener('click', () => {
+            closeCart();
+            closeFavorites();
+        });
+    }
 });
