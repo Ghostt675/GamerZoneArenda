@@ -749,42 +749,39 @@ button{
 
 
 /* ===================================== */
-/* ========== MOBILE ADAPTATION ========= */
+/* ========== MOBILE ADAPTATION FIX ===== */
 /* ===================================== */
 
 @media (max-width:768px){
 
 /* ===== SIDEBAR ===== */
-
 .sidebar{
     width:0;
 }
-
 .sidebar.open{
-    width:220px;
+    width:180px; /* немного меньше, чтобы не мешал */
 }
 
 /* ===== NAVBAR ===== */
-
 .navbar{
     margin-left:0;
     flex-direction:column;
     align-items:stretch;
-    gap:10px;
+    gap:8px;
     padding:10px;
 }
 
-/* каталог + поиск */
+/* центр: поиск + каталог */
 .nav-center{
     width:100%;
     display:flex;
-    gap:8px;
+    gap:6px;
 }
-
-/* поиск */
 .search{
     min-width:0;
     width:100%;
+    font-size:14px;
+    padding:8px 10px;
 }
 
 /* кнопки справа */
@@ -793,88 +790,81 @@ button{
     display:flex;
     justify-content:space-between;
 }
-
-/* кнопки */
 .nav-btn,
 .products-btn{
-    font-size:14px;
-    padding:8px 10px;
+    font-size:12px;
+    padding:6px 8px;
 }
 
 /* ===== TOPBAR ===== */
-
 .topbar{
     justify-content:center;
 }
-
 .phone{
     display:none;
 }
 
 /* ===== БАННЕР ===== */
-
 .banner{
     margin:15px auto;
 }
-
 .banner img{
     border-radius:12px;
 }
 
 /* ===== ТОВАРЫ ===== */
-
 .products{
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr); /* две карточки в ряд */
+    gap:12px; /* уменьшенный gap, чтобы не перекрывались */
+    padding:15px 10px;
 }
 
 /* карточка товара */
-
 .card{
     width:100%;
 }
-
 .card img{
-    height:140px;
+    height:130px;
 }
 
 /* ===== МОДАЛКИ ===== */
-
 .cartModal,
 .sideModal{
-    width:100%;
+    width:90%;        /* меньше, чтобы не выглядело огромно */
+    max-width:350px;
     right:-100%;
+    top:10%;          /* чуть отступ сверху */
+    height:80%;       /* не на весь экран */
+    border-radius:10px;
+    padding:15px;
+    overflow-y:auto;
 }
 
 .cartModal.open,
 .sideModal.open{
-    right:0;
+    right:5%;         /* отступ слева/справа */
 }
 
 /* ===== КАРТОЧКИ В КОРЗИНЕ ===== */
-
 .fav-card,
 .cart-card{
     flex-direction:row;
-    gap:10px;
+    gap:8px;
 }
-
 .fav-card img,
 .cart-card img{
-    width:70px;
-    height:70px;
+    width:65px;
+    height:65px;
 }
 
 /* ===== ABOUT ===== */
-
 .about{
-    padding:25px 15px;
+    padding:20px 15px;
 }
 
 /* ===== FOOTER ===== */
-
 footer{
-    padding:20px;
+    padding:15px;
 }
-
 }
