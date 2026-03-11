@@ -64,69 +64,70 @@ function renderProducts(containerId, filterFn) {
 }
 
 
-function addToCart(id, btnEl) {
-    const product = products.find(p => p.id === id);
-    if (!product) return;
+// ===== АНИМАЦИЯ ТОВАР ЛЕТИТ В КОРЗИНУ =====
+function flyToCart(btnEl){
 
+    const card = btnEl.closest(".card");
+    const img = card ? card.querySelector("img") : null;
     const cartIcon = document.querySelector(".cart-icon");
 
-    // если товар уже в корзине — удаляем
+    if(!img || !cartIcon) return;
+
+    const imgRect = img.getBoundingClientRect();
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    const flyingImg = img.cloneNode(true);
+
+    flyingImg.style.position = "fixed";
+    flyingImg.style.left = imgRect.left + "px";
+    flyingImg.style.top = imgRect.top + "px";
+    flyingImg.style.width = imgRect.width + "px";
+    flyingImg.style.height = imgRect.height + "px";
+    flyingImg.style.transition = "all 0.7s ease";
+    flyingImg.style.zIndex = "9999";
+    flyingImg.style.pointerEvents = "none";
+
+    document.body.appendChild(flyingImg);
+
+    setTimeout(()=>{
+
+        flyingImg.style.left = cartRect.left + "px";
+        flyingImg.style.top = cartRect.top + "px";
+        flyingImg.style.width = "30px";
+        flyingImg.style.height = "30px";
+        flyingImg.style.opacity = "0.2";
+
+    },10);
+
+    setTimeout(()=>{
+        flyingImg.remove();
+    },700);
+
+}
+
+
+function addToCart(id, btnEl) {
+
     if (cart.includes(id)) {
+
         cart = cart.filter(item => item !== id);
-        saveCartToLocalStorage();
-        updateCartCount();
-        renderCart();
-        renderFavorites();
-        renderProducts("popularProducts", p => p.popular);
-        return;
-    }
 
-    // ==== АНИМАЦИЯ ПОЛЕТА ТОВАРА ====
-    const imgEl = btnEl.parentElement.querySelector("img");
-    if (imgEl && cartIcon) {
-        const clone = imgEl.cloneNode(true);
-        const rect = imgEl.getBoundingClientRect();
-        clone.style.position = "fixed";
-        clone.style.left = rect.left + "px";
-        clone.style.top = rect.top + "px";
-        clone.style.width = rect.width + "px";
-        clone.style.height = rect.height + "px";
-        clone.style.transition = "all 0.7s ease-in-out";
-        clone.style.zIndex = 1000;
-        document.body.appendChild(clone);
-
-        const cartRect = cartIcon.getBoundingClientRect();
-
-        setTimeout(() => {
-            clone.style.left = cartRect.left + "px";
-            clone.style.top = cartRect.top + "px";
-            clone.style.width = "30px";
-            clone.style.height = "30px";
-            clone.style.opacity = "0.7";
-        }, 10);
-
-        clone.addEventListener("transitionend", () => {
-            clone.remove();
-            cart.push(id); // добавляем товар после анимации
-            saveCartToLocalStorage();
-            updateCartCount();
-            renderCart();
-            renderFavorites();
-            renderProducts("popularProducts", p => p.popular);
-
-            // тряска корзины
-            cartIcon.classList.add("shake");
-            setTimeout(() => cartIcon.classList.remove("shake"), 400);
-        });
     } else {
-        // если картинки нет — просто добавляем
+
         cart.push(id);
+
+        // ⭐ анимация
+        if(btnEl){
+            flyToCart(btnEl);
+        }
+
         saveCartToLocalStorage();
-        updateCartCount();
-        renderCart();
-        renderFavorites();
-        renderProducts("popularProducts", p => p.popular);
     }
+
+    updateCartCount();
+    renderCart();
+    renderFavorites();
+    renderProducts("popularProducts", p => p.popular);
 }
 
 function removeFromCart(id){
