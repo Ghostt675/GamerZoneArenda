@@ -959,19 +959,20 @@ button{
 }
 
 .control-btn:hover {
-    color: #ff5722; /* оранжевый */
+    color: #ff5722; /* оранжево-красный оттенок */
 }
 
 .period-controls {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .period-controls input[type=number] {
     width: 50px;
     text-align: center;
-    margin: 0 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     height: 30px;
