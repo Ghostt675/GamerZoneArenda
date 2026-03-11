@@ -95,7 +95,7 @@ function renderProducts(containerId, filterFn) {
             <div class="favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>${product.price} ₽</span> <!-- Только цена без привязки к суткам -->
+            <span>${product.price} ₽</span> <!-- Здесь убираем лишние символы -->
             <button class="add-cart-btn" data-id="${product.id}" onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
