@@ -92,15 +92,11 @@ function renderProducts(containerId, filterFn) {
         card.className = "card";
 
         card.innerHTML = `
-            <div class="favorite-btn ${isFav ? "active" : ""}"
-                 data-id="${product.id}"
-                 onclick="toggleFavorite(${product.id}, this)"></div>
+            <div class="favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>${product.price} ₽ / ${product.period}</span>
-            <button class="add-cart-btn"
-                    data-id="${product.id}"
-                    onclick="addToCart(${product.id}, this)">
+            <span>${product.price} ₽</span> <!-- Только цена без привязки к суткам -->
+            <button class="add-cart-btn" data-id="${product.id}" onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
         `;
