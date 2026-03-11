@@ -57,12 +57,14 @@ function renderProducts(containerId, filterFn) {
         container.appendChild(card);
     });
 }
-
 // Анимация полёта товара в корзину
 function flyToCart(btnEl) {
     const card = btnEl.closest('.card');
     const img = card && card.querySelector('img');
     const cartIcon = document.querySelector('.cart-icon');
+
+    console.log('Картинки:', img); // DEBUG: проверяем, нашли ли картинку
+    console.log('Иконка корзины:', cartIcon); // DEBUG: проверяем, выбрали ли иконку
 
     if (!img || !cartIcon) return;
 
@@ -72,7 +74,7 @@ function flyToCart(btnEl) {
     const clone = img.cloneNode(true);
     clone.classList.add('fly-img');
 
-    // Устанавливаем исходные координаты и размеры
+    // Настройка начальной позиции
     clone.style.position = 'fixed';
     clone.style.left = `${imgRect.left}px`;
     clone.style.top = `${imgRect.top}px`;
@@ -103,11 +105,9 @@ function flyToCart(btnEl) {
 // Добавление товара в корзину
 function addToCart(id, btnEl) {
     if (cart.hasOwnProperty(id)) {
-        // Если товар уже в корзине, удаляем его
-        delete cart[id];
+        delete cart[id]; // Если товар уже в корзине, удаляем его
     } else {
-        // Иначе добавляем товар в корзину
-        cart[id] = 1;
+        cart[id] = 1; // Иначе добавляем
     }
 
     saveDataToLocalStorage();
@@ -116,13 +116,13 @@ function addToCart(id, btnEl) {
     renderProducts('popularProducts', p => p.popular);
 
     if (btnEl) {
-        // меняем текст кнопки в зависимости от состояния товара
+        // Меняем текст кнопки в зависимости от состояния товара
         btnEl.textContent = cart.hasOwnProperty(id) ? 'В корзине' : 'Добавить в корзину';
     }
-}
 
-// Больше не нужно отдельной функции удаления
-// Вы можете избавиться от функции removeFromCart(), поскольку вся логика содержится внутри addToCart()
+    // Если кнопка доступна, выполняем анимацию
+    if (btnEl) flyToCart(btnEl);
+}
 
 // Удаление товара из корзины
 function removeFromCart(id) {
