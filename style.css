@@ -894,6 +894,34 @@ button{
     overflow: visible; /* обязательно */
 }
 
+
+/* Клон для анимации полёта */
+.fly-img {
+    position: fixed !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+    transition: all 0.7s ease-in-out !important;
+}
+
+/* Корзина трясётся */
+@keyframes cartShake {
+    0%{ transform: rotate(0deg); }
+    25%{ transform: rotate(-6deg); }
+    50%{ transform: rotate(6deg); }
+    75%{ transform: rotate(-4deg); }
+    100%{ transform: rotate(0deg); }
+}
+
+.cart-icon.shake {
+    animation: cartShake 0.4s ease;
+}
+
+/* Обеспечиваем видимость клона вне контейнеров */
+body, html, .container, .products {
+    overflow: visible !important;
+}
+
+    
 /* ===== FOOTER ===== */
 footer{
     padding:15px;
