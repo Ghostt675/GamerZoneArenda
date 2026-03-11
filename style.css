@@ -971,27 +971,30 @@ button{
     color: #ff5722;                 /* Яркий акцентный цвет при наведении */
 }
 
-/* Поле с выбором дней */
 .period-input {
-    width: 50px;                    /* Ширина поля */
-    text-align: center;             /* Текста по центру */
-    border-radius: 5px;             /* Скруглённые углы */
-    border: 1px solid #ccc;         /* Тонкая светлая рамка */
-    height: 30px;                   /* Стандартная высота */
-    appearance: none;               /* Убираем стрелочки вверх-вниз */
-    padding: 0 5px;                 /* Интервал внутри поля */
-    font-size: inherit;             /* Наследуем размер шрифта */
-    background: transparent;        /* Прозрачный фон */
-    color: currentColor;            /* Черный цвет текста */
+    width: 50px;                   /* Компактная ширина */
+    text-align: center;            /* Алгоритм централизации */
+    border-radius: 5px;            /* Закруглённые углы */
+    border: 1px solid #ccc;        /* Светлая тонкая рамка */
+    height: 30px;                  /* Нормальная высота */
+    background: transparent;       /* Прозрачный фон */
+    color: currentColor;           /* Обычный черный цвет текста */
+    padding: 0 5px;                /* Небольшие отступы внутри */
+    font-size: inherit;            /* Наследование размера шрифта */
+    appearance: none;              /* Убираем стандартные браузеры стрелочки */
 }
 
-/* Дополнительный блок для обозначения единиц времени */
-.period-label {
-    font-size: 14px;                /* Меньший размер шрифта */
-    margin-left: 5px;               /* Расстояние от числа */
-    vertical-align: middle;         /* Равномерное выравнивание */
+/* Специфическое правило для Firefox */
+.period-input::-moz-number-spinner {
+    display: none;
 }
-    
+
+/* Специальное правило для Chrome/Safari */
+.period-input::-webkit-outer-spin-button,
+.period-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 /* ===== FOOTER ===== */
 footer{
     padding:15px;
