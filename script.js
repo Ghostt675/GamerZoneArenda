@@ -5,20 +5,9 @@ const products = [
     { id: 3, name: "Call Of Duty WW2", price: 500, img: "images/cdww2.png", category: "accounts", popular: true }
 ];
 
-
-// ===== LOCAL STORAGE =====
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-// сохранить корзину
-function saveCart() {
-    localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-// сохранить избранное
-function saveFavorites() {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-}
+// ===== СОСТОЯНИЕ =====
+let cart = [];
+let favorites = [];
 
 // ===== ГЕНЕРАЦИЯ КАРТОЧЕК =====
 function renderProducts(containerId, filterFn) {
@@ -48,32 +37,39 @@ function renderProducts(containerId, filterFn) {
     });
 }
 
-// ===== ДОБАВЛЕНИЕ В КОРЗИНУ =====
-function addToCart(product, btn) {
+function addToCart(id, btnEl) {
 
-    cart.push(product);
+    if (cart.includes(id)) {
 
-    saveCart();
+        cart = cart.filter(item => item !== id);
 
-    updateCartCount();
-    renderCart();
+    } else {
 
-    if (btn) {
-        flyToCart(btn);
+        cart.push(id);
+
     }
-}
 
-// ===== УДАЛЕНИЕ ИЗ КОРЗИНЫ =====
-function removeFromCart(id) {
-
-    cart = cart.filter(item => item.id !== id);
-
-    saveCart();
-
-    renderCart();
     updateCartCount();
+    renderCart();
+    renderFavorites();
+    renderProducts("popularProducts", p => p.popular);
 }
 
+function removeFromCart(id){
+
+    cart = cart.filter(item => item !== id);
+
+    // ищем кнопку товара на странице
+    const btn = document.querySelector(`.add-cart-btn[data-id="${id}"]`);
+
+    if(btn){
+        btn.classList.remove("in-cart");
+        btn.innerText = "Добавить в корзину";
+    }
+
+    updateCartCount();
+    renderCart();
+}
 
 function updateCartCount() {
     const el = document.getElementById("cartCount");
@@ -132,7 +128,8 @@ function renderFavorites() {
                 onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
-            <button class="remove-btn" onclick="toggleFavorite(${product.id})">❌</button>
+            <button class="remove-btn"
+            onclick="toggleFavorite(${product.id})">❌</button>
         `;
         container.appendChild(card);
     });
@@ -185,19 +182,15 @@ function toggleCatalog() {
 //функция прыжка сердца избранного
 function toggleFavorite(id, btnEl) {
     const idx = favorites.indexOf(id);
-
     if (idx === -1) {
         favorites.push(id);
     } else {
         favorites.splice(idx, 1);
     }
 
-    saveFavorites(); // ⭐ сохраняем
-
     if (!btnEl) {
         btnEl = document.querySelector(`.favorite-btn[data-id="${id}"]`);
     }
-
     if (btnEl) {
         btnEl.classList.toggle("active", favorites.includes(id));
 
@@ -218,19 +211,12 @@ function toggleFavorite(id, btnEl) {
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
-
     renderProducts("popularProducts", p => p.popular);
-
     updateCartCount();
 
-    renderCart();
-    renderFavorites();
-
     const overlay = document.getElementById("overlay");
-
     overlay.addEventListener("click", () => {
         closeCart();
         closeFavorites();
     });
-
 });
