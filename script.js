@@ -95,7 +95,7 @@ function renderProducts(containerId, filterFn) {
             <div class="favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" onclick="toggleFavorite(${product.id}, this)"></div>
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
-            <span>От ${product.prices[0]} ₽ за ${product.periodValue} суток</span> <!-- Новое оформление -->
+            <span>От ${product.prices[0]} ₽ за ${formatDuration(product.periodValue)}</span>
             <button class="add-cart-btn" data-id="${product.id}" onclick="addToCart(${product.id}, this)">
                 ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
             </button>
@@ -197,11 +197,8 @@ function renderCart() {
         const product = products.find(p => p.id === id);
         if (!product) return;
 
-        // Период аренды
         const days = product.periodValue;
-
-        // Первоначальная цена и цена за следующие дни
-        const firstDayCost = product.prices[0];              // Цена за первый день
+        const firstDayCost = product.prices[0];                // Цена за первый день
         const subsequentDaysCost = Math.max(days - 1, 0) * product.prices[1]; // Цена за доп. дни
         const totalProductCost = firstDayCost + subsequentDaysCost;           // Общая стоимость
 
@@ -214,7 +211,8 @@ function renderCart() {
             <p>${product.name}</p>
             <div class="period-controls">
                 <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)">−</button>
-                <input type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
+                <input class="period-input" type="number" value="${days}" min="1" max="${product.maxPeriod}" readonly />
+                <span class="period-label">${formatDuration(days)}</span>
                 <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
             <span>Стоимость: ${totalProductCost} ₽</span>
@@ -230,7 +228,7 @@ function renderFavorites() {
     container.innerHTML = "";
 
     if (!favorites.length) {
-        container.innerHTML = "<p class='empty-text'>Здесь будут ваши избранные товары</p>";
+        container.innerHTML = "<p class='empty-text'>Здесь пока ничего нет.</p>";
         return;
     }
 
@@ -242,14 +240,14 @@ function renderFavorites() {
         card.className = "fav-card";
         card.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
-            <p>${product.name}</p>
-            <span>${product.price} ₽</span>
-            <button class="add-cart-btn"
-                onclick="addToCart(${product.id}, this)">
-                ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
-            </button>
-            <button class="remove-btn"
-            onclick="toggleFavorite(${product.id})">❌</button>
+            <h3>${product.name}</h3>
+            <span>Цена: ${product.prices[0]} ₽</span>
+            <div class="actions">
+                <button class="add-cart-btn" onclick="addToCart(${product.id}, this)">
+                    ${cart.includes(product.id) ? "В корзине" : "Добавить в корзину"}
+                </button>
+                <button class="remove-btn" onclick="toggleFavorite(${product.id})">❌</button>
+            </div>
         `;
         container.appendChild(card);
     });
@@ -327,6 +325,19 @@ function toggleFavorite(id, btnEl) {
     
     renderFavorites();
     renderProducts("popularProducts", p => p.popular);
+}
+
+
+// Функция для правильного написания окончания
+function formatDuration(value) {
+    let remainder = value % 100;
+    if ((remainder >= 5 && remainder <= 20) || (value % 10 >= 5 || value % 10 === 0)) {
+        return `${value} суток`;
+    } else if (value % 10 === 1) {
+        return `${value} сутки`;
+    } else {
+        return `${value} суток`;
+    }
 }
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
