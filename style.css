@@ -870,44 +870,43 @@ footer{
 }
 
 
-/* ===== ICON BUTTONS ===== */
-.icon-btn{
-    position: relative;
-    background:none;
-    border:none;
-    cursor:pointer;
-    padding:0;
-    margin:0;
+/* ===== NAVBAR ===== */
+.navbar{
+    display:flex;
+    justify-content:center;  /* центрируем всё */
+    align-items:center;
+    gap:40px;                /* промежуток между центром и иконками */
+    background:#2a3230;
+    padding:12px 20px;
 }
 
-.nav-icon{
-    width:32px;
-    height:32px;
-    object-fit:contain;
-    transition:0.2s;
+/* центр: каталог + поиск */
+.nav-center{
+    display:flex;
+    align-items:center;
+    gap:15px;           /* расстояние между каталогом и поиском */
 }
 
-.nav-icon:hover{
-    transform:scale(1.1);
+/* кнопка каталог */
+.products-btn {
+    background-color: #7CFF6B;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
 }
 
-/* счетчик на корзине */
-.cart-count{
-    position:absolute;
-    top:-6px;
-    right:-6px;
-    background:#ff3b3b;
-    color:white;
-    font-size:12px;
-    padding:2px 6px;
-    border-radius:50%;
+.products-btn:hover {
+    background-color: #43bd33;
 }
 
-
-/* ===== ПОИСК ===== */
+/* поиск */
 .search{
-    width:250px;          /* фиксированная ширина, можно менять */
-    min-width:150px;
+    width:320px;       /* чуть больше */
+    min-width:200px;
     max-width:400px;
     background:#1f2624;
     border:none;
@@ -921,4 +920,44 @@ footer{
 .search:focus{
     outline:none;
     box-shadow:0 0 8px #7cff6b;
+}
+
+/* иконки */
+.icons{
+    display:flex;
+    gap:20px;          /* увеличенное расстояние между иконками */
+    align-items:center;
+}
+
+/* кнопки иконок */
+.icon-btn{
+    position: relative;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    margin:0;
+}
+
+.nav-icon{
+    width:36px;        /* чуть больше иконки */
+    height:36px;
+    object-fit:contain;
+    transition:0.2s;
+}
+
+.nav-icon:hover{
+    transform:scale(1.15);
+}
+
+/* счетчик на корзине */
+.cart-count{
+    position:absolute;
+    top:-6px;
+    right:-6px;
+    background:#ff3b3b;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
 }
