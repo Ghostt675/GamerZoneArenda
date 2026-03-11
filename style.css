@@ -952,14 +952,14 @@ button{
 .control-btn {
     background-color: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: 1.5rem;   /* Сделали шрифт поменьше */
     cursor: pointer;
-    padding: 0.5em 1em;
+    padding: 0.3em 0.8em; /* Уменьшаем внутренние отступы */
     transition: color 0.3s;
 }
 
 .control-btn:hover {
-    color: #ff5722; /* оранжево-красный оттенок */
+    color: #ff5722; /* оранжевый */
 }
 
 .period-controls {
