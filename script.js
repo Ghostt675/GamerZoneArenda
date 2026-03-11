@@ -65,6 +65,12 @@ function renderProducts(containerId, filterFn) {
 
 
 function addToCart(id, btnEl) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+
+    const cartIcon = document.querySelector(".cart-icon");
+
+    // если товар уже в корзине — удаляем
     if (cart.includes(id)) {
         cart = cart.filter(item => item !== id);
         saveCartToLocalStorage();
@@ -75,12 +81,9 @@ function addToCart(id, btnEl) {
         return;
     }
 
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-
-    // ==== Анимация полета товара ====
+    // ==== АНИМАЦИЯ ПОЛЕТА ТОВАРА ====
     const imgEl = btnEl.parentElement.querySelector("img");
-    if (imgEl) {
+    if (imgEl && cartIcon) {
         const clone = imgEl.cloneNode(true);
         const rect = imgEl.getBoundingClientRect();
         clone.style.position = "fixed";
@@ -92,7 +95,6 @@ function addToCart(id, btnEl) {
         clone.style.zIndex = 1000;
         document.body.appendChild(clone);
 
-        const cartIcon = document.querySelector(".cart-icon");
         const cartRect = cartIcon.getBoundingClientRect();
 
         setTimeout(() => {
@@ -105,20 +107,19 @@ function addToCart(id, btnEl) {
 
         clone.addEventListener("transitionend", () => {
             clone.remove();
-            // слегка потрясти иконку корзины
-            cartIcon.classList.add("shake");
-            setTimeout(() => cartIcon.classList.remove("shake"), 400);
-
-            // После анимации добавить товар
-            cart.push(id);
+            cart.push(id); // добавляем товар после анимации
             saveCartToLocalStorage();
             updateCartCount();
             renderCart();
             renderFavorites();
             renderProducts("popularProducts", p => p.popular);
+
+            // тряска корзины
+            cartIcon.classList.add("shake");
+            setTimeout(() => cartIcon.classList.remove("shake"), 400);
         });
     } else {
-        // если картинка не найдена — просто добавляем
+        // если картинки нет — просто добавляем
         cart.push(id);
         saveCartToLocalStorage();
         updateCartCount();
