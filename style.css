@@ -226,8 +226,10 @@ body {
     content:"";
     position:absolute;
     left:0;
+    top:50%;
+    transform:translateY(-50%);
     width:1px;
-    height:24px;
+    height:60%;   /* вместо фиксированной высоты */
     background:#8aa39c;
 }
 
@@ -945,6 +947,28 @@ button{
 
 .cart-icon.shake {
     animation: cartShake 0.4s ease;
+}
+
+.days-control{
+display:flex;
+align-items:center;
+gap:10px;
+margin:5px 0;
+}
+
+.days-control button{
+width:26px;
+height:26px;
+border:none;
+border-radius:6px;
+background:#2f3a37;
+color:white;
+cursor:pointer;
+}
+
+.days-control span{
+min-width:20px;
+text-align:center;
 }
 
     
