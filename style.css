@@ -401,7 +401,7 @@ footer a:hover{
 
 /* кнопки */
 button{
-    background: #ff4d4d;
+    background: transparent;
     border:none;
     color:white;
     padding:10px 15px;
