@@ -974,27 +974,27 @@ button{
     line-height:1;
 }
 
-/* кнопки + и - */
 
-/* Основной размер кнопок + и - */
-.control-btn {
+/* ===== КНОПКИ + / - ===== */
+.period-controls .control-btn {
+    width: 50px;               /* увеличиваем кнопку */
+    height: 50px;              /* увеличиваем кнопку */
+    font-size: 24px;           /* размер + / - */
     background-color: transparent; /* прозрачный фон */
-    border: none;                  /* без границ */
-    font-size: 2rem;               /* размер символа + или - */
-    width: 50px;                   /* ширина кнопки */
-    height: 50px;                  /* высота кнопки */
-    border-radius: 10px;           /* скругление углов */
-    cursor: pointer;               /* курсор руки */
+    border: none;              /* без рамки */
+    border-radius: 8px;        /* скругление */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease, color 0.2s ease; /* плавное увеличение */
+    cursor: pointer;
+    transition: transform 0.2s, font-size 0.2s;
+    color: #fff;               /* белый текст */
 }
 
-/* Эффект при наведении */
-.control-btn:hover {
-    transform: scale(1.2); /* увеличиваем на 20% */
-    color: #7CFF6B;        /* можно менять цвет при наведении */
+.period-controls .control-btn:hover {
+    transform: scale(1.2);     /* увеличиваем при наведении */
+    font-size: 28px;           /* ещё чуть крупнее при hover */
+    color: #7CFF6B;            /* светлый акцент при наведении */
 }
     
 /* ===== FOOTER ===== */
