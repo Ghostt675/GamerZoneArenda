@@ -210,14 +210,17 @@ function renderCart() {
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <div class="period-controls">
+
                 <button class="control-btn" onclick="changePeriod(${product.id}, -1)">−</button>
 
+                <div class="period-center">
                 <span class="period-value">${product.periodValue}</span>
-
-                <button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
-
-            <span class="period-label">${product.period}</span>
+                <span class="period-label">${product.period}</span>
             </div>
+
+<button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
+
+</div>
             <span>Стоимость: ${totalProductCost} ₽</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
         `;
