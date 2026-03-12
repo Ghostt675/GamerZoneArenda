@@ -442,40 +442,6 @@ button{
     display:block;
 }
 
-/* ===== АДАПТИВ ===== */
-@media screen and (max-width:768px){
-    .navbar{
-        flex-direction:column;
-        align-items:flex-start;
-        padding:10px;
-    }
-    .nav-center{
-        width:100%;
-        margin-left:0;
-        gap:10px;
-    }
-    .search{
-        width:100%;
-    }
-    .products{
-        flex-direction:column;
-        gap:15px;
-    }
-    .about{
-        padding:30px 15px;
-    }
-    .logo{
-        height:50px;
-        margin:0 auto;
-    }
-    .sidebar{
-        width:0;
-    }
-    .sidebar.open{
-        width:200px;
-    }
-}
-
 
 .navbar {
     margin-left: 70px;
