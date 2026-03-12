@@ -185,7 +185,6 @@ function updateCartCount() {
     const el = document.getElementById("cartCount");
     if (el) el.innerText = cart.length;
 }
-
 function renderCart() {
     const container = document.getElementById("cartItems");
     container.innerHTML = "";
@@ -214,17 +213,13 @@ function renderCart() {
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <div class="period-controls">
-
                 <button class="control-btn" onclick="changePeriod(${product.id}, -1)">−</button>
-
                 <div class="period-center">
-                <span class="period-value">${product.periodValue}</span>
-                <span class="period-label">${product.period}</span>
+                    <span class="period-value">${product.periodValue}</span>
+                    <span class="period-label">${formatDuration(product.periodValue)}</span> <!-- Используем функцию formatDuration() -->
+                </div>
+                <button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
             </div>
-
-<button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
-
-</div>
             <span>Стоимость: ${totalProductCost} ₽</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
         `;
