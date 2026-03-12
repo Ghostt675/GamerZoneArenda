@@ -949,13 +949,6 @@ button{
     animation: cartShake 0.4s ease;
 }
 
-.period-controls{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-top:8px;
-}
-
 /* блок цифры и слова */
 .period-center{
     display:flex;
