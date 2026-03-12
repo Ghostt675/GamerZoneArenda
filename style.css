@@ -976,25 +976,28 @@ button{
 
 
 /* ===== КНОПКИ + / - ===== */
-.period-controls .control-btn {
-    width: 50px;               /* увеличиваем кнопку */
-    height: 50px;              /* увеличиваем кнопку */
-    font-size: 24px;           /* размер + / - */
-    background-color: transparent; /* прозрачный фон */
-    border: none;              /* без рамки */
-    border-radius: 8px;        /* скругление */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s, font-size 0.2s;
-    color: #fff;               /* белый текст */
+.cartModal .period-controls .control-btn,
+.sideModal .period-controls .control-btn {
+    width: 50px !important;        /* ширина кнопки */
+    height: 50px !important;       /* высота кнопки */
+    font-size: 28px !important;    /* размер символа + / - */
+    background-color: transparent !important; /* прозрачный фон */
+    border: none !important;       /* без рамки */
+    border-radius: 8px !important; /* скругление */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: transform 0.2s, font-size 0.2s !important;
+    color: #fff !important;        /* белый текст */
 }
 
-.period-controls .control-btn:hover {
-    transform: scale(1.2);     /* увеличиваем при наведении */
-    font-size: 28px;           /* ещё чуть крупнее при hover */
-    color: #7CFF6B;            /* светлый акцент при наведении */
+/* hover эффект */
+.cartModal .period-controls .control-btn:hover,
+.sideModal .period-controls .control-btn:hover {
+    transform: scale(1.3) !important; /* увеличиваем при наведении */
+    font-size: 32px !important;       /* ещё чуть крупнее при hover */
+    color: #7CFF6B !important;        /* светлый акцент */
 }
     
 /* ===== FOOTER ===== */
