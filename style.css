@@ -958,17 +958,32 @@ button{
 }
 
 /* Кнопки "+" и "-" */
-.control-btn {
-    background-color: transparent; /* Прозрачный фон */
-    border: none;                  /* Без границ */
-    font-size: 1.5rem;             /* Размер символов */
-    cursor: pointer;               /* Курсор руки */
-    padding: 0.3em 0.8em;          /* Интервал вокруг */
-    transition: color 0.3s;        /* Плавный переход цвета */
+.control-btn{
+    width:32px;
+    height:32px;
+
+    background:#2f3836 !important; /* убираем красный */
+    color:#fff !important;
+
+    border:none !important;
+    border-radius:8px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:0.2s;
 }
 
-.control-btn:hover {
-    color: #ff5722;                /* Акцентный цвет при наведении */
+.control-btn:hover{
+    background:#7CFF6B !important;
+    color:#000 !important;
+    transform:scale(1.08);
 }
 
 /* Поле ввода периода */
