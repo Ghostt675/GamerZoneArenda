@@ -976,30 +976,25 @@ button{
 
 /* кнопки + и - */
 
-.period-controls .control-btn{
-    background: transparent;
-    border: none;
-
-    width: 36px;        /* размер кнопки */
-    height: 36px;
-
-    font-size: 24px;    /* размер + и - */
-    font-weight: bold;
-    color: #ffffff;
-
+/* Основной размер кнопок + и - */
+.control-btn {
+    background-color: transparent; /* прозрачный фон */
+    border: none;                  /* без границ */
+    font-size: 2rem;               /* размер символа + или - */
+    width: 50px;                   /* ширина кнопки */
+    height: 50px;                  /* высота кнопки */
+    border-radius: 10px;           /* скругление углов */
+    cursor: pointer;               /* курсор руки */
     display: flex;
     align-items: center;
     justify-content: center;
-
-    cursor: pointer;
-
-    transition: transform 0.15s ease, color 0.15s ease;
+    transition: transform 0.2s ease, color 0.2s ease; /* плавное увеличение */
 }
 
-/* эффект при наведении */
-.period-controls .control-btn:hover{
-    transform: scale(1.3);   /* увеличение */
-    color: #7CFF6B;          /* зелёный цвет */
+/* Эффект при наведении */
+.control-btn:hover {
+    transform: scale(1.2); /* увеличиваем на 20% */
+    color: #7CFF6B;        /* можно менять цвет при наведении */
 }
     
 /* ===== FOOTER ===== */
