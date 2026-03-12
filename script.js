@@ -210,10 +210,13 @@ function renderCart() {
             <img src="${product.img}" alt="${product.name}">
             <p>${product.name}</p>
             <div class="period-controls">
-                <button class="control-btn minus" data-id="${product.id}" onclick="changePeriod(${product.id}, -1)">−</button>
-                <input class="period-input" type="text" value="${days}" readonly/> <!-- Видоизменённое поле -->
-                <span class="period-label">${formatDuration(days)}</span> <!-- Слово "сутки" -->
-                <button class="control-btn plus" data-id="${product.id}" onclick="changePeriod(${product.id}, 1)">+</button>
+                <button class="control-btn" onclick="changePeriod(${product.id}, -1)">−</button>
+
+                <span class="period-value">${product.periodValue}</span>
+
+                <button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
+
+            <span class="period-label">${product.period}</span>
             </div>
             <span>Стоимость: ${totalProductCost} ₽</span>
             <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
