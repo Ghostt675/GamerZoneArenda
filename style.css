@@ -958,30 +958,26 @@ button{
 }
 
 /* Кнопки "+" и "-" */
-.period-controls .control-btn{
-    width:32px;
-    height:32px;
-
-    background:transparent !important;
-    color:#ffffff !important;
-
-    border:none !important;
-    border-radius:50%;
-
-    font-size:20px;
-    font-weight:bold;
-
-    padding:0 !important;
+.period-controls button{
+    all: unset;              /* полностью сбрасывает стиль button */
+    
+    width:28px;
+    height:28px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    font-size:18px;
+    font-weight:bold;
+    color:#fff;
+
     cursor:pointer;
+    border-radius:6px;
     transition:0.2s;
 }
 
-.period-controls .control-btn:hover{
+.period-controls button:hover{
     color:#7CFF6B;
     transform:scale(1.1);
 }
