@@ -534,8 +534,8 @@ button{
 
 /* слово "сутки" */
 .period-label{
-    font-size:12px;
-    color:#aaa;
+    font-size:16px;
+    color:white;
     text-align:center;
     line-height:1;
 }
