@@ -982,30 +982,33 @@ button{
 }
 
 /* кнопки + и - */
+
 .period-controls .control-btn{
-    background:transparent;
-    border:none;
+    background: transparent;
+    border: none;
 
-    width:34px;
-    height:34px;
+    width: 36px;        /* размер кнопки */
+    height: 36px;
 
-    font-size:24px;
-    font-weight:bold;
-    color:#fff;
+    font-size: 24px;    /* размер + и - */
+    font-weight: bold;
+    color: #ffffff;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    cursor:pointer;
-    transition:0.15s;
+    cursor: pointer;
+
+    transition: transform 0.15s ease, color 0.15s ease;
 }
 
-/* увеличение при наведении */
+/* эффект при наведении */
 .period-controls .control-btn:hover{
-    transform:scale(1.25);
-    color:#7CFF6B;
+    transform: scale(1.3);   /* увеличение */
+    color: #7CFF6B;          /* зелёный цвет */
 }
+    
 /* ===== FOOTER ===== */
 footer{
     padding:15px;
