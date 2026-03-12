@@ -3,9 +3,10 @@ const products = [
     { 
       id:1,
       name:"PlayStation 5",
-      prices:[1100, 1600], // Цены: 1-й день - 1100₽, последующие дни - 1600₽
+      prices:[1100, 1600], 
       maxPeriod:7,
-      periodValue:1,
+      minPeriod:3,              // Минимум 3 суток
+      periodValue:3,
       period:"сутки",
       img:"images/ps5.jpg",
       category:"playstation",
@@ -16,7 +17,8 @@ const products = [
       name:"Xbox Series X",
       prices:[1400, 1800],
       maxPeriod:5,
-      periodValue:1,
+      minPeriod:2,              // Минимум 2 суток
+      periodValue:2,
       period:"сутки",
       img:"images/xbox.jpg",
       category:"xbox",
@@ -27,8 +29,9 @@ const products = [
       name:"Call Of Duty WW2",
       prices:[500, 700],
       maxPeriod:3,
-      periodValue:3,
-      period:"3 суток",
+      minPeriod:1,              // Минимум 1 сутки
+      periodValue:1,
+      period:"сутки",
       img:"images/cdww2.png",
       category:"accounts",
       popular:true 
@@ -66,6 +69,7 @@ function loadFavoritesFromLocalStorage() {
 }
 
 // Функция изменения периода аренды
+
 function changePeriod(id, delta) {
     const product = products.find(p => p.id === id);
     if (!product) return;
@@ -73,7 +77,7 @@ function changePeriod(id, delta) {
     product.periodValue += delta;
 
     // Ограничиваем значения
-    if (product.periodValue < 1) product.periodValue = 1;
+    if (product.periodValue < product.minPeriod) product.periodValue = product.minPeriod; // Индивидуальное минимальное значение
     if (product.periodValue > product.maxPeriod) product.periodValue = product.maxPeriod;
 
     // Пересчитываем содержимое корзины
@@ -341,6 +345,8 @@ function formatDuration(value) {
         return `${value} суток`;
     } else if (value % 10 === 1) {
         return `${value} сутки`;
+    } else if (value % 10 >= 2 && value % 10 <= 4) {
+        return `${value} суток`;
     } else {
         return `${value} суток`;
     }
