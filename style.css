@@ -972,17 +972,8 @@ button{
 }
 
 /* Поле ввода периода */
-.period-input {
-    width: 50px;                   /* Ширина поля */
-    text-align: center;            /* По центру */
-    border-radius: 5px;            /* Скруглённые углы */
-    border: 1px solid #ccc;        /* Серый бордюр */
-    height: 30px;                  /* Высоту оставили небольшой */
-    background: transparent;       /* Прозрачный фон */
-    color: currentColor;           /* Чёрный цвет текста */
-    padding: 0 5px;                /* Внутренние отступы */
-    font-size: inherit;            /* Наследует размер шрифта */
-    appearance: none;              /* Без стандартных стрелок */
+.period-input{
+    display:none !important;
 }
 
 /* Для Firefox */
