@@ -958,32 +958,32 @@ button{
 }
 
 /* Кнопки "+" и "-" */
-.control-btn{
+.period-controls .control-btn{
     width:32px;
     height:32px;
 
-    background:#2f3836 !important; /* убираем красный */
-    color:#fff !important;
+    background:transparent !important;
+    color:#ffffff !important;
 
     border:none !important;
-    border-radius:8px;
+    border-radius:6px;
 
-    font-size:18px;
+    font-size:20px;
     font-weight:bold;
 
-    cursor:pointer;
+    padding:0 !important;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    cursor:pointer;
     transition:0.2s;
 }
 
-.control-btn:hover{
-    background:#7CFF6B !important;
-    color:#000 !important;
-    transform:scale(1.08);
+.period-controls .control-btn:hover{
+    color:#7CFF6B;
+    transform:scale(1.1);
 }
 
 /* Поле ввода периода */
