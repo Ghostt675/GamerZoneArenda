@@ -210,19 +210,18 @@ function renderCart() {
         const item = document.createElement("div");
         item.className = "fav-card";
         item.innerHTML = `
-            <img src="${product.img}" alt="${product.name}">
-            <p>${product.name}</p>
-            <div class="period-controls">
-                <button class="control-btn" onclick="changePeriod(${product.id}, -1)">−</button>
-                <div class="period-center">
-                    <span class="period-value">${product.periodValue}</span>
-                    <span class="period-label">${formatDuration(product.periodValue)}</span> <!-- Используем функцию formatDuration() -->
-                </div>
-                <button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
-            </div>
-            <span>Стоимость: ${totalProductCost} ₽</span>
-            <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
-        `;
+    <img src="${product.img}" alt="${product.name}">
+    <p>${product.name}</p>
+    <div class="period-controls">
+        <button class="control-btn" onclick="changePeriod(${product.id}, -1)">−</button>
+        <div class="period-center">
+            <span class="period-label">${formatDuration(product.periodValue)}</span> <!-- Оставляем только корректное окончание -->
+        </div>
+        <button class="control-btn" onclick="changePeriod(${product.id}, 1)">+</button>
+    </div>
+    <span>Стоимость: ${totalProductCost} ₽</span>
+    <button class="remove-btn" onclick="removeFromCart(${product.id})">✖️</button>
+`;
         container.appendChild(item);
     });
     document.getElementById("total").innerText = "Итого: " + total + " ₽";
