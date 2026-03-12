@@ -949,64 +949,62 @@ button{
     animation: cartShake 0.4s ease;
 }
 
-/* Контроллеры периода */
-.period-controls {
-    display: inline-flex;          /* Горизонтальное расположение */
-    align-items: center;           /* Центральное выравнивание */
-    gap: 10px;                     /* Промежуток между элементами */
-    margin-top: 10px;              /* Отступ сверху */
+.period-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
 }
 
-/* Кнопки "+" и "-" */
+/* блок цифры и слова */
+.period-center{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:40px;
+}
 
+/* цифра */
+.period-value{
+    font-size:18px;
+    font-weight:bold;
+    color:#fff;
+    line-height:1;
+}
+
+/* слово "сутки" */
+.period-label{
+    font-size:12px;
+    color:#aaa;
+    text-align:center;
+    line-height:1;
+}
+
+/* кнопки + и - */
 .period-controls .control-btn{
-    background: transparent;
-    border: none;
+    background:transparent;
+    border:none;
 
-    width: 36px;        /* размер кнопки */
-    height: 36px;
+    width:34px;
+    height:34px;
 
-    font-size: 24px;    /* размер + и - */
-    font-weight: bold;
-    color: #ffffff;
+    font-size:24px;
+    font-weight:bold;
+    color:#fff;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    cursor: pointer;
-
-    transition: transform 0.15s ease, color 0.15s ease;
+    cursor:pointer;
+    transition:0.15s;
 }
 
-/* эффект при наведении */
+/* увеличение при наведении */
 .period-controls .control-btn:hover{
-    transform: scale(1.3);   /* увеличение */
-    color: #7CFF6B;          /* зелёный цвет */
-}
-
-/* Поле ввода периода */
-.period-input{
-    display:none !important;
-}
-
-/* Для Firefox */
-.period-input::-moz-number-spinner {
-    display: none;
-}
-
-/* Для Chrome/Safari */
-.period-input::-webkit-outer-spin-button,
-.period-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Надпись "сутки" */
-.period-label {
-    font-size: 14px;               /* Малый размер шрифта */
-    margin-left: 5px;              /* Левый отступ */
-    vertical-align: middle;        /* Ровное позиционирование */
+    transform:scale(1.25);
+    color:#7CFF6B;
 }
 /* ===== FOOTER ===== */
 footer{
