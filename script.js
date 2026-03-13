@@ -3,10 +3,10 @@ const products = [
     { 
       id:1,
       name:"PlayStation 5",
-      prices:[1100, 1600], 
-      maxPeriod:7,
-      minPeriod:3,              // Минимум 3 суток
-      periodValue:3,
+      prices:[1100, 600, 600, 600, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500], 
+      maxPeriod:14,
+      minPeriod:1,              // Минимум 3 суток
+      periodValue:1,
       period:"сутки",
       img:"images/ps5.jpg",
       category:"playstation",
@@ -15,10 +15,10 @@ const products = [
     { 
       id:2,
       name:"Xbox Series X",
-      prices:[1400, 1800],
-      maxPeriod:5,
-      minPeriod:2,              // Минимум 2 суток
-      periodValue:2,
+      prices:[1400, 600, 600, 600, 500],
+      maxPeriod:14,
+      minPeriod:1,              // Минимум 2 суток
+      periodValue:1,
       period:"сутки",
       img:"images/xbox.jpg",
       category:"xbox",
@@ -27,10 +27,10 @@ const products = [
     { 
       id:3,
       name:"Call Of Duty WW2",
-      prices:[500, 700],
-      maxPeriod:3,
-      minPeriod:1,              // Минимум 1 сутки
-      periodValue:1,
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              // Минимум 1 сутки
+      periodValue:3,
       period:"сутки",
       img:"images/cdww2.png",
       category:"accounts",
