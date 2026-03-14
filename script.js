@@ -396,11 +396,11 @@ address:address
 cart:cart
 };
 
-await fetch("https://your-server.ru:5000/send-order",{
+await fetch("https://ghostt675.github.io/GamerZoneArenda/:5000/send-order",{
 method:"POST",
 headers:{
 "Content-Type":"application/json",
-"X-Site-Key":"YOUR_SECRET_KEY"
+"X-Site-Key":"4c6c5f9e5b4a9c3f0d2a1b7e8f9c6d3e"
 },
 body:JSON.stringify(order)
 });
