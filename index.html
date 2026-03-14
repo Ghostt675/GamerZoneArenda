@@ -143,7 +143,7 @@
   </div>
   <div id="cartItems"></div>
   <p id="total"></p>
-  <button class="add-cart-btn orderBtn">Оформить заказ</button>
+  <button class="add-cart-btn orderBtn" onclick="openCheckout()">Оформить заказ</button>
 </div>
 
 <!-- ===== ИЗБРАННОЕ ===== -->
@@ -158,6 +158,37 @@
 </div>
 
 
+<!-- ===== ОФОРМЛЕНИЕ ЗАКАЗА ===== -->
+
+<div id="checkoutModal" class="checkoutModal">
+
+<div class="checkout-box">
+
+<h2>Оформление заказа</h2>
+
+<input id="fio" placeholder="ФИО">
+
+<input id="birth" type="date">
+
+<input id="phone" placeholder="Телефон">
+
+<input id="address" placeholder="Адрес доставки">
+
+<label class="agree-box">
+<input type="checkbox" id="agree">
+<span>Согласен на обработку персональных данных</span>
+</label>
+
+<button class="orderNextBtn" onclick="confirmOrder()">Далее</button>
+
+<button class="closeBtn" onclick="closeCheckout()">Закрыть</button>
+
+</div>
+
+</div>
+  
+
+  
 <!-- overlay для закрытия модалок -->
 <div id="overlay" class="overlay"></div>
 
