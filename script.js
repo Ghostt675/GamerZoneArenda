@@ -346,6 +346,78 @@ function formatDuration(value) {
     }
 }
 
+
+// ===== ОТКРЫТЬ ОФОРМЛЕНИЕ =====
+
+function openCheckout(){
+
+if(cart.length === 0){
+alert("Корзина пустая");
+return;
+}
+
+document.getElementById("checkoutModal").classList.add("open");
+
+}
+
+// ===== ЗАКРЫТЬ =====
+
+function closeCheckout(){
+document.getElementById("checkoutModal").classList.remove("open");
+}
+
+// ===== ПОДТВЕРЖДЕНИЕ =====
+
+async function confirmOrder(){
+
+const fio = document.getElementById("fio").value;
+const birth = document.getElementById("birth").value;
+const phone = document.getElementById("phone").value;
+const address = document.getElementById("address").value;
+const agree = document.getElementById("agree").checked;
+
+if(!fio || !phone || !address){
+alert("Заполните все поля");
+return;
+}
+
+if(!agree){
+alert("Нужно согласие на обработку данных");
+return;
+}
+
+const order = {
+user:{
+fio:fio,
+birth:birth,
+phone:phone,
+address:address
+},
+cart:cart
+};
+
+await fetch("https://your-server.ru:5000/send-order",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"X-Site-Key":"YOUR_SECRET_KEY"
+},
+body:JSON.stringify(order)
+});
+
+alert("Заказ отправлен!");
+
+closeCheckout();
+
+cart = [];
+localStorage.setItem("cart", JSON.stringify(cart));
+
+renderCart();
+updateCartCount();
+
+}
+
+
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
     loadCartFromLocalStorage();
