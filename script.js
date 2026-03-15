@@ -396,7 +396,7 @@ address:address
 cart:cart
 };
 
-await fetch("http://127.0.0.1:5000/send-order",{
+await fetch("",{
 method:"POST",
 headers:{
 "Content-Type":"application/json",
