@@ -162,23 +162,25 @@
 
 <div id="checkoutModal" class="checkoutModal">
   <div class="checkout-box">
-    <h2>Оформление заказа</h2>
+    <h2 style="color:white;">Оформление заказа</h2>
 
     <input id="fio" placeholder="ФИО">
     <input id="birth" type="date">
     <input id="phone" placeholder="Телефон">
     <input id="address" placeholder="Адрес">
 
-    <input id="deliveryTime" placeholder="Дата и время доставки (можно написать словами)">
+    <label style="color:white;">Дата и время доставки</label>
+    <input id="deliveryTime" type="text" placeholder="Например: завтра утром">
 
-    <textarea id="comment" placeholder="Пожелания к аренде (необязательно)"></textarea>
+    <label style="color:white;">Пожелания к аренде (необязательно)</label>
+    <textarea id="comment" placeholder="Ваши пожелания"></textarea>
 
-    <label>
+    <label style="color:white;">
       <input type="checkbox" id="agree">
       Согласен на обработку персональных данных
     </label>
 
-    <button class="orderNextBtn" onclick="confirmOrder()">Далее</button>
+    <button id="sendOrderBtn" class="orderNextBtn" onclick="confirmOrder()">Далее</button>
     <button class="closeBtn" onclick="closeCheckout()">Закрыть</button>
   </div>
 </div>
@@ -189,6 +191,8 @@
         <p>Ваш заказ отправляется...</p>
     </div>
 </div>
+
+
   
   
 <!-- overlay для закрытия модалок -->
