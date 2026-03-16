@@ -443,11 +443,11 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        const response = await fetch("/api/send-order", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(order)
-        });
+        const response = await fetch("https://45.144.220.76:5000/send-order", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(order)
+});
 
         const result = await response.json();
         if(result.status !== "ok"){
