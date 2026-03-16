@@ -161,35 +161,27 @@
 <!-- ===== ОФОРМЛЕНИЕ ЗАКАЗА ===== -->
 
 <div id="checkoutModal" class="checkoutModal">
+  <div class="checkout-box">
+    <h2>Оформление заказа</h2>
 
-<div class="checkout-box">
+    <input id="fio" placeholder="ФИО">
+    <input id="birth" type="date">
+    <input id="phone" placeholder="Телефон">
+    <input id="address" placeholder="Адрес">
 
-<h2>Оформление заказа</h2>
+    <input id="deliveryTime" placeholder="Дата и время доставки (можно написать словами)">
 
-<input id="fio" placeholder="ФИО">
-<input id="birth" type="date">
-<input id="phone" placeholder="Телефон">
-<input id="address" placeholder="Адрес">
+    <textarea id="comment" placeholder="Пожелания к аренде (необязательно)"></textarea>
 
-<label>Дата и время доставки</label>
-<input id="deliveryTime" type="datetime-local">
+    <label>
+      <input type="checkbox" id="agree">
+      Согласен на обработку персональных данных
+    </label>
 
-<label>Пожелания к аренде</label>
-<textarea id="comment" placeholder="Ваши пожелания"></textarea>
-
-<label>
-<input type="checkbox" id="agree">
-Согласен на обработку персональных данных
-</label>
-
-<button class="orderNextBtn" onclick="confirmOrder()">Далее</button>
-
-<button class="closeBtn" onclick="closeCheckout()">Закрыть</button>
-
+    <button class="orderNextBtn" onclick="confirmOrder()">Далее</button>
+    <button class="closeBtn" onclick="closeCheckout()">Закрыть</button>
+  </div>
 </div>
-
-</div>
-  
 
 <div id="loadingOverlay" class="loading-overlay">
     <div class="loading-box">
