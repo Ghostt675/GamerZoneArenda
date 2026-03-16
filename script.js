@@ -349,30 +349,29 @@ function formatDuration(value) {
 
 // ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
 // ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
+// ===== МОДАЛКИ =====
 function openCheckout() {
     if(cart.length === 0){
-        alert("Корзина пустая");
+        alert("Корзина пуста");
         return;
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
-
 function closeCheckout() {
     document.getElementById("checkoutModal").classList.remove("open");
 }
-
 function openConfirm() {
     document.getElementById("confirmModal").classList.add("open");
 }
-
 function closeConfirm() {
     document.getElementById("confirmModal").classList.remove("open");
 }
 
-function showLoader() { document.getElementById("loadingOverlay").classList.add("show"); }
-function hideLoader() { document.getElementById("loadingOverlay").classList.remove("show"); }
+// ===== ИНДИКАТОР ЗАГРУЗКИ =====
+function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
+function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
 
-// ===== Проверка данных перед отправкой =====
+// ===== ПРЕВЬЮ ЗАКАЗА =====
 document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
@@ -391,7 +390,7 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
         return;
     }
 
-    // Показываем превью заказа
+    // Формируем превью
     const preview = `
         <p><strong>ФИО:</strong> ${fio}</p>
         <p><strong>Дата рождения:</strong> ${birth}</p>
@@ -402,7 +401,7 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
         <p><strong>Товары:</strong></p>
         <ul>
             ${cart.map(id => {
-                const p = products.find(pr => pr.id === id);
+                const p = products.find(pr => pr.id===id);
                 const days = p.periodValue;
                 const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
                 return `<li>${p.name} — ${days} суток — ${price} ₽</li>`;
@@ -415,7 +414,7 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
     openConfirm();
 });
 
-// ===== Отправка заказа =====
+// ===== ОТПРАВКА ЗАКАЗА =====
 document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const btn = document.getElementById("sendOrderBtn");
     btn.disabled = true;
@@ -429,7 +428,7 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
     const cartItems = cart.map(id => {
-        const p = products.find(pr => pr.id === id);
+        const p = products.find(pr => pr.id===id);
         const days = p.periodValue;
         const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
         return { name: p.name, days, price };
@@ -443,11 +442,11 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        const response = await fetch("http://45.144.220.76:5000/send-order", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(order)
-});
+        const response = await fetch("/api/send-order", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(order)
+        });
 
         const result = await response.json();
         if(result.status !== "ok"){
@@ -459,25 +458,12 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
 
         alert("Заказ успешно отправлен!");
 
-        // Сброс корзины
         cart = [];
-        localStorage.setItem("cart", "[]");
+        localStorage.setItem("cart","[]");
         renderCart();
         updateCartCount();
-        renderProducts("popularProducts", p => p.popular);
+        renderProducts("popularProducts", p=>p.popular);
         renderFavorites();
-
-        closeConfirm();
-        btn.disabled = false;
-    } catch(e){
-        console.error(e);
-        alert("Ошибка отправки");
-        btn.disabled = false;
-    } finally {
-        hideLoader();
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("sendOrderBtn");
