@@ -385,6 +385,16 @@ const birth = document.getElementById("birth").value;
 const phone = document.getElementById("phone").value;
 const address = document.getElementById("address").value;
 
+const deliveryTime = document.getElementById("deliveryTime").value;
+const comment = document.getElementById("comment").value;
+
+if(!fio || !phone || !address){
+alert("Заполните все обязательные поля");
+hideLoader();
+btn.disabled=false;
+return;
+}
+
 const cartItems = cart.map(id => {
 
 const product = products.find(p => p.id === id);
@@ -392,7 +402,7 @@ const product = products.find(p => p.id === id);
 const days = product.periodValue;
 
 const first = product.prices[0];
-const extra = Math.max(days-1,0)*product.prices[1];
+const extra = Math.max(days-1,0) * product.prices[1];
 const price = first + extra;
 
 return {
@@ -404,7 +414,14 @@ price:price
 });
 
 const order = {
-user:{fio,birth,phone,address},
+user:{
+fio:fio,
+birth:birth,
+phone:phone,
+address:address
+},
+deliveryTime:deliveryTime,
+comment:comment,
 cart:cartItems
 };
 
