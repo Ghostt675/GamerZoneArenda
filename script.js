@@ -348,8 +348,9 @@ function formatDuration(value) {
 
 
 // ===== ОТКРЫТЬ МОДАЛКУ ОФОРМЛЕНИЯ =====
+// ===== ОТКРЫТЬ МОДАЛКУ =====
 function openCheckout() {
-    if(cart.length === 0){
+    if (cart.length === 0) {
         alert("Корзина пустая");
         return;
     }
@@ -361,34 +362,44 @@ function closeCheckout() {
     document.getElementById("checkoutModal").classList.remove("open");
 }
 
-// ===== ПОДТВЕРЖДЕНИЕ / ПЕРВЫЙ ШАГ =====
-function nextStep() {
-    const fio = document.getElementById("fio").value.trim();
-    const birth = document.getElementById("birth").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const deliveryTime = document.getElementById("deliveryTime").value.trim();
-    const agree = document.getElementById("agree").checked;
+// ===== ПОШАГОВАЯ ЛОГИКА =====
+let step = 1;
 
-    if(!fio || !birth || !phone || !address || !deliveryTime){
-        alert("Заполните все обязательные поля и дату/время доставки");
-        return;
-    }
-    if(!agree){
-        alert("Нужно согласие на обработку данных");
-        return;
-    }
+function confirmOrder() {
+    if (step === 1) {
+        // Проверяем обязательные поля
+        const fio = document.getElementById("fio").value.trim();
+        const birth = document.getElementById("birth").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const deliveryTime = document.getElementById("deliveryTime").value.trim();
+        const agree = document.getElementById("agree").checked;
 
-    // Скрываем первый шаг и показываем кнопку отправки
-    document.getElementById("step1").style.display = "none";
-    document.getElementById("step2").style.display = "block";
+        if (!fio || !birth || !phone || !address || !deliveryTime) {
+            alert("Заполните все обязательные поля, включая дату и время доставки");
+            return;
+        }
+        if (!agree) {
+            alert("Нужно согласие на обработку данных");
+            return;
+        }
+
+        // Переходим на шаг 2 — подтверждение заказа
+        step = 2;
+        document.querySelector(".orderNextBtn").innerText = "Отправить заказ";
+        alert(
+            `Проверьте ваши данные:\nФИО: ${fio}\nДата рождения: ${birth}\nТелефон: ${phone}\nАдрес: ${address}\nДата и время доставки: ${deliveryTime}`
+        );
+
+    } else if (step === 2) {
+        // Отправка заказа
+        sendOrder();
+    }
 }
 
 // ===== ОТПРАВКА ЗАКАЗА =====
-async function confirmOrder() {
-    const btn = document.getElementById("sendOrderBtn");
-    if(btn.disabled) return;
-
+async function sendOrder() {
+    const btn = document.querySelector(".orderNextBtn");
     btn.disabled = true;
     showLoader();
 
@@ -417,6 +428,7 @@ async function confirmOrder() {
             comment
         };
 
+        // Отправка на бекенд
         await fetch("http://127.0.0.1:5000/send-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -425,15 +437,19 @@ async function confirmOrder() {
 
         hideLoader();
         alert("Заказ успешно отправлен!");
-        
+
         // Очистка корзины
         cart = [];
-        localStorage.setItem("cart","[]");
+        localStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
 
         closeCheckout();
-    } catch(e) {
+        step = 1;
+        btn.disabled = false;
+        btn.innerText = "Далее";
+
+    } catch (e) {
         hideLoader();
         alert("Ошибка отправки");
         btn.disabled = false;
