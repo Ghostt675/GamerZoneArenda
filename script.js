@@ -365,37 +365,70 @@ function closeCheckout() {
 // ===== ПОШАГОВАЯ ЛОГИКА =====
 let step = 1;
 
-function confirmOrder() {
-    if (step === 1) {
-        // Проверяем обязательные поля
-        const fio = document.getElementById("fio").value.trim();
-        const birth = document.getElementById("birth").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const address = document.getElementById("address").value.trim();
-        const deliveryTime = document.getElementById("deliveryTime").value.trim(); 
-        const agree = document.getElementById("agree").checked;
+async function confirmOrder(){
+    const btn = document.getElementById("sendOrderBtn");
+    if(btn.disabled) return;
 
-        if (!fio || !birth || !phone || !address || !deliveryTime) {
-            alert("Заполните все обязательные поля, включая дату и время доставки");
-            return;
-        }
-        if (!agree) {
-            alert("Нужно согласие на обработку данных");
-            return;
-        }
+    // Проверяем поля
+    const fio = document.getElementById("fio").value.trim();
+    const birth = document.getElementById("birth").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const deliveryTime = document.getElementById("deliveryTime").value.trim();
+    const comment = document.getElementById("comment").value.trim();
+    const agree = document.getElementById("agree").checked;
 
-        // Переходим на шаг 2 — подтверждение заказа
-        step = 2;
-        document.querySelector(".orderNextBtn").innerText = "Отправить заказ";
-        alert(
-            `Проверьте ваши данные:\nФИО: ${fio}\nДата рождения: ${birth}\nТелефон: ${phone}\nАдрес: ${address}\nДата и время доставки: ${deliveryTime}`
-        );
+    if(!fio || !birth || !phone || !address || !deliveryTime){
+        alert("Заполните все обязательные поля");
+        return;
+    }
+    if(!agree){
+        alert("Нужно согласие на обработку данных");
+        return;
+    }
 
-    } else if (step === 2) {
-        // Отправка заказа
-        sendOrder();
+    btn.disabled = true;
+    showLoader();
+
+    try{
+        const cartItems = cart.map(id => {
+            const product = products.find(p => p.id === id);
+            const days = product.periodValue;
+            const first = product.prices[0];
+            const extra = Math.max(days-1,0) * product.prices[1];
+            const price = first + extra;
+            return {name: product.name, days, price};
+        });
+
+        const order = { user:{fio,birth,phone,address}, cart:cartItems, deliveryTime, comment };
+
+        await fetch("http://45.144.220.76:5000/send-order", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(order)
+        });
+
+        hideLoader();
+        alert("Заказ успешно отправлен!");
+
+        cart = [];
+        localStorage.setItem("cart","[]");
+        renderCart();
+        updateCartCount();
+        renderProducts("popularProducts", p=>p.popular); // сброс кнопок "В корзине"
+
+        closeCheckout();
+
+    } catch(e){
+        hideLoader();
+        console.error(e);
+        alert("Ошибка отправки заказа");
+        btn.disabled = false;
     }
 }
+
+function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
+function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
 
 // ===== ОТПРАВКА ЗАКАЗА =====
 async function sendOrder() {
