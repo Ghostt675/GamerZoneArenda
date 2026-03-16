@@ -403,11 +403,11 @@ async function sendOrder() {
             comment
         };
 
-        await fetch("http://45.144.220.76:5000/send-order", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(order)
-        });
+        await fetch("/send-order", {   
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order)
+            });
 
         hideLoader();
         alert("Заказ успешно отправлен!");
