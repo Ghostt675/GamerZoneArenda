@@ -167,16 +167,19 @@
 <h2>Оформление заказа</h2>
 
 <input id="fio" placeholder="ФИО">
-
 <input id="birth" type="date">
-
 <input id="phone" placeholder="Телефон">
+<input id="address" placeholder="Адрес">
 
-<input id="address" placeholder="Адрес доставки">
+<label>Дата и время доставки</label>
+<input id="deliveryTime" type="datetime-local">
 
-<label class="agree-box">
+<label>Пожелания к аренде</label>
+<textarea id="comment" placeholder="Ваши пожелания"></textarea>
+
+<label>
 <input type="checkbox" id="agree">
-<span>Согласен на обработку персональных данных</span>
+Согласен на обработку персональных данных
 </label>
 
 <button class="orderNextBtn" onclick="confirmOrder()">Далее</button>
