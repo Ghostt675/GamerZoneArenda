@@ -347,35 +347,30 @@ function formatDuration(value) {
 }
 
 
-// ===== ОТКРЫТЬ МОДАЛКУ ОФОРМЛЕНИЯ =====
-// ===== ОТКРЫТЬ МОДАЛКУ =====
+// ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
 function openCheckout() {
-    if (cart.length === 0) {
+    if(cart.length === 0){
         alert("Корзина пустая");
         return;
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
-
-// ===== ЗАКРЫТЬ =====
-function closeCheckout() {
+function closeCheckout(){
     document.getElementById("checkoutModal").classList.remove("open");
 }
 
-// ===== ПОШАГОВАЯ ЛОГИКА =====
-let step = 1;
-
-async function confirmOrder(){
+// ===== ОТПРАВКА ЗАКАЗА =====
+async function sendOrder() {
     const btn = document.getElementById("sendOrderBtn");
     if(btn.disabled) return;
 
-    // Проверяем поля
+    // Собираем поля
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
     const deliveryTime = document.getElementById("deliveryTime").value.trim();
-    const comment = document.getElementById("comment").value.trim();
+    const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
     const agree = document.getElementById("agree").checked;
 
     if(!fio || !birth || !phone || !address || !deliveryTime){
@@ -390,9 +385,10 @@ async function confirmOrder(){
     btn.disabled = true;
     showLoader();
 
-    try{
+    try {
+        // Формируем корзину
         const cartItems = cart.map(id => {
-            const product = products.find(p => p.id === id);
+            const product = products.find(p => p.id===id);
             const days = product.periodValue;
             const first = product.prices[0];
             const extra = Math.max(days-1,0) * product.prices[1];
@@ -400,7 +396,12 @@ async function confirmOrder(){
             return {name: product.name, days, price};
         });
 
-        const order = { user:{fio,birth,phone,address}, cart:cartItems, deliveryTime, comment };
+        const order = {
+            user:{fio,birth,phone,address},
+            cart:cartItems,
+            deliveryTime,
+            comment
+        };
 
         await fetch("http://45.144.220.76:5000/send-order", {
             method:"POST",
@@ -411,93 +412,29 @@ async function confirmOrder(){
         hideLoader();
         alert("Заказ успешно отправлен!");
 
+        // Очистка корзины и кнопок
         cart = [];
         localStorage.setItem("cart","[]");
         renderCart();
         updateCartCount();
-        renderProducts("popularProducts", p=>p.popular); // сброс кнопок "В корзине"
+        renderProducts("popularProducts", p=>p.popular);
+        renderFavorites();
 
         closeCheckout();
+        btn.disabled = false;
+        btn.innerText = "Далее";
 
     } catch(e){
         hideLoader();
         console.error(e);
-        alert("Ошибка отправки заказа");
-        btn.disabled = false;
-    }
-}
-
-function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
-function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
-
-// ===== ОТПРАВКА ЗАКАЗА =====
-async function sendOrder() {
-    const btn = document.querySelector(".orderNextBtn");
-    btn.disabled = true;
-    showLoader();
-
-    try {
-        const fio = document.getElementById("fio").value.trim();
-        const birth = document.getElementById("birth").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const address = document.getElementById("address").value.trim();
-        const deliveryTime = document.getElementById("deliveryTime").value.trim(); 
-        const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
-
-        const cartItems = cart.map(id => {
-            const product = products.find(p => p.id === id);
-            const days = product.periodValue;
-            const first = product.prices[0];
-            const extra = Math.max(days-1,0) * product.prices[1];
-            const price = first + extra;
-
-            return { name: product.name, days, price };
-        });
-
-        const order = {
-            user: { fio, birth, phone, address },
-            cart: cartItems,
-            deliveryTime,
-            comment
-        };
-
-        await fetch("http://127.0.0.1:5000/send-order", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order)
-        });
-
-        hideLoader();
-        alert("Заказ успешно отправлен!");
-
-        // Очистка корзины
-        cart = [];
-            localStorage.setItem("cart", JSON.stringify(cart));
-            renderCart();                   
-            updateCartCount();             
-            renderProducts("popularProducts", p => p.popular); 
-            renderFavorites();           
-
-        closeCheckout();
-        step = 1;
-        btn.disabled = false;
-        btn.innerText = "Далее";
-
-    } catch (e) {
-        hideLoader();
         alert("Ошибка отправки");
         btn.disabled = false;
-        console.error(e);
     }
 }
 
 // ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader() {
-    document.getElementById("loadingOverlay").classList.add("show");
-}
-function hideLoader() {
-    document.getElementById("loadingOverlay").classList.remove("show");
-}
+function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
+function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
 
 
 
