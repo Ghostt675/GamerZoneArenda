@@ -355,9 +355,14 @@ function openCheckout() {
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
+
 function closeCheckout(){
     document.getElementById("checkoutModal").classList.remove("open");
 }
+
+// ===== ИНДИКАТОР ЗАГРУЗКИ =====
+function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
+function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
 
 // ===== ОТПРАВКА ЗАКАЗА =====
 async function sendOrder() {
@@ -373,6 +378,7 @@ async function sendOrder() {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
     const agree = document.getElementById("agree").checked;
 
+    // Проверка обязательных полей
     if(!fio || !birth || !phone || !address || !deliveryTime){
         alert("Заполните все обязательные поля");
         return;
@@ -397,22 +403,23 @@ async function sendOrder() {
         });
 
         const order = {
-            user:{fio,birth,phone,address},
-            cart:cartItems,
+            user: {fio,birth,phone,address},
+            cart: cartItems,
             deliveryTime,
             comment
         };
 
-        await fetch("/send-order", {   
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(order)
-            });
+        // Отправка на сервер
+        await fetch("/send-order", {   // <-- если используешь свой сервер
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(order)
+        });
 
         hideLoader();
         alert("Заказ успешно отправлен!");
 
-        // Очистка корзины и кнопок
+        // Очистка корзины и кнопок "В корзине"
         cart = [];
         localStorage.setItem("cart","[]");
         renderCart();
@@ -431,6 +438,7 @@ async function sendOrder() {
         btn.disabled = false;
     }
 }
+
 
 // ===== ИНДИКАТОР ЗАГРУЗКИ =====
 function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
