@@ -450,33 +450,31 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     });
 
     const order = {
-        user: { fio, birth, phone, address },
-        cart: cartItems,
-        deliveryTime,
-        comment
-    };
+    user: { fio, birth, phone, address },
+    cart: cartItems,
+    deliveryTime,
+    comment
+};
 
-    try {
-        const response = await fetch("http://45.144.220.76/api/send-order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(order)
-        });
+try {
+    const response = await fetch("http://45.144.220.76:5000/send-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order)
+    });
 
-        let result;
-        try {
-            result = await response.json();
-        } catch (jsonErr) {
-            console.error("Ошибка парсинга JSON:", jsonErr, await response.text());
-            throw new Error("Сервер вернул некорректный JSON");
-        }
+    const result = await response.json();
 
-        if (result.status !== "ok") {
-            alert("Ошибка отправки: " + (result.message || "Неизвестная ошибка"));
-            return;
-        }
+    if(result.status !== "ok"){
+        alert("Ошибка отправки: " + (result.message || "Неизвестная ошибка"));
+        return;
+    }
+
+    alert("Заказ успешно отправлен!");
+} catch(e){
+    console.error(e);
+    alert("Ошибка отправки: " + e.message);
+}
 
         alert("Заказ успешно отправлен!");
 
