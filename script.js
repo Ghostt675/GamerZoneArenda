@@ -370,49 +370,41 @@ document.getElementById("checkoutModal").classList.remove("open");
 
 async function confirmOrder(){
 
+const btn = document.getElementById("sendOrderBtn");
+
+if(btn.disabled) return;
+
+btn.disabled = true;
+
+showLoader();
+
+try{
+
 const fio = document.getElementById("fio").value;
 const birth = document.getElementById("birth").value;
 const phone = document.getElementById("phone").value;
 const address = document.getElementById("address").value;
-const agree = document.getElementById("agree").checked;
 
-if(!fio || !phone || !address || !birth){
-alert("Заполните все поля");
-return;
-}
-
-if(!agree){
-alert("Нужно согласие на обработку данных");
-return;
-}
-
-/* собираем полноценные товары */
 const cartItems = cart.map(id => {
 
-    const product = products.find(p => p.id === id);
-    if(!product) return null;
+const product = products.find(p => p.id === id);
 
-    const days = product.periodValue;
+const days = product.periodValue;
 
-    const firstDayCost = product.prices[0];
-    const extraDaysCost = Math.max(days - 1, 0) * product.prices[1];
-    const totalPrice = firstDayCost + extraDaysCost;
+const first = product.prices[0];
+const extra = Math.max(days-1,0)*product.prices[1];
+const price = first + extra;
 
-    return {
-        name: product.name,
-        days: days,
-        price: totalPrice
-    };
+return {
+name:product.name,
+days:days,
+price:price
+};
 
-}).filter(Boolean);
+});
 
 const order = {
-user:{
-fio:fio,
-birth:birth,
-phone:phone,
-address:address
-},
+user:{fio,birth,phone,address},
 cart:cartItems
 };
 
@@ -424,16 +416,40 @@ headers:{
 body:JSON.stringify(order)
 });
 
-alert("Заказ отправлен!");
+hideLoader();
 
-closeCheckout();
+alert("Заказ успешно отправлен!");
 
-cart = [];
-localStorage.setItem("cart", JSON.stringify(cart));
+cart=[];
+localStorage.setItem("cart","[]");
 
 renderCart();
 updateCartCount();
+
+closeCheckout();
+
 }
+catch(e){
+
+hideLoader();
+
+alert("Ошибка отправки");
+
+btn.disabled=false;
+
+}
+
+}
+
+
+function showLoader(){
+document.getElementById("loadingOverlay").classList.add("show");
+}
+
+function hideLoader(){
+document.getElementById("loadingOverlay").classList.remove("show");
+}
+
 
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
