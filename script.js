@@ -348,14 +348,14 @@ function formatDuration(value) {
 
 
 // ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
+// ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
 function openCheckout() {
     if(cart.length === 0){
-        alert("Корзина пустая");
+        alert("Корзина пуста");
         return;
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
-
 function closeCheckout(){
     document.getElementById("checkoutModal").classList.remove("open");
 }
@@ -409,11 +409,11 @@ async function sendOrder() {
             comment
         };
 
-        // Отправка на сервер
+        // Отправка на сервер через прокси, IP скрыт
         await fetch("/api/send-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(order)
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(order)
         });
 
         hideLoader();
@@ -434,16 +434,10 @@ async function sendOrder() {
     } catch(e){
         hideLoader();
         console.error(e);
-        alert("Ошибка отправки");
+        alert("Ошибка отправки заказа");
         btn.disabled = false;
     }
 }
-
-
-// ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
-function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
-
 
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
