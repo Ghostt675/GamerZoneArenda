@@ -172,11 +172,22 @@
       Согласен на обработку персональных данных
     </label>
 
-    <button id="sendOrderBtn" onclick="sendOrder()">Далее</button>
+    <button id="checkOrderBtn">Далее</button>
     <button class="closeBtn" onclick="closeCheckout()">Закрыть</button>
   </div>
 </div>
 
+<!-- Модалка проверки -->
+<div id="confirmModal" class="checkoutModal">
+  <div class="checkout-box">
+    <h2 style="color:white;">Проверьте данные</h2>
+    <div id="orderPreview"></div>
+    <button id="sendOrderBtn">Подтвердить заказ</button>
+    <button class="closeBtn" onclick="closeConfirm()">Отмена</button>
+  </div>
+</div>
+
+<!-- Индикатор загрузки -->
 <div id="loadingOverlay" class="loading-overlay">
   <div class="loading-box">
     <div class="loader"></div>
