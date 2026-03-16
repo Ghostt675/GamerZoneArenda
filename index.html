@@ -157,30 +157,32 @@
     <h2 style="color:white;">Оформление заказа</h2>
 
     <input id="fio" placeholder="ФИО">
-    <input id="birth" type="date">
+    <input id="birth" type="date" placeholder="Дата рождения">
     <input id="phone" placeholder="Телефон">
     <input id="address" placeholder="Адрес">
 
     <label style="color:white;">Дата и время доставки</label>
     <input id="deliveryTime" type="text" placeholder="Например: завтра утром">
 
-    <label style="color:white;">Пожелания к аренде (необязательно)</label>
-    <textarea id="comment" placeholder="Ваши пожелания"></textarea>
+    <label style="color:white;">Пожелания к аренде</label>
+    <textarea id="comment" placeholder="Ваши пожелания (необязательно)"></textarea>
 
     <label style="color:white;">
-      <input type="checkbox" id="agree"> Согласен на обработку персональных данных
+      <input type="checkbox" id="agree">
+      Согласен на обработку персональных данных
     </label>
 
-    <button id="sendOrderBtn" class="orderNextBtn" onclick="confirmOrder()">Далее</button>
+    <button id="sendOrderBtn">Далее</button>
     <button class="closeBtn" onclick="closeCheckout()">Закрыть</button>
   </div>
 </div>
 
+
 <div id="loadingOverlay" class="loading-overlay">
-    <div class="loading-box">
-        <div class="loader"></div>
-        <p>Ваш заказ отправляется...</p>
-    </div>
+  <div class="loading-box">
+    <div class="loader"></div>
+    <p>Ваш заказ отправляется...</p>
+  </div>
 </div>
 
 
