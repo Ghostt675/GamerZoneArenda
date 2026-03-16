@@ -435,45 +435,46 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
     const cartItems = cart.map(id => {
-        const p = products.find(pr => pr.id===id);
+        const p = products.find(pr => pr.id === id);
         const days = p.periodValue;
-        const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
+        const price = p.prices[0] + Math.max(days - 1, 0) * p.prices[1];
         return { name: p.name, days, price };
     });
 
     const order = {
-        user: {fio,birth,phone,address},
+        user: { fio, birth, phone, address },
         cart: cartItems,
         deliveryTime,
         comment
     };
 
     try {
-        const response = fetch("http://45.144.220.76/api/send-order", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(order)
-});
+        // ❌ Была ошибка: неправильно закрыты кавычки и нет await
+        const response = await fetch("http://45.144.220.76/api/send-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        });
+
         const result = await response.json();
 
-        if(result.status !== "ok"){
-            alert("Ошибка отправки: " + (result.message||""));
+        if (result.status !== "ok") {
+            alert("Ошибка отправки: " + (result.message || "Неизвестная ошибка"));
             return;
         }
 
         alert("Заказ успешно отправлен!");
 
-        // Очистка корзины и обновление UI
         cart = [];
-        localStorage.setItem("cart","[]");
+        localStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
-        renderProducts("popularProducts", p=>p.popular);
+        renderProducts("popularProducts", p => p.popular);
         renderFavorites();
 
         closeConfirm();
 
-    } catch(e){
+    } catch (e) {
         console.error(e);
         alert("Ошибка отправки: " + e.message);
     } finally {
