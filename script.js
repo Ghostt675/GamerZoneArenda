@@ -428,7 +428,6 @@ async function sendOrder() {
             comment
         };
 
-        // Отправка на бекенд
         await fetch("http://127.0.0.1:5000/send-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -440,9 +439,11 @@ async function sendOrder() {
 
         // Очистка корзины
         cart = [];
-        localStorage.setItem("cart", "[]");
-        renderCart();
-        updateCartCount();
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();                   
+            updateCartCount();             
+            renderProducts("popularProducts", p => p.popular); 
+            renderFavorites();           
 
         closeCheckout();
         step = 1;
