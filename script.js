@@ -410,10 +410,10 @@ async function sendOrder() {
         };
 
         // Отправка на сервер
-        await fetch("/send-order", {   // <-- если используешь свой сервер
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(order)
+        await fetch("/api/send-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order)
         });
 
         hideLoader();
