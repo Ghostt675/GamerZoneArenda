@@ -422,6 +422,7 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
 });
 
 // ===== ОТПРАВКА ЗАКАЗА =====
+// ===== ОТПРАВКА ЗАКАЗА =====
 document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const btn = document.getElementById("sendOrderBtn");
     btn.disabled = true;
@@ -433,6 +434,13 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const address = document.getElementById("address").value.trim();
     const deliveryTime = document.getElementById("deliveryTime").value.trim();
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
+
+    if (!fio || !birth || !phone || !address || !deliveryTime) {
+        alert("Заполните все обязательные поля");
+        btn.disabled = false;
+        hideLoader();
+        return;
+    }
 
     const cartItems = cart.map(id => {
         const p = products.find(pr => pr.id === id);
@@ -449,14 +457,14 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        // ✅ Исправленный fetch
         const response = await fetch("http://45.144.220.76/api/send-order", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(order)
         });
 
-        // Если сервер вернул не JSON, будет ошибка
         let result;
         try {
             result = await response.json();
