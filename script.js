@@ -351,25 +351,29 @@ function formatDuration(value) {
 // ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
 function openCheckout() {
     if(cart.length === 0){
-        alert("Корзина пуста");
+        alert("Корзина пустая");
         return;
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
-function closeCheckout(){
+
+function closeCheckout() {
     document.getElementById("checkoutModal").classList.remove("open");
 }
 
-// ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
-function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
+function openConfirm() {
+    document.getElementById("confirmModal").classList.add("open");
+}
 
-// ===== ОТПРАВКА ЗАКАЗА =====
-async function sendOrder() {
-    const btn = document.getElementById("sendOrderBtn");
-    if(btn.disabled) return;
+function closeConfirm() {
+    document.getElementById("confirmModal").classList.remove("open");
+}
 
-    // Собираем поля
+function showLoader() { document.getElementById("loadingOverlay").classList.add("show"); }
+function hideLoader() { document.getElementById("loadingOverlay").classList.remove("show"); }
+
+// ===== Проверка данных перед отправкой =====
+document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
@@ -378,7 +382,6 @@ async function sendOrder() {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
     const agree = document.getElementById("agree").checked;
 
-    // Проверка обязательных полей
     if(!fio || !birth || !phone || !address || !deliveryTime){
         alert("Заполните все обязательные поля");
         return;
@@ -388,56 +391,92 @@ async function sendOrder() {
         return;
     }
 
+    // Показываем превью заказа
+    const preview = `
+        <p><strong>ФИО:</strong> ${fio}</p>
+        <p><strong>Дата рождения:</strong> ${birth}</p>
+        <p><strong>Телефон:</strong> ${phone}</p>
+        <p><strong>Адрес:</strong> ${address}</p>
+        <p><strong>Доставка:</strong> ${deliveryTime}</p>
+        <p><strong>Пожелания:</strong> ${comment}</p>
+        <p><strong>Товары:</strong></p>
+        <ul>
+            ${cart.map(id => {
+                const p = products.find(pr => pr.id === id);
+                const days = p.periodValue;
+                const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
+                return `<li>${p.name} — ${days} суток — ${price} ₽</li>`;
+            }).join("")}
+        </ul>
+    `;
+    document.getElementById("orderPreview").innerHTML = preview;
+
+    closeCheckout();
+    openConfirm();
+});
+
+// ===== Отправка заказа =====
+document.getElementById("sendOrderBtn").addEventListener("click", async () => {
+    const btn = document.getElementById("sendOrderBtn");
     btn.disabled = true;
     showLoader();
 
+    const fio = document.getElementById("fio").value.trim();
+    const birth = document.getElementById("birth").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const deliveryTime = document.getElementById("deliveryTime").value.trim();
+    const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
+
+    const cartItems = cart.map(id => {
+        const p = products.find(pr => pr.id === id);
+        const days = p.periodValue;
+        const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
+        return { name: p.name, days, price };
+    });
+
+    const order = {
+        user: {fio,birth,phone,address},
+        cart: cartItems,
+        deliveryTime,
+        comment
+    };
+
     try {
-        // Формируем корзину
-        const cartItems = cart.map(id => {
-            const product = products.find(p => p.id===id);
-            const days = product.periodValue;
-            const first = product.prices[0];
-            const extra = Math.max(days-1,0) * product.prices[1];
-            const price = first + extra;
-            return {name: product.name, days, price};
-        });
-
-        const order = {
-            user: {fio,birth,phone,address},
-            cart: cartItems,
-            deliveryTime,
-            comment
-        };
-
-        // Отправка на сервер через прокси, IP скрыт
-        await fetch("/api/send-order", {
+        const response = await fetch("/api/send-order", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(order)
         });
 
-        hideLoader();
+        const result = await response.json();
+        if(result.status !== "ok"){
+            alert("Ошибка отправки: " + (result.message||""));
+            btn.disabled = false;
+            hideLoader();
+            return;
+        }
+
         alert("Заказ успешно отправлен!");
 
-        // Очистка корзины и кнопок "В корзине"
+        // Сброс корзины
         cart = [];
-        localStorage.setItem("cart","[]");
+        localStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
-        renderProducts("popularProducts", p=>p.popular);
+        renderProducts("popularProducts", p => p.popular);
         renderFavorites();
 
-        closeCheckout();
+        closeConfirm();
         btn.disabled = false;
-        btn.innerText = "Далее";
-
     } catch(e){
-        hideLoader();
         console.error(e);
-        alert("Ошибка отправки заказа");
+        alert("Ошибка отправки");
         btn.disabled = false;
+    } finally {
+        hideLoader();
     }
-}
+});
 
 
 document.addEventListener("DOMContentLoaded", () => {
