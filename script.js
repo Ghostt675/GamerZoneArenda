@@ -346,9 +346,6 @@ function formatDuration(value) {
     }
 }
 
-
-// ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
-// ===== ОТКРЫТЬ/ЗАКРЫТЬ МОДАЛКУ =====
 // ===== МОДАЛКИ =====
 function openCheckout() {
     if(cart.length === 0){
@@ -357,22 +354,31 @@ function openCheckout() {
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
+
 function closeCheckout() {
     document.getElementById("checkoutModal").classList.remove("open");
 }
+
 function openConfirm() {
     document.getElementById("confirmModal").classList.add("open");
 }
+
 function closeConfirm() {
     document.getElementById("confirmModal").classList.remove("open");
 }
 
 // ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader(){ document.getElementById("loadingOverlay").classList.add("show"); }
-function hideLoader(){ document.getElementById("loadingOverlay").classList.remove("show"); }
+function showLoader(){
+    document.getElementById("loadingOverlay").classList.add("show");
+}
+
+function hideLoader(){
+    document.getElementById("loadingOverlay").classList.remove("show");
+}
 
 // ===== ПРЕВЬЮ ЗАКАЗА =====
 document.getElementById("checkOrderBtn").addEventListener("click", () => {
+
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
@@ -385,12 +391,12 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
         alert("Заполните все обязательные поля");
         return;
     }
+
     if(!agree){
         alert("Нужно согласие на обработку данных");
         return;
     }
 
-    // Формируем превью
     const preview = `
         <p><strong>ФИО:</strong> ${fio}</p>
         <p><strong>Дата рождения:</strong> ${birth}</p>
@@ -408,6 +414,7 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
             }).join("")}
         </ul>
     `;
+
     document.getElementById("orderPreview").innerHTML = preview;
 
     closeCheckout();
@@ -416,8 +423,10 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
 
 // ===== ОТПРАВКА ЗАКАЗА =====
 document.getElementById("sendOrderBtn").addEventListener("click", async () => {
+
     const btn = document.getElementById("sendOrderBtn");
     btn.disabled = true;
+
     showLoader();
 
     const fio = document.getElementById("fio").value.trim();
@@ -442,15 +451,17 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
+
         const response = await fetch("/api/send-order", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type":"application/json"},
             body: JSON.stringify(order)
         });
 
         const result = await response.json();
+
         if(result.status !== "ok"){
-            alert("Ошибка отправки: " + (result.message||""));
+            alert("Ошибка отправки");
             btn.disabled = false;
             hideLoader();
             return;
@@ -460,18 +471,27 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
 
         cart = [];
         localStorage.setItem("cart","[]");
+
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p=>p.popular);
         renderFavorites();
 
-document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("sendOrderBtn");
-    if(btn){
-        btn.addEventListener("click", sendOrder);
-    }
-});
+        closeConfirm();
 
+    } catch(e){
+
+        console.error(e);
+        alert("Ошибка отправки");
+
+    } finally {
+
+        hideLoader();
+        btn.disabled = false;
+
+    }
+
+});
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
