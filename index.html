@@ -9,7 +9,7 @@
 
 <body>
 
-<!-- ===== ВЕРХНЯЯ ТОНКАЯ ПОЛОСА ===== -->
+<!--ВЕРХ-->
 <div class="topbar">
   <div class="top-right">
     <a href="https://avito.ru" target="_blank">
@@ -56,10 +56,8 @@
 
 </div>
 
-<!-- ===== ОСНОВНОЕ МЕНЮ ===== -->
 <div class="navbar">
 
-  <!-- центр: каталог + поиск -->
   <div class="nav-center">
       <button class="products-btn" onclick="toggleCatalog()">
         Каталог
@@ -68,7 +66,6 @@
       <input class="search" placeholder="Поиск товаров">
   </div>
 
-  <!-- правые иконки -->
   <div class="icons">
         <button class="icon-btn" onclick="openFavorites()">
             <img src="images/favorite-icon.png" alt="🤍" class="nav-icon">
@@ -82,17 +79,15 @@
 </div>
 
 
-<!-- ===== КОНТЕЙНЕР ДЛЯ ВСЕГО КОНТЕНТА ===== -->
 <div class="container">
 
 <div class="banner">
     <img src="images/banner.png" alt="Banner">
 </div>
 
-  <!-- ===== ПОПУЛЯРНЫЕ ТОВАРЫ ===== -->
+  
 <h2 class="section-title">Популярные товары</h2>
-<div class="products" id="popularProducts"></div>
-
+  <div class="products" id="popularProducts"></div>
 
   
 <section class="reviews">
@@ -108,7 +103,7 @@
   </div>
 </section>
 
-  <!-- ===== ОПИСАНИЕ САЙТА ===== -->
+
   <section class="about">
     <h2>О нашем сайте</h2>
     <p>
@@ -119,9 +114,8 @@
     </p>
   </section>
 
-</div> <!-- /container -->
+</div> 
 
-<!-- ===== ФУТЕР ===== -->
 <footer>
   <p>© 2026 | GamerZone</p>
   <a href="https://t.me/USERNAME" target="_blank">
@@ -135,7 +129,7 @@
   </a>
 </footer>
 
-<!-- ===== КОРЗИНА ===== -->
+
 <div id="cartModal" class="cartModal">
   <div class="modal-header">
     <h3>Корзина</h3>
@@ -146,7 +140,7 @@
   <button class="add-cart-btn orderBtn" onclick="openCheckout()">Оформить заказ</button>
 </div>
 
-<!-- ===== ИЗБРАННОЕ ===== -->
+
 <div id="favoritesModal" class="sideModal">
   <div class="sideModal-header">
     <h3>Избранные товары</h3>
@@ -158,7 +152,6 @@
 </div>
 
 
-<!-- ===== ОФОРМЛЕНИЕ ЗАКАЗА ===== -->
 
 <div id="checkoutModal" class="checkoutModal">
   <div class="checkout-box">
@@ -192,12 +185,9 @@
 </div>
 
 
-  
-  
-<!-- overlay для закрытия модалок -->
 <div id="overlay" class="overlay"></div>
 
-<!-- ===== JS ===== -->
+
 <script src="script.js"></script>
 </body>
 </html>
