@@ -440,6 +440,14 @@ async function sendOrder() {
 }
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("sendOrderBtn");
+    if(btn){
+        btn.addEventListener("click", sendOrder);
+    }
+});
+
+
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
     loadCartFromLocalStorage();
