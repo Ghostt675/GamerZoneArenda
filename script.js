@@ -396,11 +396,10 @@ address:address
 cart:cart
 };
 
-await fetch("",{
+await fetch("http://127.0.0.1:5000/send-order",{
 method:"POST",
 headers:{
-"Content-Type":"application/json",
-"X-Site-Key":"4c6c5f9e5b4a9c3f0d2a1b7e8f9c6d3e"
+"Content-Type":"application/json"
 },
 body:JSON.stringify(order)
 });
