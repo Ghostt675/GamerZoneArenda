@@ -423,10 +423,8 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
 
 // ===== ОТПРАВКА ЗАКАЗА =====
 document.getElementById("sendOrderBtn").addEventListener("click", async () => {
-
     const btn = document.getElementById("sendOrderBtn");
     btn.disabled = true;
-
     showLoader();
 
     const fio = document.getElementById("fio").value.trim();
@@ -451,28 +449,24 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-
         const response = await fetch("http://45.144.220.76:5000/send-order", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(order)
-});
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(order)
         });
 
         const result = await response.json();
 
         if(result.status !== "ok"){
-            alert("Ошибка отправки");
-            btn.disabled = false;
-            hideLoader();
+            alert("Ошибка отправки: " + (result.message||""));
             return;
         }
 
         alert("Заказ успешно отправлен!");
 
+        // Очистка корзины и обновление UI
         cart = [];
         localStorage.setItem("cart","[]");
-
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p=>p.popular);
@@ -481,17 +475,12 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
         closeConfirm();
 
     } catch(e){
-
         console.error(e);
-        alert("Ошибка отправки");
-
+        alert("Ошибка отправки: " + e.message);
     } finally {
-
         hideLoader();
         btn.disabled = false;
-
     }
-
 });
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
