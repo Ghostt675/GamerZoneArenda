@@ -376,7 +376,7 @@ const phone = document.getElementById("phone").value;
 const address = document.getElementById("address").value;
 const agree = document.getElementById("agree").checked;
 
-if(!fio || !phone || !address){
+if(!fio || !phone || !address || !fio){
 alert("Заполните все поля");
 return;
 }
