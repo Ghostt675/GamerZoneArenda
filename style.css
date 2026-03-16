@@ -580,6 +580,25 @@ button{
   color:#000;
 }
 
+/* ===== ЧЕРНЫЙ/БЕЛЫЙ ТЕКСТ В ЧЕКАУТЕ ===== */
+.checkoutModal .checkout-box h2 {
+    color: #ffffff; /* заголовок "Оформление заказа" белый */
+}
+
+.checkoutModal .checkout-box label {
+    color: #ffffff; /* надписи типа "Согласен на обработку..." белые */
+}
+
+.checkoutModal .checkout-box p {
+    color: #ffffff; /* если есть текст внутри чекбокса или подсказки */
+}
+
+/* Поля ввода остаются с темным текстом */
+.checkoutModal .checkout-box input,
+.checkoutModal .checkout-box textarea {
+    color: #000000; /* текст внутри полей черный */
+}
+
 /* Loader */
 .loading-overlay {
   position: fixed;
