@@ -376,7 +376,7 @@ const phone = document.getElementById("phone").value;
 const address = document.getElementById("address").value;
 const agree = document.getElementById("agree").checked;
 
-if(!fio || !phone || !address || !fio){
+if(!fio || !phone || !address || !birth){
 alert("Заполните все поля");
 return;
 }
@@ -386,6 +386,26 @@ alert("Нужно согласие на обработку данных");
 return;
 }
 
+/* собираем полноценные товары */
+const cartItems = cart.map(id => {
+
+    const product = products.find(p => p.id === id);
+    if(!product) return null;
+
+    const days = product.periodValue;
+
+    const firstDayCost = product.prices[0];
+    const extraDaysCost = Math.max(days - 1, 0) * product.prices[1];
+    const totalPrice = firstDayCost + extraDaysCost;
+
+    return {
+        name: product.name,
+        days: days,
+        price: totalPrice
+    };
+
+}).filter(Boolean);
+
 const order = {
 user:{
 fio:fio,
@@ -393,7 +413,7 @@ birth:birth,
 phone:phone,
 address:address
 },
-cart:cart
+cart:cartItems
 };
 
 await fetch("http://127.0.0.1:5000/send-order",{
@@ -413,7 +433,6 @@ localStorage.setItem("cart", JSON.stringify(cart));
 
 renderCart();
 updateCartCount();
-
 }
 
 
