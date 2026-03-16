@@ -449,14 +449,21 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        // ❌ Была ошибка: неправильно закрыты кавычки и нет await
+        // ✅ Исправленный fetch
         const response = await fetch("http://45.144.220.76/api/send-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(order)
         });
 
-        const result = await response.json();
+        // Если сервер вернул не JSON, будет ошибка
+        let result;
+        try {
+            result = await response.json();
+        } catch (jsonErr) {
+            console.error("Ошибка парсинга JSON:", jsonErr, await response.text());
+            throw new Error("Сервер вернул некорректный JSON");
+        }
 
         if (result.status !== "ok") {
             alert("Ошибка отправки: " + (result.message || "Неизвестная ошибка"));
@@ -465,6 +472,7 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
 
         alert("Заказ успешно отправлен!");
 
+        // Очистка корзины и обновление UI
         cart = [];
         localStorage.setItem("cart", "[]");
         renderCart();
