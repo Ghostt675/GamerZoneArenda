@@ -347,124 +347,106 @@ function formatDuration(value) {
 }
 
 
-// ===== ОТКРЫТЬ ОФОРМЛЕНИЕ =====
-
-function openCheckout(){
-
-if(cart.length === 0){
-alert("Корзина пустая");
-return;
-}
-
-document.getElementById("checkoutModal").classList.add("open");
-
+// ===== ОТКРЫТЬ МОДАЛКУ ОФОРМЛЕНИЯ =====
+function openCheckout() {
+    if(cart.length === 0){
+        alert("Корзина пустая");
+        return;
+    }
+    document.getElementById("checkoutModal").classList.add("open");
 }
 
 // ===== ЗАКРЫТЬ =====
-
-function closeCheckout(){
-document.getElementById("checkoutModal").classList.remove("open");
+function closeCheckout() {
+    document.getElementById("checkoutModal").classList.remove("open");
 }
 
-// ===== ПОДТВЕРЖДЕНИЕ =====
+// ===== ПОДТВЕРЖДЕНИЕ / ПЕРВЫЙ ШАГ =====
+function nextStep() {
+    const fio = document.getElementById("fio").value.trim();
+    const birth = document.getElementById("birth").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const deliveryTime = document.getElementById("deliveryTime").value.trim();
+    const agree = document.getElementById("agree").checked;
 
-async function confirmOrder(){
+    if(!fio || !birth || !phone || !address || !deliveryTime){
+        alert("Заполните все обязательные поля и дату/время доставки");
+        return;
+    }
+    if(!agree){
+        alert("Нужно согласие на обработку данных");
+        return;
+    }
 
-const btn = document.getElementById("sendOrderBtn");
-
-if(btn.disabled) return;
-
-btn.disabled = true;
-
-showLoader();
-
-try{
-
-const fio = document.getElementById("fio").value;
-const birth = document.getElementById("birth").value;
-const phone = document.getElementById("phone").value;
-const address = document.getElementById("address").value;
-
-const deliveryTime = document.getElementById("deliveryTime").value;
-const comment = document.getElementById("comment").value;
-
-if(!fio || !phone || !address){
-alert("Заполните все обязательные поля");
-hideLoader();
-btn.disabled=false;
-return;
+    // Скрываем первый шаг и показываем кнопку отправки
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
 }
 
-const cartItems = cart.map(id => {
+// ===== ОТПРАВКА ЗАКАЗА =====
+async function confirmOrder() {
+    const btn = document.getElementById("sendOrderBtn");
+    if(btn.disabled) return;
 
-const product = products.find(p => p.id === id);
+    btn.disabled = true;
+    showLoader();
 
-const days = product.periodValue;
+    try {
+        const fio = document.getElementById("fio").value.trim();
+        const birth = document.getElementById("birth").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const deliveryTime = document.getElementById("deliveryTime").value.trim();
+        const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
-const first = product.prices[0];
-const extra = Math.max(days-1,0) * product.prices[1];
-const price = first + extra;
+        const cartItems = cart.map(id => {
+            const product = products.find(p => p.id === id);
+            const days = product.periodValue;
+            const first = product.prices[0];
+            const extra = Math.max(days-1,0) * product.prices[1];
+            const price = first + extra;
 
-return {
-name:product.name,
-days:days,
-price:price
-};
+            return { name: product.name, days, price };
+        });
 
-});
+        const order = {
+            user: { fio, birth, phone, address },
+            cart: cartItems,
+            deliveryTime,
+            comment
+        };
 
-const order = {
-user:{
-fio:fio,
-birth:birth,
-phone:phone,
-address:address
-},
-deliveryTime:deliveryTime,
-comment:comment,
-cart:cartItems
-};
+        await fetch("http://127.0.0.1:5000/send-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        });
 
-await fetch("http://127.0.0.1:5000/send-order",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(order)
-});
+        hideLoader();
+        alert("Заказ успешно отправлен!");
+        
+        // Очистка корзины
+        cart = [];
+        localStorage.setItem("cart","[]");
+        renderCart();
+        updateCartCount();
 
-hideLoader();
-
-alert("Заказ успешно отправлен!");
-
-cart=[];
-localStorage.setItem("cart","[]");
-
-renderCart();
-updateCartCount();
-
-closeCheckout();
-
-}
-catch(e){
-
-hideLoader();
-
-alert("Ошибка отправки");
-
-btn.disabled=false;
-
+        closeCheckout();
+    } catch(e) {
+        hideLoader();
+        alert("Ошибка отправки");
+        btn.disabled = false;
+        console.error(e);
+    }
 }
 
+// ===== ИНДИКАТОР ЗАГРУЗКИ =====
+function showLoader() {
+    document.getElementById("loadingOverlay").classList.add("show");
 }
-
-
-function showLoader(){
-document.getElementById("loadingOverlay").classList.add("show");
-}
-
-function hideLoader(){
-document.getElementById("loadingOverlay").classList.remove("show");
+function hideLoader() {
+    document.getElementById("loadingOverlay").classList.remove("show");
 }
 
 
