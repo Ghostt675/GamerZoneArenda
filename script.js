@@ -372,7 +372,7 @@ function confirmOrder() {
         const birth = document.getElementById("birth").value.trim();
         const phone = document.getElementById("phone").value.trim();
         const address = document.getElementById("address").value.trim();
-        const deliveryTime = document.getElementById("deliveryTime").value.trim();
+        const deliveryTime = document.getElementById("deliveryTime").value.trim(); 
         const agree = document.getElementById("agree").checked;
 
         if (!fio || !birth || !phone || !address || !deliveryTime) {
@@ -408,7 +408,7 @@ async function sendOrder() {
         const birth = document.getElementById("birth").value.trim();
         const phone = document.getElementById("phone").value.trim();
         const address = document.getElementById("address").value.trim();
-        const deliveryTime = document.getElementById("deliveryTime").value.trim();
+        const deliveryTime = document.getElementById("deliveryTime").value.trim(); 
         const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
         const cartItems = cart.map(id => {
