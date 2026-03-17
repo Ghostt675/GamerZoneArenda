@@ -457,24 +457,31 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        const response = await fetch("https://45.144.220.76:5000/send-order", {
+        const response = await fetch("http://45.144.220.76/api/send-order", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(order)
         });
+
+        // Проверка ответа
+        if (!response.ok) {
+            throw new Error("Сервер вернул ошибку: " + response.status);
+        }
 
         const result = await response.json();
 
         if (result.status !== "ok") {
-            alert("Ошибка отправки: " + (result.message || "Неизвестная ошибка"));
-            return;
+            throw new Error(result.message || "Ошибка сервера");
         }
 
+        // УСПЕХ
         alert("Заказ успешно отправлен!");
 
-        // Очистка корзины
         cart = [];
         localStorage.setItem("cart", "[]");
+
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
@@ -483,7 +490,7 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
         closeConfirm();
 
     } catch (e) {
-        console.error(e);
+        console.error("Ошибка:", e);
         alert("Ошибка отправки: " + e.message);
     } finally {
         hideLoader();
