@@ -347,23 +347,19 @@ function formatDuration(value) {
 }
 
 // ===== МОДАЛКИ =====
-// ===== МОДАЛКИ =====
 function openCheckout() {
-    if(cart.length === 0){
+    if (cart.length === 0) {
         alert("Корзина пуста");
         return;
     }
     document.getElementById("checkoutModal").classList.add("open");
 }
-
 function closeCheckout() {
     document.getElementById("checkoutModal").classList.remove("open");
 }
-
 function openConfirm() {
     document.getElementById("confirmModal").classList.add("open");
 }
-
 function closeConfirm() {
     document.getElementById("confirmModal").classList.remove("open");
 }
@@ -372,11 +368,11 @@ function closeConfirm() {
 function showLoader() {
     document.getElementById("loadingOverlay").classList.add("show");
 }
-
 function hideLoader() {
     document.getElementById("loadingOverlay").classList.remove("show");
+}
 
-    
+// ===== ПРЕВЬЮ ЗАКАЗА =====
 document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
@@ -390,7 +386,6 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
         alert("Заполните все обязательные поля");
         return;
     }
-
     if (!agree) {
         alert("Нужно согласие на обработку данных");
         return;
@@ -418,7 +413,7 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
     openConfirm();
 });
 
-
+// ===== ОТПРАВКА ЗАКАЗА =====
 async function sendOrder() {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
@@ -443,27 +438,25 @@ async function sendOrder() {
 
     const order = { user: { fio, birth, phone, address }, cart: cartItems, deliveryTime, comment };
 
-    try {
-      
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypFLjWz9e7_aDlBx5__AGGScMV8nHfC4lWh3t7h5T7aSsz40EOI4uwZ0Sl51H2yNJPgQ/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypFLjWz9e7_aDlBx5__AGGScMV8nHfC4lWh3t7h5T7aSsz40EOI4uwZ0Sl51H2yNJPgQ/exec";
 
+    try {
+        showLoader();
         const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(order)
         });
 
-    
         if (!response.ok) throw new Error("Сервер вернул ошибку: " + response.status);
 
         const result = await response.json();
         if (result.status !== "ok") throw new Error(result.message || "Ошибка сервера");
 
-        // Успех
         alert("Заказ успешно отправлен!");
         cart = [];
         localStorage.setItem("cart", "[]");
-        renderCart();
+        erCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
         renderFavorites();
@@ -472,8 +465,13 @@ async function sendOrder() {
     } catch (e) {
         console.error("Ошибка:", e);
         alert("Ошибка отправки: " + e.message);
+    } finally {
+        hideLoader();
     }
 }
+
+// Привязка кнопки к отправке
+document.getElementById("sendOrderBtn").addEventListener("click", sendOrder); rend
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
