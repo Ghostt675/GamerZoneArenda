@@ -457,13 +457,11 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        const response = await fetch("https://45.144.220.76/api/send-order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(order)
-        });
+        const response = await fetch("/api/send-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(order)
+});
 
         // Проверка ответа
         if (!response.ok) {
