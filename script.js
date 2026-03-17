@@ -404,39 +404,42 @@ async function sendOrder() {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
     if (!fio || !birth || !phone || !address || !deliveryTime) {
-        alert("Заполните все обязательные поля"); return;
+        alert("Заполните все обязательные поля");
+        return;
     }
 
     const cartItems = cart.map(id => {
         const p = products.find(pr => pr.id === id);
-        return { name: p.name, days: p.periodValue, price: p.prices[0] + Math.max(p.periodValue - 1, 0) * p.prices[1] };
+        return { name: p.name, days: p.periodValue, price: p.prices[0] + Math.max(p.periodValue-1,0)*p.prices[1] };
     });
 
     const order = { user: { fio, birth, phone, address }, cart: cartItems, deliveryTime, comment };
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypFLjWz9e7_aDlBx5__AGGScMV8nHfC4lWh3t7h5T7aSsz40EOI4uwZ0Sl51H2yNJPgQ/exec";
 
     try {
-        showLoader();
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
+        const response = await fetch("https://45.144.220.76:5000/send-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(order)
         });
 
         if (!response.ok) throw new Error("Сервер вернул ошибку: " + response.status);
+
         const result = await response.json();
         if (result.status !== "ok") throw new Error(result.message || "Ошибка сервера");
 
         alert("Заказ успешно отправлен!");
         cart = [];
-        localStorage.setItem("cart", "[]");
-        renderCart(); updateCartCount(); renderProducts("popularProducts", p => p.popular); renderFavorites();
+        localStorage.setItem("cart","[]");
+        renderCart();
+        updateCartCount();
+        renderProducts("popularProducts", p => p.popular);
+        renderFavorites();
         closeConfirm();
 
     } catch (e) {
-        console.error("Ошибка:", e);
+        console.error(e);
         alert("Ошибка отправки: " + e.message);
-    } finally { hideLoader(); }
+    }
 }
 
 // Привязка кнопки
