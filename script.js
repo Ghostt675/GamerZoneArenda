@@ -347,6 +347,7 @@ function formatDuration(value) {
 }
 
 // ===== МОДАЛКИ =====
+// ===== МОДАЛКИ =====
 function openCheckout() {
     if(cart.length === 0){
         alert("Корзина пуста");
@@ -368,17 +369,16 @@ function closeConfirm() {
 }
 
 // ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader(){
+function showLoader() {
     document.getElementById("loadingOverlay").classList.add("show");
 }
 
-function hideLoader(){
+function hideLoader() {
     document.getElementById("loadingOverlay").classList.remove("show");
 }
 
 // ===== ПРЕВЬЮ ЗАКАЗА =====
 document.getElementById("checkOrderBtn").addEventListener("click", () => {
-
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
@@ -387,12 +387,12 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
     const agree = document.getElementById("agree").checked;
 
-    if(!fio || !birth || !phone || !address || !deliveryTime){
+    if (!fio || !birth || !phone || !address || !deliveryTime) {
         alert("Заполните все обязательные поля");
         return;
     }
 
-    if(!agree){
+    if (!agree) {
         alert("Нужно согласие на обработку данных");
         return;
     }
@@ -407,21 +407,19 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
         <p><strong>Товары:</strong></p>
         <ul>
             ${cart.map(id => {
-                const p = products.find(pr => pr.id===id);
+                const p = products.find(pr => pr.id === id);
                 const days = p.periodValue;
-                const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
+                const price = p.prices[0] + Math.max(days - 1, 0) * p.prices[1];
                 return `<li>${p.name} — ${days} суток — ${price} ₽</li>`;
             }).join("")}
         </ul>
     `;
-
     document.getElementById("orderPreview").innerHTML = preview;
-
     closeCheckout();
     openConfirm();
 });
 
-
+// ===== ОТПРАВКА ЗАКАЗА =====
 document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const btn = document.getElementById("sendOrderBtn");
     btn.disabled = true;
@@ -434,7 +432,6 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     const deliveryTime = document.getElementById("deliveryTime").value.trim();
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
-    // Проверка
     if (!fio || !birth || !phone || !address || !deliveryTime) {
         alert("Заполните все обязательные поля");
         btn.disabled = false;
@@ -457,13 +454,12 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        const response = await fetch("http://45.144.220.76/send-order", { method: "POST", ... }), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(order)
-});
+        const response = await fetch("http://45.144.220.76:5000/send-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        });
 
-        // Проверка ответа
         if (!response.ok) {
             throw new Error("Сервер вернул ошибку: " + response.status);
         }
@@ -474,7 +470,6 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
             throw new Error(result.message || "Ошибка сервера");
         }
 
-        // УСПЕХ
         alert("Заказ успешно отправлен!");
 
         cart = [];
@@ -484,7 +479,6 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
         renderFavorites();
-
         closeConfirm();
 
     } catch (e) {
