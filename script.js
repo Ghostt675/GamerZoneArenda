@@ -348,29 +348,16 @@ function formatDuration(value) {
 
 // ===== МОДАЛКИ =====
 function openCheckout() {
-    if (cart.length === 0) {
-        alert("Корзина пуста");
-        return;
-    }
+    if (cart.length === 0) { alert("Корзина пуста"); return; }
     document.getElementById("checkoutModal").classList.add("open");
 }
-function closeCheckout() {
-    document.getElementById("checkoutModal").classList.remove("open");
-}
-function openConfirm() {
-    document.getElementById("confirmModal").classList.add("open");
-}
-function closeConfirm() {
-    document.getElementById("confirmModal").classList.remove("open");
-}
+function closeCheckout() { document.getElementById("checkoutModal").classList.remove("open"); }
+function openConfirm() { document.getElementById("confirmModal").classList.add("open"); }
+function closeConfirm() { document.getElementById("confirmModal").classList.remove("open"); }
 
 // ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader() {
-    document.getElementById("loadingOverlay").classList.add("show");
-}
-function hideLoader() {
-    document.getElementById("loadingOverlay").classList.remove("show");
-}
+function showLoader() { document.getElementById("loadingOverlay").classList.add("show"); }
+function hideLoader() { document.getElementById("loadingOverlay").classList.remove("show"); }
 
 // ===== ПРЕВЬЮ ЗАКАЗА =====
 document.getElementById("checkOrderBtn").addEventListener("click", () => {
@@ -382,14 +369,8 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
     const agree = document.getElementById("agree").checked;
 
-    if (!fio || !birth || !phone || !address || !deliveryTime) {
-        alert("Заполните все обязательные поля");
-        return;
-    }
-    if (!agree) {
-        alert("Нужно согласие на обработку данных");
-        return;
-    }
+    if (!fio || !birth || !phone || !address || !deliveryTime) { alert("Заполните все обязательные поля"); return; }
+    if (!agree) { alert("Нужно согласие на обработку данных"); return; }
 
     const preview = `
         <p><strong>ФИО:</strong> ${fio}</p>
@@ -423,21 +404,15 @@ async function sendOrder() {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
 
     if (!fio || !birth || !phone || !address || !deliveryTime) {
-        alert("Заполните все обязательные поля");
-        return;
+        alert("Заполните все обязательные поля"); return;
     }
 
     const cartItems = cart.map(id => {
         const p = products.find(pr => pr.id === id);
-        return {
-            name: p.name,
-            days: p.periodValue,
-            price: p.prices[0] + Math.max(p.periodValue - 1, 0) * p.prices[1]
-        };
+        return { name: p.name, days: p.periodValue, price: p.prices[0] + Math.max(p.periodValue - 1, 0) * p.prices[1] };
     });
 
     const order = { user: { fio, birth, phone, address }, cart: cartItems, deliveryTime, comment };
-
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypFLjWz9e7_aDlBx5__AGGScMV8nHfC4lWh3t7h5T7aSsz40EOI4uwZ0Sl51H2yNJPgQ/exec";
 
     try {
@@ -449,29 +424,23 @@ async function sendOrder() {
         });
 
         if (!response.ok) throw new Error("Сервер вернул ошибку: " + response.status);
-
         const result = await response.json();
         if (result.status !== "ok") throw new Error(result.message || "Ошибка сервера");
 
         alert("Заказ успешно отправлен!");
         cart = [];
         localStorage.setItem("cart", "[]");
-        erCart();
-        updateCartCount();
-        renderProducts("popularProducts", p => p.popular);
-        renderFavorites();
+        renderCart(); updateCartCount(); renderProducts("popularProducts", p => p.popular); renderFavorites();
         closeConfirm();
 
     } catch (e) {
         console.error("Ошибка:", e);
         alert("Ошибка отправки: " + e.message);
-    } finally {
-        hideLoader();
-    }
+    } finally { hideLoader(); }
 }
 
-// Привязка кнопки к отправке
-document.getElementById("sendOrderBtn").addEventListener("click", sendOrder); rend
+// Привязка кнопки
+document.getElementById("sendOrderBtn").addEventListener("click", sendOrder); 
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
