@@ -457,7 +457,7 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     };
 
     try {
-        const response = await fetch("http://45.144.220.76/api/send-order", {
+        const response = await fetch("https://45.144.220.76/api/send-order", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
