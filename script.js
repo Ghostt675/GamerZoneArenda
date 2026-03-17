@@ -375,9 +375,8 @@ function showLoader() {
 
 function hideLoader() {
     document.getElementById("loadingOverlay").classList.remove("show");
-}
 
-// ===== ПРЕВЬЮ ЗАКАЗА =====
+    
 document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
@@ -419,12 +418,8 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
     openConfirm();
 });
 
-// ===== ОТПРАВКА ЗАКАЗА =====
-document.getElementById("sendOrderBtn").addEventListener("click", async () => {
-    const btn = document.getElementById("sendOrderBtn");
-    btn.disabled = true;
-    showLoader();
 
+async function sendOrder() {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
@@ -434,47 +429,40 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
 
     if (!fio || !birth || !phone || !address || !deliveryTime) {
         alert("Заполните все обязательные поля");
-        btn.disabled = false;
-        hideLoader();
         return;
     }
 
     const cartItems = cart.map(id => {
         const p = products.find(pr => pr.id === id);
-        const days = p.periodValue;
-        const price = p.prices[0] + Math.max(days - 1, 0) * p.prices[1];
-        return { name: p.name, days, price };
+        return {
+            name: p.name,
+            days: p.periodValue,
+            price: p.prices[0] + Math.max(p.periodValue - 1, 0) * p.prices[1]
+        };
     });
 
-    const order = {
-        user: { fio, birth, phone, address },
-        cart: cartItems,
-        deliveryTime,
-        comment
-    };
+    const order = { user: { fio, birth, phone, address }, cart: cartItems, deliveryTime, comment };
 
     try {
-        const response = await fetch("https://45.144.220.76:5000/send-order", {
+      
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypFLjWz9e7_aDlBx5__AGGScMV8nHfC4lWh3t7h5T7aSsz40EOI4uwZ0Sl51H2yNJPgQ/exec";
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(order)
         });
 
-        if (!response.ok) {
-            throw new Error("Сервер вернул ошибку: " + response.status);
-        }
+    
+        if (!response.ok) throw new Error("Сервер вернул ошибку: " + response.status);
 
         const result = await response.json();
+        if (result.status !== "ok") throw new Error(result.message || "Ошибка сервера");
 
-        if (result.status !== "ok") {
-            throw new Error(result.message || "Ошибка сервера");
-        }
-
+        // Успех
         alert("Заказ успешно отправлен!");
-
         cart = [];
         localStorage.setItem("cart", "[]");
-
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
@@ -484,11 +472,8 @@ document.getElementById("sendOrderBtn").addEventListener("click", async () => {
     } catch (e) {
         console.error("Ошибка:", e);
         alert("Ошибка отправки: " + e.message);
-    } finally {
-        hideLoader();
-        btn.disabled = false;
     }
-});
+}
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
