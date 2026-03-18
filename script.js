@@ -362,6 +362,10 @@ function openPlaystationSites() {
     window.open("https://www.playstation.com/ru-ua/games/ea-play/", "_blank");
 }
 
+function openXboxSite() {
+    window.open("https://newxboxone.ru/game-pass-premium", "_blank");
+}
+
 
 const searchInput = document.querySelector(".search");
 
