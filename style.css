@@ -538,6 +538,16 @@ button{
     position: relative;/* если текста много, появится скролл */
 }
 
+#rulesModal .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #000;          /* черный крестик на белом фоне */
+    font-weight: bold;
+}
+
 
 /* ===== КНОПКИ + / - ===== */
 .cartModal .period-controls .control-btn,
