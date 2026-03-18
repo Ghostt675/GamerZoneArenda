@@ -534,7 +534,8 @@ button{
     max-width: 600px;
     width: 90%;
     max-height: 80%;
-    overflow-y: auto;      /* если текста много, появится скролл */
+    overflow-y: auto;  
+    position: relative;/* если текста много, появится скролл */
 }
 
 
