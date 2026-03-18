@@ -268,10 +268,15 @@ function closeRules() {
 }
 
 function showAllProducts() {
-    // Просто рендерим все товары
-    renderProducts("popularProducts", p => true);
-}
+    // Рендерим все товары в блоке allProducts
+    renderProducts("allProducts", p => true);
 
+    // Опционально: скроллим страницу к разделу "Все товары"
+    const section = document.getElementById("allProducts");
+    if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+    }
+}
 
 
 // ===== МОДАЛКИ =====
