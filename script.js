@@ -477,7 +477,7 @@ async function sendOrderToForm() {
         alert("Заказ успешно отправлен!");
 
         cart = [];
-        calStorage.setItem("cart", "[]");
+        loccalStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
@@ -492,7 +492,7 @@ async function sendOrderToForm() {
 
 // ===== ПРИВЯЗКА КНОПОК =====
 document.getElementById("checkOrderBtn").onclick = openOrderPreview;
-document.getElementById("sendOrderBtn").onclick = sendOrderToForm; lo
+document.getElementById("sendOrderBtn").onclick = sendOrderToForm; 
 
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
