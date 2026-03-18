@@ -477,7 +477,7 @@ async function sendOrderToForm() {
         alert("Заказ успешно отправлен!");
 
         cart = [];
-        loccalStorage.setItem("cart", "[]");
+        localStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
