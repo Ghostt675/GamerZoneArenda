@@ -366,19 +366,32 @@ function openPlaystationSites() {
 
 // ===== МОДАЛКИ =====
 function openCheckout() {
-    if (cart.length === 0) { alert("Корзина пуста"); return; }
+    if (cart.length === 0) { 
+        alert("Корзина пуста"); 
+        return; 
+    }
     document.getElementById("checkoutModal").classList.add("open");
 }
-function closeCheckout() { document.getElementById("checkoutModal").classList.remove("open"); }
-function openConfirm() { document.getElementById("confirmModal").classList.add("open"); }
-function closeConfirm() { document.getElementById("confirmModal").classList.remove("open"); }
+function closeCheckout() {
+    document.getElementById("checkoutModal").classList.remove("open");
+}
+function openConfirm() {
+    document.getElementById("confirmModal").classList.add("open");
+}
+function closeConfirm() {
+    document.getElementById("confirmModal").classList.remove("open");
+}
 
 // ===== ИНДИКАТОР ЗАГРУЗКИ =====
-function showLoader() { document.getElementById("loadingOverlay").classList.add("show"); }
-function hideLoader() { document.getElementById("loadingOverlay").classList.remove("show"); }
+function showLoader() {
+    document.getElementById("loadingOverlay").classList.add("show");
+}
+function hideLoader() {
+    document.getElementById("loadingOverlay").classList.remove("show");
+}
 
 // ===== ПРЕВЬЮ ЗАКАЗА =====
-document.getElementById("checkOrderBtn").addEventListener("click", () => {
+function openOrderPreview() {
     const fio = document.getElementById("fio").value.trim();
     const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
@@ -387,8 +400,14 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
     const comment = document.getElementById("comment").value.trim() || "Нет пожеланий";
     const agree = document.getElementById("agree").checked;
 
-    if (!fio || !birth || !phone || !address || !deliveryTime) { alert("Заполните все обязательные поля"); return; }
-    if (!agree) { alert("Нужно согласие на обработку данных"); return; }
+    if (!fio || !birth || !phone || !address || !deliveryTime) {
+        alert("Заполните все обязательные поля");
+        return;
+    }
+    if (!agree) {
+        alert("Нужно согласие на обработку данных");
+        return;
+    }
 
     const preview = `
         <p><strong>ФИО:</strong> ${fio}</p>
@@ -407,15 +426,17 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
             }).join("")}
         </ul>
     `;
+
     document.getElementById("orderPreview").innerHTML = preview;
+
     closeCheckout();
     openConfirm();
-});
+}
 
 // ===== ОТПРАВКА ЗАКАЗА =====
 async function sendOrderToForm() {
     const fio = document.getElementById("fio").value.trim();
-    const birth = document.getElementById("birth").value.trim(); 
+    const birth = document.getElementById("birth").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
     const deliveryTime = document.getElementById("deliveryTime").value.trim();
@@ -426,27 +447,22 @@ async function sendOrderToForm() {
         return;
     }
 
-    
     const cartText = cart.map(id => {
         const p = products.find(pr => pr.id === id);
         const days = p.periodValue;
-        const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
+        const price = p.prices[0] + Math.max(days - 1, 0) * p.prices[1];
         return `${p.name} — ${days} суток — ${price} ₽`;
     }).join("\n");
 
-    
     const [year, month, day] = birth.split("-");
 
     const formData = new FormData();
-
-    formData.append("entry.1872618546", fio);          
-    formData.append("entry.1442322764", phone);        
-    formData.append("entry.965774275", address);       
-    formData.append("entry.1596654108", deliveryTime); 
-    formData.append("entry.1188219136", comment);      
-    formData.append("entry.1430448643", cartText);     
-
-   
+    formData.append("entry.1872618546", fio);
+    formData.append("entry.1442322764", phone);
+    formData.append("entry.965774275", address);
+    formData.append("entry.1596654108", deliveryTime);
+    formData.append("entry.1188219136", comment);
+    formData.append("entry.1430448643", cartText);
     formData.append("entry.238103303_year", year);
     formData.append("entry.238103303_month", month);
     formData.append("entry.238103303_day", day);
@@ -461,7 +477,7 @@ async function sendOrderToForm() {
         alert("Заказ успешно отправлен!");
 
         cart = [];
-        localStorage.setItem("cart", "[]");
+        calStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
@@ -474,8 +490,9 @@ async function sendOrderToForm() {
     }
 }
 
-// Привязка кнопки
-document.getElementById("sendOrderBtn").addEventListener("click", sendOrderToForm);
+// ===== ПРИВЯЗКА КНОПОК =====
+document.getElementById("checkOrderBtn").onclick = openOrderPreview;
+document.getElementById("sendOrderBtn").onclick = sendOrderToForm; lo
 
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
