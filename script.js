@@ -25,7 +25,7 @@ const products = [
     },
     { 
       id:3,
-      name:"Мультиаккаунт",
+      name:"Игровой аккаунт",
       prices:[300, 100, 150],
       maxPeriod:14,
       minPeriod:3,              
@@ -73,7 +73,7 @@ const products = [
     },
     {
       id:7,
-      name:"Мультиaккаунт Зла",
+      name:"Игровой aккаунт Зла",
       prices:[300, 100, 150],
       maxPeriod:14,
       minPeriod:3,              
