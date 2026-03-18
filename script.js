@@ -465,6 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadFavoritesFromLocalStorage();
     
     renderProducts("popularProducts", p => p.popular);
+    renderProducts("allProducts", () => true);
     updateCartCount();
 
     const overlay = document.getElementById("overlay");
