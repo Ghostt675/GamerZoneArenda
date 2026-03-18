@@ -549,7 +549,7 @@ async function sendOrderToForm() {
             body: formData
         });
 
-        alert("Заказ успешно отправлен!");
+        alert("Заказ успешно оформлен! С вами свяжутся в течении 5 минут в рабочее время.");
 
         cart = [];
         localStorage.setItem("cart", "[]");
