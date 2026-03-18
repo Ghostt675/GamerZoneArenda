@@ -459,6 +459,18 @@ async function sendOrderToForm() {
 // Привязка кнопки
 document.getElementById("sendOrderBtn").addEventListener("click", sendOrderToForm);
 
+
+
+function openRules() {
+    document.getElementById("rulesModal").classList.add("open");
+}
+
+function closeRules() {
+    document.getElementById("rulesModal").classList.remove("open");
+}
+
+
+
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
     loadCartFromLocalStorage();
