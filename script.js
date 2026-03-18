@@ -23,7 +23,19 @@ const products = [
       img:"images/cdww2.png",
       category:"accounts",
       popular:false 
-    }
+    },
+    { 
+      id:3,
+      name:"Мульти-аккаунт",
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              // Минимум 1 сутки
+      periodValue:3,
+      period:"сутки",
+      img:"images/one_multi_acc.png",
+      category:"accounts",
+      popular:true
+    {
 ];
 
 // ===== LOCAL STORAGE =====
