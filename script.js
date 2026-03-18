@@ -363,6 +363,16 @@ function openPlaystationSites() {
 }
 
 
+const searchInput = document.querySelector(".search");
+
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+
+    // Рендерим все товары, но фильтруем по имени
+    renderProducts("allProducts", p => p.name.toLowerCase().includes(query));
+    renderProducts("popularProducts", p => p.popular && p.name.toLowerCase().includes(query));
+});
+
 
 // ===== МОДАЛКИ =====
 function openCheckout() {
