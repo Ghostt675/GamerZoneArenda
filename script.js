@@ -370,8 +370,8 @@ function formatDuration(value) {
 
 
 function openPlaystationSites() {
-    window.open("https://site1.com", "_blank");
-    window.open("https://site2.com", "_blank");
+    window.open("https://www.playstation.com/ru-ua/ps-plus/games/", "_blank");
+    window.open("https://www.playstation.com/ru-ua/games/ea-play/", "_blank");
 }
 
 
