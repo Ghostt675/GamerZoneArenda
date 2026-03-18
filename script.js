@@ -35,7 +35,19 @@ const products = [
       img:"images/one_multi_acc.png",
       category:"accounts",
       popular:true
+    },
     {
+      id:4,
+      name:"Mafia Trilogy",
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              // Минимум 1 сутки
+      periodValue:3,
+      period:"сутки",
+      img:"images/mafia.png",
+      category:"accounts",
+      popular:false
+    }
 ];
 
 // ===== LOCAL STORAGE =====
