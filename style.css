@@ -472,6 +472,28 @@ button{
 }
 
 
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+}
+
+.nav-links span {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    transition: 0.2s;
+}
+
+.nav-links span:hover {
+    color: #fff;
+}
+
+.divider {
+    color: rgba(255,255,255,0.4);
+}
+
+
 /* Эффект дрожания корзины */
 @keyframes cartShake {
     0%, 100% { transform: rotate(0deg); }
