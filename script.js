@@ -457,6 +457,8 @@ async function sendOrderToForm() {
         return;
     }
 
+    showLoader();
+    
     const cartText = cart.map(id => {
         const p = products.find(pr => pr.id === id);
         const days = p.periodValue;
@@ -497,6 +499,8 @@ async function sendOrderToForm() {
     } catch (e) {
         console.error("Ошибка:", e);
         alert("Ошибка отправки: " + e.message);
+    } finally {
+        hideLoader();
     }
 }
 
