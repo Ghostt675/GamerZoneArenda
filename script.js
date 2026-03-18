@@ -469,7 +469,10 @@ function closeRules() {
     document.getElementById("rulesModal").classList.remove("open");
 }
 
-
+function showAllProducts() {
+    // Просто рендерим все товары
+    renderProducts("popularProducts", p => true);
+}
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
