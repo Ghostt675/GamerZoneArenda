@@ -14,18 +14,6 @@ const products = [
     },
     { 
       id:2,
-      name:"Xbox Series X",
-      prices:[1400, 600, 600, 600, 500],
-      maxPeriod:14,
-      minPeriod:1,              // Минимум 2 суток
-      periodValue:1,
-      period:"сутки",
-      img:"images/xbox.jpg",
-      category:"xbox",
-      popular:true 
-    },
-    { 
-      id:3,
       name:"Call Of Duty WW2",
       prices:[300, 100, 150],
       maxPeriod:14,
@@ -34,7 +22,7 @@ const products = [
       period:"сутки",
       img:"images/cdww2.png",
       category:"accounts",
-      popular:true 
+      popular:false 
     }
 ];
 
