@@ -257,6 +257,23 @@ function renderFavorites() {
     });
 }
 
+
+
+function openRules() {
+    document.getElementById("rulesModal").classList.add("open");
+}
+
+function closeRules() {
+    document.getElementById("rulesModal").classList.remove("open");
+}
+
+function showAllProducts() {
+    // Просто рендерим все товары
+    renderProducts("popularProducts", p => true);
+}
+
+
+
 // ===== МОДАЛКИ =====
 function openCart() {
     document.getElementById("cartModal").classList.add("open");
@@ -459,20 +476,6 @@ async function sendOrderToForm() {
 // Привязка кнопки
 document.getElementById("sendOrderBtn").addEventListener("click", sendOrderToForm);
 
-
-
-function openRules() {
-    document.getElementById("rulesModal").classList.add("open");
-}
-
-function closeRules() {
-    document.getElementById("rulesModal").classList.remove("open");
-}
-
-function showAllProducts() {
-    // Просто рендерим все товары
-    renderProducts("popularProducts", p => true);
-}
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
