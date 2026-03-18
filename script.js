@@ -457,7 +457,7 @@ async function sendOrderToForm() {
 }
 
 // Привязка кнопки
-document.getElementById("sendOrderBtn").addEventListener("click", sendOrder); 
+document.getElementById("sendOrderBtn").addEventListener("click", sendOrderToForm);
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener("DOMContentLoaded", () => {
