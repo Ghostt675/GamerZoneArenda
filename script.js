@@ -1,11 +1,10 @@
-// ===== БАЗА ТОВАРОВ =====
 const products = [
     { 
       id:1,
       name:"PlayStation 5",
       prices:[1100, 600, 600, 600, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500], 
       maxPeriod:14,
-      minPeriod:1,              // Минимум 3 суток
+      minPeriod:1,              
       periodValue:1,
       period:"сутки",
       img:"images/ps5.jpg",
@@ -17,7 +16,7 @@ const products = [
       name:"Call Of Duty WW2",
       prices:[300, 100, 150],
       maxPeriod:14,
-      minPeriod:3,              // Минимум 1 сутки
+      minPeriod:3,              
       periodValue:3,
       period:"сутки",
       img:"images/cdww2.png",
@@ -29,7 +28,7 @@ const products = [
       name:"Мульти-аккаунт",
       prices:[300, 100, 150],
       maxPeriod:14,
-      minPeriod:3,              // Минимум 1 сутки
+      minPeriod:3,              
       periodValue:3,
       period:"сутки",
       img:"images/one_multi_acc.png",
@@ -41,7 +40,7 @@ const products = [
       name:"Mafia Trilogy",
       prices:[300, 100, 150],
       maxPeriod:14,
-      minPeriod:3,              // Минимум 1 сутки
+      minPeriod:3,              
       periodValue:3,
       period:"сутки",
       img:"images/mafia.png",
@@ -53,7 +52,7 @@ const products = [
       name:"Metro Saga Bundle",
       prices:[300, 100, 150],
       maxPeriod:14,
-      minPeriod:3,              // Минимум 1 сутки
+      minPeriod:3,              
       periodValue:3,
       period:"сутки",
       img:"images/metro.png",
@@ -65,10 +64,22 @@ const products = [
       name:"UFC5 Ultimate",
       prices:[300, 100, 150],
       maxPeriod:14,
-      minPeriod:3,              // Минимум 1 сутки
+      minPeriod:3,              
       periodValue:3,
       period:"сутки",
       img:"images/UFC5.png",
+      category:"accounts",
+      popular:true
+    },
+    {
+      id:7,
+      name:"Мульти-Аккаунт Зла",
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              
+      periodValue:3,
+      period:"сутки",
+      img:"images/evil_acc.png",
       category:"accounts",
       popular:true
     }
