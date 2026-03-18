@@ -368,6 +368,14 @@ function formatDuration(value) {
     }
 }
 
+
+function openPlaystationSites() {
+    window.open("https://site1.com", "_blank");
+    window.open("https://site2.com", "_blank");
+}
+
+
+
 // ===== МОДАЛКИ =====
 function openCheckout() {
     if (cart.length === 0) { alert("Корзина пуста"); return; }
