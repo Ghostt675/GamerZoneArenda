@@ -59,6 +59,18 @@ const products = [
       img:"images/metro.png",
       category:"accounts",
       popular:false
+    },
+    {
+      id:6,
+      name:"UFC5 Ultimate",
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              // Минимум 1 сутки
+      periodValue:3,
+      period:"сутки",
+      img:"images/UFC5.png",
+      category:"accounts",
+      popular:true
     }
 ];
 
