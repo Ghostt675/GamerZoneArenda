@@ -46,6 +46,18 @@ const products = [
       period:"сутки",
       img:"images/mafia.png",
       category:"accounts",
+      popular:true
+    },
+    {
+      id:5,
+      name:"Metro Saga Bundle",
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              // Минимум 1 сутки
+      periodValue:3,
+      period:"сутки",
+      img:"images/metro.png",
+      category:"accounts",
       popular:false
     }
 ];
