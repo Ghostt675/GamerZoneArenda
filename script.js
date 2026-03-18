@@ -395,9 +395,9 @@ document.getElementById("checkOrderBtn").addEventListener("click", () => {
 });
 
 // ===== ОТПРАВКА ЗАКАЗА =====
-async function sendOrder() {
+async function sendOrderToForm() {
     const fio = document.getElementById("fio").value.trim();
-    const birth = document.getElementById("birth").value.trim();
+    const birth = document.getElementById("birth").value.trim(); 
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
     const deliveryTime = document.getElementById("deliveryTime").value.trim();
@@ -408,28 +408,42 @@ async function sendOrder() {
         return;
     }
 
-    const cartItems = cart.map(id => {
+    
+    const cartText = cart.map(id => {
         const p = products.find(pr => pr.id === id);
-        return { name: p.name, days: p.periodValue, price: p.prices[0] + Math.max(p.periodValue-1,0)*p.prices[1] };
-    });
+        const days = p.periodValue;
+        const price = p.prices[0] + Math.max(days-1,0)*p.prices[1];
+        return `${p.name} — ${days} суток — ${price} ₽`;
+    }).join("\n");
 
-    const order = { user: { fio, birth, phone, address }, cart: cartItems, deliveryTime, comment };
+    
+    const [year, month, day] = birth.split("-");
+
+    const formData = new FormData();
+
+    formData.append("entry.1872618546", fio);          
+    formData.append("entry.1442322764", phone);        
+    formData.append("entry.965774275", address);       
+    formData.append("entry.1596654108", deliveryTime); 
+    formData.append("entry.1188219136", comment);      
+    formData.append("entry.1430448643", cartText);     
+
+   
+    formData.append("entry.238103303_year", year);
+    formData.append("entry.238103303_month", month);
+    formData.append("entry.238103303_day", day);
 
     try {
-        const response = await fetch("https://45.144.220.76:5000/send-order", {
+        await fetch("https://docs.google.com/forms/d/e/1FAIpQLSd4ZQ7noQ7WwrhVMD-EW--ouqUXJ2KYq8VXp3UffVY_5OM4qw/formResponse", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order)
+            mode: "no-cors",
+            body: formData
         });
 
-        if (!response.ok) throw new Error("Сервер вернул ошибку: " + response.status);
-
-        const result = await response.json();
-        if (result.status !== "ok") throw new Error(result.message || "Ошибка сервера");
-
         alert("Заказ успешно отправлен!");
+
         cart = [];
-        localStorage.setItem("cart","[]");
+        localStorage.setItem("cart", "[]");
         renderCart();
         updateCartCount();
         renderProducts("popularProducts", p => p.popular);
@@ -437,7 +451,7 @@ async function sendOrder() {
         closeConfirm();
 
     } catch (e) {
-        console.error(e);
+        console.error("Ошибка:", e);
         alert("Ошибка отправки: " + e.message);
     }
 }
