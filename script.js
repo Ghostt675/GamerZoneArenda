@@ -23,8 +23,20 @@ const products = [
       category:"accounts",
       popular:false 
     },
-    { 
+    {
       id:3,
+      name:"Gran Turismo 7",
+      prices:[300, 100, 150],
+      maxPeriod:14,
+      minPeriod:3,              
+      periodValue:3,
+      period:"сутки",
+      img:"images/GT7.png",
+      category:"accounts",
+      popular:true
+    },
+    { 
+      id:4,
       name:"Игровой аккаунт",
       prices:[300, 100, 150],
       maxPeriod:14,
@@ -36,7 +48,7 @@ const products = [
       popular:true
     },
     {
-      id:4,
+      id:5,
       name:"Mafia Trilogy",
       prices:[300, 100, 150],
       maxPeriod:14,
@@ -48,7 +60,7 @@ const products = [
       popular:true
     },
     {
-      id:5,
+      id:6,
       name:"Metro Saga Bundle",
       prices:[300, 100, 150],
       maxPeriod:14,
@@ -60,7 +72,7 @@ const products = [
       popular:false
     },
     {
-      id:6,
+      id:7,
       name:"UFC5 Ultimate",
       prices:[300, 100, 150],
       maxPeriod:14,
@@ -72,7 +84,7 @@ const products = [
       popular:true
     },
     {
-      id:7,
+      id:8,
       name:"Игровой aккаунт Зла",
       prices:[300, 100, 150],
       maxPeriod:14,
